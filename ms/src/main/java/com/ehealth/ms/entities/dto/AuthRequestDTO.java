@@ -1,12 +1,11 @@
-package com.ehelth.rs.entities.dto;
+package com.ehealth.ms.entities.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class UserCredentialsDTO {
+public class AuthRequestDTO {
     private String email;
     private String password;
-    private String role;
 }

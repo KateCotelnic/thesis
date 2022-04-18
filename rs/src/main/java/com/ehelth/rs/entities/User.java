@@ -31,6 +31,7 @@ public class User {
         return UserCredentialsDTO.builder()
                 .email(this.email)
                 .password(this.password)
+                .role(this.role.toString())
                 .build();
     }
 
