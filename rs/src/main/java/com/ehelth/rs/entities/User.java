@@ -17,21 +17,25 @@ import javax.persistence.*;
 @Table(name = "USERS")
 public class User {
     @Id
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "ROLE")
     private Role role;
+
+    @Column(name = "ENABLE")
+    private boolean isEnable;
 
     public UserCredentialsDTO toUserCredentialsDTO(){
         return UserCredentialsDTO.builder()
                 .email(this.email)
                 .password(this.password)
                 .role(this.role.toString())
+                .isEnable(this.isEnable)
                 .build();
     }
 
@@ -41,6 +45,7 @@ public class User {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", isEnable=" + isEnable +
                 '}';
     }
 }
