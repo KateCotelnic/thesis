@@ -2,22 +2,78 @@ package com.ehealth.ms.controllers;
 
 import com.ehealth.ms.entities.dto.AuthRequestDTO;
 import com.ehealth.ms.entities.dto.AuthResponseDTO;
+import com.ehealth.ms.entities.dto.AuthResponseRSDTO;
+import com.ehealth.ms.security.JwtTokenProvider;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/login")
 @RequiredArgsConstructor
 public class AuthController {
     private final RSService rsService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO authRequestDTO){
-        AuthResponseDTO authResponseDTO = rsService.getUserAuth(authRequestDTO);
-        return ResponseEntity.ok(authResponseDTO);
+    @PostMapping("/doctor")
+    public ResponseEntity<AuthResponseDTO> loginDoctor(@RequestBody AuthRequestDTO request){
+        AuthResponseRSDTO user;
+        try {
+            user = rsService.getUserByUsername(request.getEmail());
+            if (!user.getRole().equals("DOCTOR")){
+                throw new RuntimeException("User not found");
+            }
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+//        } catch (AuthenticationException e) {
+        }catch (RuntimeException e){
+            throw new BadCredentialsException("Incorrect combination of email and/or password");
+        }
+        String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole());
+
+        return ResponseEntity.ok(AuthResponseDTO.builder()
+                .email(request.getEmail())
+                .token(token)
+                .build());
+    }
+
+    @PostMapping("/patient")
+    public ResponseEntity<AuthResponseDTO> loginPatient(@RequestBody AuthRequestDTO request){
+        AuthResponseRSDTO user;
+        try {
+            user = rsService.getUserByUsername(request.getEmail());
+            if (!user.getRole().equals("PATIENT")){
+                throw new RuntimeException("User not found");
+            }
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+//        } catch (AuthenticationException e) {
+        }catch (RuntimeException e){
+            throw new BadCredentialsException("Incorrect combination of email and/or password");
+        }
+        String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole());
+
+        return ResponseEntity.ok(AuthResponseDTO.builder()
+                .email(request.getEmail())
+                .token(token)
+                .build());
+    }
+
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+        securityContextLogoutHandler.logout(request, response, null);
+    }
+
+    @GetMapping("/hi")
+    public ResponseEntity<String> hello(){
+        return ResponseEntity.ok("HELLO");
     }
 }
