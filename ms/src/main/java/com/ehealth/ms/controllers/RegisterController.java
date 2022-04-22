@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/register")
 @RequiredArgsConstructor
@@ -22,6 +24,15 @@ public class RegisterController {
 
     @PostMapping()
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody AuthRequestDTO request){
+        if (Objects.isNull(request.getEmail()) || !request.getEmail().matches("^(?![.])[A-z0-9.]{5,35}@[A-z0-9.]{1,10}\\.[A-z0-9.]{1,11}$")) {
+//            throw new InvalidEmailException("Email is not valid.");
+            throw new RuntimeException("invalid email");
+        }
+        if (Objects.isNull(request.getPassword()) || !request.getPassword().matches("^[A-z0-9'~!@#$%^&*()_+\\-=?.,;:'\\/\\\"|\\{\\}<>\\[\\]]{5,10}$")) {
+//            throw new NotSuitablePasswordException("Password is not valid.");
+            throw new RuntimeException("invalid password");
+        }
+
         if(rsService.existUserByUsername(request.getEmail())){
             throw new RuntimeException("existing user");
         }
