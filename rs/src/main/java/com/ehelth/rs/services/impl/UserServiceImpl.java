@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getUserByEmail(email).orElseThrow(
                 () -> new RuntimeException("User not found")
         );
-        System.out.println(user);
         return user.toUserCredentialsDTO();
     }
 

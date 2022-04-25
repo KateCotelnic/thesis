@@ -1,13 +1,11 @@
 package com.ehealth.ms.entities.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class RegisterUserRSDTO {
+public class RegisterRequestDTO {
     private String email;
     private String password;
     private String role;

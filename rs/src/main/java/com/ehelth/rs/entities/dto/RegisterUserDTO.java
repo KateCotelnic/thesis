@@ -12,6 +12,11 @@ public class RegisterUserDTO {
     private String password;
     private String role;
     private boolean isEnable;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String phoneNumber;
+    private String photo;
 
     public User toUser(){
         return User.builder()
@@ -19,6 +24,11 @@ public class RegisterUserDTO {
                 .isEnable(isEnable)
                 .password(password)
                 .role(Role.valueOf(role))
+                .firstName(firstName)
+                .lastName(lastName)
+                .middleName(middleName)
+                .phoneNumber(phoneNumber)
+                .photo(photo)
                 .build();
     }
 }

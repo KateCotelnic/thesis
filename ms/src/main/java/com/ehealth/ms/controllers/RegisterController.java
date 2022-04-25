@@ -1,6 +1,6 @@
 package com.ehealth.ms.controllers;
 
-import com.ehealth.ms.entities.dto.AuthRequestDTO;
+import com.ehealth.ms.entities.dto.RegisterRequestDTO;
 import com.ehealth.ms.entities.dto.RegisterResponseDTO;
 import com.ehealth.ms.entities.dto.RegisterUserRSDTO;
 import com.ehealth.ms.security.JwtTokenProvider;
@@ -23,7 +23,7 @@ public class RegisterController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping()
-    public ResponseEntity<RegisterResponseDTO> register(@RequestBody AuthRequestDTO request){
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO request){
         if (Objects.isNull(request.getEmail()) || !request.getEmail().matches("^(?![.])[A-z0-9.]{5,35}@[A-z0-9.]{1,10}\\.[A-z0-9.]{1,11}$")) {
 //            throw new InvalidEmailException("Email is not valid.");
             throw new RuntimeException("invalid email");
@@ -32,7 +32,6 @@ public class RegisterController {
 //            throw new NotSuitablePasswordException("Password is not valid.");
             throw new RuntimeException("invalid password");
         }
-
         if(rsService.existUserByUsername(request.getEmail())){
             throw new RuntimeException("existing user");
         }
@@ -42,6 +41,11 @@ public class RegisterController {
                 .password(encodedPas)
                 .isEnable(true)
                 .role("PATIENT")
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .middleName(request.getMiddleName())
+                .phoneNumber(request.getPhoneNumber())
+                .photo(request.getPhoto())
                 .build();
         rsService.insertUser(userRSDTO);
         String token = jwtTokenProvider.createToken(request.getEmail(), "PATIENT");

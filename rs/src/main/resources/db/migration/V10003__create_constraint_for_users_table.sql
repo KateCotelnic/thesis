@@ -1,0 +1,2 @@
+ALTER TABLE users
+    ADD CONSTRAINT PK_user_id PRIMARY KEY (email);
