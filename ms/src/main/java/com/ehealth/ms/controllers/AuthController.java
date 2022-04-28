@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 public class AuthController {
     private final RSService rsService;
     private final AuthenticationManager authenticationManager;

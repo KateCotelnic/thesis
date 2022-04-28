@@ -4,15 +4,16 @@ INSERT INTO users (email,
                      is_enable,
                      first_name,
                      last_name,
-                     phone_number)
+                     phone_number,
+                     age)
 VALUES ('katie@email.com', '$2a$12$6OxG/l4ROLHeUXyvfrvRge9/w8PHt9gZZjY37uL15bUXeB/Jpvss.',
-        'ADMIN', true, 'Catherine', 'Cot', '049584732'),
+        'ADMIN', true, 'Catherine', 'Cot', '049584732', 27),
        ('jeffrey@email.com', '$2a$12$20kvXa6CZ5/JHuib0kIeOevbCFAF4mZJR7W6PiEbBQDqhbKrLpPOi',
-        'PATIENT', false, 'Jeffrey', 'Jef', '304874032'),
+        'PATIENT', false, 'Jeffrey', 'Jef', '304874032', 12),
        ('emily@email.com', '$2a$12$fVQwXxgEV.abCSLpjN7V6uXV4Qm4cvRqANCXmnpwXZ5dTixXrBNBe',
-        'PATIENT', true, 'Emily', 'Muller', '3215153425'),
+        'PATIENT', true, 'Emily', 'Muller', '3215153425', 16),
        ('catal@email.com', '$2a$12$C5gDWeIRojjxAjPgG1XacugzdAb6HrJeHzFqIIM96nicRF9ISOQdy',
-        'PATIENT', true, 'Catalin', 'Kelly', '4932754930');
+        'PATIENT', true, 'Catalin', 'Kelly', '4932754930', 45);
 
 INSERT INTO users (email,
                    password,

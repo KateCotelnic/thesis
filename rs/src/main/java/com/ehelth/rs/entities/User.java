@@ -1,5 +1,7 @@
 package com.ehelth.rs.entities;
 
+import com.ehelth.rs.entities.dto.DoctorDTO;
+import com.ehelth.rs.entities.dto.DoctorDetailsDTO;
 import com.ehelth.rs.entities.dto.UserCredentialsDTO;
 import com.ehelth.rs.entities.enums.Classification;
 import com.ehelth.rs.entities.enums.Grade;
@@ -9,6 +11,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -45,6 +48,9 @@ public class User {
     @Column(name = "middle_name")
     private String middleName;
 
+    @Column(name = "age")
+    private int age;
+
     @Column(name = "phone_number")
     @NonNull
     private String phoneNumber;
@@ -78,11 +84,11 @@ public class User {
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Comment> commentsForUser;
+    private List<Comment> commentsForDoctors;
 
     @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Comment> commentsByUser;
+    private List<Comment> commentsForUser;
 
     @ManyToMany(mappedBy = "doctors")
     @ToString.Exclude
@@ -90,11 +96,11 @@ public class User {
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Appointment> appointmentsForUser;
+    private List<Appointment> appointmentsForDoctor;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Appointment> appointmentsByUser;
+    private List<Appointment> appointmentsForUsers;
 
     public UserCredentialsDTO toUserCredentialsDTO(){
         return UserCredentialsDTO.builder()
@@ -102,6 +108,46 @@ public class User {
                 .password(this.password)
                 .role(this.role.toString())
                 .isEnable(this.isEnable)
+                .build();
+    }
+
+    public DoctorDTO toDoctorDTO(){
+        return DoctorDTO.builder()
+                .email(email)
+                .classification(classification.toString())
+                .description(description)
+                .firstName(firstName)
+                .middleName(middleName)
+                .lastName(lastName)
+                .phoneNumber(phoneNumber)
+                .speciality(speciality.toString())
+                .price(price + "")
+                .photo(photo)
+                .grade(grade.toString())
+                .experience(experience + "")
+                .rating(rating + "")
+                .hospitals(hospitals.stream().map(Hospital::getHospitalName).collect(Collectors.toList()))
+                .build();
+    }
+
+    public DoctorDetailsDTO toDoctorDetailsDTO(){
+        return DoctorDetailsDTO.builder()
+                .email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .middleName(middleName)
+                .phoneNumber(phoneNumber)
+                .speciality(speciality.toString())
+                .price(price + "")
+                .photo(photo)
+                .grade(grade.toString())
+                .experience(experience + "")
+                .description(description)
+                .classification(classification.toString())
+                .rating(rating + "")
+                .hospitals(hospitals.stream().map(Hospital::getHospitalName).collect(Collectors.toList()))
+                .comments(commentsForDoctors.stream().map(Comment::toCommentDTO).collect(Collectors.toList()))
+                .appointmentsDoctor(appointmentsForDoctor.stream().map(Appointment::toAppointmentDoctorDTO).collect(Collectors.toList()))
                 .build();
     }
 }

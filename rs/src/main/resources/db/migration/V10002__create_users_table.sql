@@ -7,6 +7,7 @@ CREATE TABLE users
     first_name   varchar(255) NOT NULL,
     middle_name  varchar(255),
     last_name    varchar(255) NOT NULL,
+    age          integer DEFAULT 0,
     phone_number varchar(255) NOT NULL,
     photo        varchar(255),
     speciality   varchar(255),

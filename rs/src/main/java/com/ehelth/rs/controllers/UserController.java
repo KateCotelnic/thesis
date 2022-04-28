@@ -1,7 +1,9 @@
 package com.ehelth.rs.controllers;
 
+import com.ehelth.rs.entities.dto.DoctorDetailsDTO;
 import com.ehelth.rs.entities.dto.RegisterUserDTO;
 import com.ehelth.rs.entities.dto.UserCredentialsDTO;
+import com.ehelth.rs.services.DoctorService;
 import com.ehelth.rs.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final DoctorService doctorService;
 
     @GetMapping("/getUserByEmail")
     public ResponseEntity<UserCredentialsDTO> getUser(@RequestParam(name = "email", defaultValue = "")String email){
@@ -29,5 +32,11 @@ public class UserController {
     public ResponseEntity<UserCredentialsDTO> insertUser(@RequestBody RegisterUserDTO registerUserDTO){
         UserCredentialsDTO user = userService.insertUser(registerUserDTO);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/getDoctorDetailsByEmail")
+    public ResponseEntity<DoctorDetailsDTO> getDoctorByEmail(@RequestParam(name = "email", defaultValue = "")String email){
+        DoctorDetailsDTO doctorDetailsDTO = doctorService.getDoctorByEmail(email);
+        return ResponseEntity.ok(doctorDetailsDTO);
     }
 }

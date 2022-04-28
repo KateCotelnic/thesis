@@ -1,6 +1,7 @@
 package com.ehelth.rs.entities;
 
 
+import com.ehelth.rs.entities.dto.CommentDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,4 +44,16 @@ public class Comment {
     @JoinColumn(name = "doctor_email")
     @NonNull
     private User doctor;
+
+    public CommentDTO toCommentDTO(){
+        return CommentDTO.builder()
+                .body(body)
+                .date(date.toString())
+                .rating(rating + "")
+                .firstNamePatient(patient.getFirstName())
+                .lastNamePatient(patient.getLastName())
+                .middleNamePatient(patient.getMiddleName())
+                .photoPatient(patient.getPhoto())
+                .build();
+    }
 }

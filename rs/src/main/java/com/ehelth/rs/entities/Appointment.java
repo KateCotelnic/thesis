@@ -1,6 +1,7 @@
 package com.ehelth.rs.entities;
 
 
+import com.ehelth.rs.entities.dto.AppointmentDoctorDTO;
 import com.ehelth.rs.entities.enums.Status;
 import lombok.*;
 
@@ -51,4 +52,18 @@ public class Appointment {
     @Column(name = "status")
     @NonNull
     private Status status;
+
+    public AppointmentDoctorDTO toAppointmentDoctorDTO(){
+        return AppointmentDoctorDTO.builder()
+                .hospital(hospital.getHospitalName())
+                .date(date.toString())
+                .duration(duration + "")
+                .status(status.toString())
+                .firstNamePatient(patient.getFirstName())
+                .lastNamePatient(patient.getLastName())
+                .middleNamePatient(patient.getMiddleName())
+                .agePatient(patient.getAge() + "")
+                .phoneNumberPatient(patient.getPhoneNumber())
+                .build();
+    }
 }

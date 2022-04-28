@@ -16,7 +16,6 @@ import java.util.List;
 public class Hospital {
     @Id
     @Column(name = "hospital_name")
-    @NonNull
     private String hospitalName;
 
     @Enumerated(value = EnumType.STRING)
