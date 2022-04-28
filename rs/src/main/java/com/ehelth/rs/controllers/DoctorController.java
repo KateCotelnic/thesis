@@ -36,4 +36,14 @@ public class DoctorController {
     public ResponseEntity<AdminDoctorEnums> getEnumsForDoctor(){
         return ResponseEntity.ok(doctorService.getEnums());
     }
+
+    @GetMapping()
+    public ResponseEntity<DoctorDetailsDTO[]> getByHospital(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
+        return ResponseEntity.ok(doctorService.getByHospital(hospitalName));
+    }
+
+    @PostMapping("/param")
+    public ResponseEntity<DoctorDetailsDTO[]> getByParam(@RequestBody ParametersDoctorDTO parametersDoctorDTO){
+        return ResponseEntity.ok(doctorService.getWithParam(parametersDoctorDTO));
+    }
 }

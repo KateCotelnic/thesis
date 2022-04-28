@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,5 +84,29 @@ public class RSServiceImpl implements RSService {
     public AdminDoctorEnums getAdminDoctorEnums() {
         AdminDoctorEnums adminDoctorEnums = restTemplate.getForEntity(urlRS + "/doctors/enums", AdminDoctorEnums.class).getBody();
         return adminDoctorEnums;
+    }
+
+    @Override
+    public List<HospitalDTO> getHospitals() {
+        HospitalDTO[] hospitalDTOS = restTemplate.getForEntity(urlRS + "/hospitals", HospitalDTO[].class).getBody();
+        return Arrays.stream(hospitalDTOS).collect(Collectors.toList());
+    }
+
+    @Override
+    public SearchEnums getSearchEnums() {
+        return restTemplate.getForEntity(urlRS + "/hospitals/enums", SearchEnums.class).getBody();
+    }
+
+    @Override
+    public List<DoctorDetailsDTO> getDoctorsByHospital(String hospitalName) {
+        DoctorDetailsDTO[] doctorDetailsDTOS = restTemplate.getForEntity(urlRS + "/doctors?hospitalName=" + hospitalName, DoctorDetailsDTO[].class).getBody();
+        return Arrays.stream(doctorDetailsDTOS).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DoctorDetailsDTO> getDoctorsByParam(String area, String classification, String speciality) {
+        ParametersDoctorDTO parametersDoctorDTO = ParametersDoctorDTO.builder().area(area).classification(classification).speciality(speciality).build();
+        DoctorDetailsDTO[] doctorDetailsDTOS = restTemplate.postForEntity(urlRS + "/doctors/param", parametersDoctorDTO, DoctorDetailsDTO[].class).getBody();
+        return Arrays.stream(doctorDetailsDTOS).collect(Collectors.toList());
     }
 }

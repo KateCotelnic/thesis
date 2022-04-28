@@ -15,4 +15,8 @@ public interface RSService {
     DoctorDetailsDTO updateDoctor(UpdateDoctorRequestDTO updateDoctorRequestDTO);
     DoctorDetailsDTO updateDoctorAsAdmin(DoctorUpdateAdminDTO doctorDTO);
     AdminDoctorEnums getAdminDoctorEnums();
+    List<HospitalDTO> getHospitals();
+    SearchEnums getSearchEnums();
+    List<DoctorDetailsDTO> getDoctorsByHospital(String hospitalName);
+    List<DoctorDetailsDTO> getDoctorsByParam(String area, String classification, String speciality);
 }

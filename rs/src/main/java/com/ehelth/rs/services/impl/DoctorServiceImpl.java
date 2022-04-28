@@ -1,5 +1,6 @@
 package com.ehelth.rs.services.impl;
 
+import com.ehelth.rs.entities.Hospital;
 import com.ehelth.rs.entities.User;
 import com.ehelth.rs.entities.dto.*;
 import com.ehelth.rs.entities.enums.Classification;
@@ -26,7 +27,6 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO[] getAllDoctors() {
         List<User> doctors = userRepository.getDoctors();
-        System.out.println(doctors);
         return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
     }
 
@@ -77,6 +77,39 @@ public class DoctorServiceImpl implements DoctorService {
                 .grades(new ArrayList<>(List.of(Arrays.toString(Grade.values()))))
                 .specialities(new ArrayList<>(List.of(Arrays.toString(Speciality.values()))))
                 .build();
+    }
+
+    @Override
+    public DoctorDetailsDTO[] getByHospital(String hospitalName) {
+        Hospital hospital = hospitalService.getHospitalByName(hospitalName);
+        List<User> doctors = userRepository.getAllByHospitalsContainingAndRole(hospital, Role.DOCTOR);
+        return doctors.stream().map(User::toDoctorDetailsDTO).toArray(DoctorDetailsDTO[]::new);
+    }
+
+    @Override
+    public DoctorDetailsDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO) {
+        List<User> doctors = new ArrayList<>();
+        if(!(parametersDoctorDTO.getArea().isEmpty())){
+            List<Hospital> hospitals = hospitalService.getAllByArea(parametersDoctorDTO.getArea());
+            List<User> finalDoctors = doctors;
+            hospitals.forEach(hospital -> finalDoctors.addAll(userRepository.getAllByHospitalsContaining(hospital)));
+            if(!(parametersDoctorDTO.getClassification().isEmpty())){
+                doctors.removeIf(doctor -> !doctor.getClassification().toString().equals(parametersDoctorDTO.getClassification()));
+            }
+            if(!(parametersDoctorDTO.getSpeciality().isEmpty())){
+                doctors.removeIf(doctor -> !doctor.getSpeciality().toString().equals(parametersDoctorDTO.getSpeciality()));
+            }
+        }
+        else if(!(parametersDoctorDTO.getSpeciality().isEmpty())){
+            doctors = userRepository.getAllBySpeciality(Speciality.valueOf(parametersDoctorDTO.getSpeciality()));
+            if(!(parametersDoctorDTO.getClassification().isEmpty())){
+                doctors.removeIf(doctor -> !doctor.getClassification().toString().equals(parametersDoctorDTO.getClassification()));
+            }
+        }
+        else if(!(parametersDoctorDTO.getClassification().isEmpty())){
+            doctors = userRepository.getAllByClassification(Classification.valueOf(parametersDoctorDTO.getClassification()));
+        }
+        return doctors.stream().map(User::toDoctorDetailsDTO).toArray(DoctorDetailsDTO[]::new);
     }
 
     private User newDoctorToUser(NewDoctorDTO newDoctorDTO){

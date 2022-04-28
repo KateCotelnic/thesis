@@ -24,14 +24,11 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping("/doctor")
+    @PostMapping()
     public ResponseEntity<AuthResponseDTO> loginDoctor(@RequestBody AuthRequestDTO request){
         AuthResponseRSDTO user;
         try {
             user = rsService.getUserByUsername(request.getEmail());
-            if (!user.getRole().equals("DOCTOR")){
-                throw new RuntimeException("User not found");
-            }
             if(!user.isEnable()){
                 throw new RuntimeException("User is not enable");
             }
@@ -45,54 +42,7 @@ public class AuthController {
         return ResponseEntity.ok(AuthResponseDTO.builder()
                 .email(request.getEmail())
                 .token(token)
-                .build());
-    }
-
-    @PostMapping("/patient")
-    public ResponseEntity<AuthResponseDTO> loginPatient(@RequestBody AuthRequestDTO request){
-        AuthResponseRSDTO user;
-        try {
-            user = rsService.getUserByUsername(request.getEmail());
-            if (!user.getRole().equals("PATIENT")){
-                throw new RuntimeException("User not found");
-            }
-            if(!user.isEnable()){
-                throw new RuntimeException("User is not enable");
-            }
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-//        } catch (AuthenticationException e) {
-        }catch (RuntimeException e){
-            throw new BadCredentialsException("Incorrect combination of email and/or password");
-        }
-        String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole());
-
-        return ResponseEntity.ok(AuthResponseDTO.builder()
-                .email(request.getEmail())
-                .token(token)
-                .build());
-    }
-
-    @PostMapping("/admin")
-    public ResponseEntity<AuthResponseDTO> loginAdmin(@RequestBody AuthRequestDTO request){
-        AuthResponseRSDTO user;
-        try {
-            user = rsService.getUserByUsername(request.getEmail());
-            if (!user.getRole().equals("ADMIN")){
-                throw new RuntimeException("Admin not found");
-            }
-            if(!user.isEnable()){
-                throw new RuntimeException("User is not enable");
-            }
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-//        } catch (AuthenticationException e) {
-        }catch (RuntimeException e){
-            throw new BadCredentialsException("Incorrect combination of email and/or password");
-        }
-        String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole());
-
-        return ResponseEntity.ok(AuthResponseDTO.builder()
-                .email(request.getEmail())
-                .token(token)
+                .role(user.getRole())
                 .build());
     }
 

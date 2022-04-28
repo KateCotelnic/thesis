@@ -1,6 +1,7 @@
 package com.ehelth.rs.entities;
 
 
+import com.ehelth.rs.entities.dto.HospitalDTO;
 import com.ehelth.rs.entities.enums.Area;
 import lombok.*;
 
@@ -38,4 +39,15 @@ public class Hospital {
     @ManyToMany
     @JoinTable(name = "hospitals_doctors", joinColumns = @JoinColumn(name = "hospital_name"), inverseJoinColumns = @JoinColumn(name = "doctor_email"))
     private List<User> doctors;
+
+    public HospitalDTO toHospitalDTO(){
+        return HospitalDTO.builder()
+                .hospitalName(hospitalName)
+                .phoneNumber(phoneNumber)
+                .address(address)
+                .photo(photo)
+                .cityArea(cityArea.toString())
+                .website(website)
+                .build();
+    }
 }
