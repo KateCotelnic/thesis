@@ -53,6 +53,32 @@ public class AdminController {
 
     @GetMapping("/enums")
     public ResponseEntity<AdminDoctorEnums> getEnumsForDoctors(){
+        verifyIsAdmin();
         return ResponseEntity.ok(rsService.getAdminDoctorEnums());
+    }
+
+    @PostMapping("/newhospital")
+    public ResponseEntity<HospitalDTO> createHospital(@RequestBody HospitalDTO hospitalDTO){
+        verifyIsAdmin();
+        return ResponseEntity.ok(rsService.createHospital(hospitalDTO));
+    }
+
+    @GetMapping("/hospitalEnums")
+    public ResponseEntity<HospitalEnums> getEnums(){
+        verifyIsAdmin();
+        return ResponseEntity.ok(rsService.getHospitalEnums());
+    }
+
+    @DeleteMapping("/hospital")
+    public ResponseEntity<HttpStatus> delete(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName){
+        verifyIsAdmin();
+        rsService.deleteHospital(hospitalName);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/updatehospital")
+    public ResponseEntity<HospitalDTO> updateHospital(@RequestBody HospitalDTO hospitalDTO){
+        verifyIsAdmin();
+        return ResponseEntity.ok(rsService.updateHospitalAsAdmin(hospitalDTO));
     }
 }

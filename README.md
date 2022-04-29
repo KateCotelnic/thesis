@@ -308,6 +308,10 @@ All requests except authentication, registration and for unauthorized user shoul
 ],
 "classifications": [
 "[CHILDREN, ADULT, FAMILY]"
+],
+"hospitals": [
+"Medpark International Hospital",
+"Repromed"
 ]
 }
 
@@ -334,6 +338,70 @@ All requests except authentication, registration and for unauthorized user shoul
 "address": "Strada Cuza Vodă 29/1"
 }
 ]
+
+&nbsp; **create new hospital**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/admin/newhospital
+<br/> request body:
+{
+"hospitalName": "New Hospital",
+"cityArea": "CENTRU",
+"photo": null,
+"phoneNumber": null,
+"website": null,
+"address": "address"
+}
+<br/> response body:
+{
+"hospitalName": "New Hospital",
+"cityArea": "CENTRU",
+"photo": null,
+"phoneNumber": null,
+"website": null,
+"address": "address"
+}
+
+&nbsp; **delete a hospital**
+<br/>
+<br/> method: DELETE
+<br/> URL: http://localhost:8090/api/admin/hospital?hospitalName=New Hospital1
+<br/> response body:
+"OK"
+
+&nbsp; **update the hospital**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/admin/updatehospital
+<br/> request body:
+{
+"hospitalName": "New Hospital",
+"cityArea": "CENTRU",
+"photo": "photo",
+"phoneNumber": null,
+"website": null,
+"address": "address"
+}
+<br/> response body:
+{
+"hospitalName": "New Hospital",
+"cityArea": "CENTRU",
+"photo": "photo",
+"phoneNumber": null,
+"website": null,
+"address": "address"
+}
+
+&nbsp; **get enums for creating and updating hospitals**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/admin/hospitalEnums
+<br/> response body:
+{
+"areas": [
+"[BOTANICA, CENTRU, CIOCANA, BUIUCANI, RISCANI]"
+]
+}
 
 ## Unauthorized user
 
@@ -501,6 +569,10 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 }
 
+## Current authorized user
+
+## User authorized as patient
+
 &nbsp; **get doctor by email**
 <br/>
 <br/> method: GET
@@ -549,9 +621,5 @@ All requests except authentication, registration and for unauthorized user shoul
 }
 ]
 }
-
-## Current authorized user
-
-## User authorized as patient
 
 ## User authorized as doctor

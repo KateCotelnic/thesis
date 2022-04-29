@@ -3,6 +3,7 @@ package com.ehealth.ms.services.impl;
 import com.ehealth.ms.entities.dto.*;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -108,5 +109,31 @@ public class RSServiceImpl implements RSService {
         ParametersDoctorDTO parametersDoctorDTO = ParametersDoctorDTO.builder().area(area).classification(classification).speciality(speciality).build();
         DoctorDetailsDTO[] doctorDetailsDTOS = restTemplate.postForEntity(urlRS + "/doctors/param", parametersDoctorDTO, DoctorDetailsDTO[].class).getBody();
         return Arrays.stream(doctorDetailsDTOS).collect(Collectors.toList());
+    }
+
+    @Override
+    public HospitalDTO createHospital(HospitalDTO hospitalDTO) {
+        try {
+            HospitalDTO hospital = restTemplate.getForEntity(urlRS + "/hospitals/byname?hospitalName=" + hospitalDTO.getHospitalName(), HospitalDTO.class).getBody();
+        }catch (Exception e){
+            restTemplate.postForEntity(urlRS + "/hospitals/new", hospitalDTO, HttpStatus.class);
+            return hospitalDTO;
+        }
+        throw new RuntimeException("The hospital exists");
+    }
+
+    @Override
+    public HospitalEnums getHospitalEnums() {
+        return restTemplate.getForEntity(urlRS + "/hospitals/hospitalEnums", HospitalEnums.class).getBody();
+    }
+
+    @Override
+    public void deleteHospital(String hospitalName) {
+        restTemplate.delete(urlRS + "/hospitals?hospitalName=" + hospitalName);
+    }
+
+    @Override
+    public HospitalDTO updateHospitalAsAdmin(HospitalDTO hospitalDTO) {
+        return restTemplate.postForEntity(urlRS + "hospitals/update", hospitalDTO, HospitalDTO.class).getBody();
     }
 }

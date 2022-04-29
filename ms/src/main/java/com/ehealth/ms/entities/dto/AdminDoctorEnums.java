@@ -15,4 +15,5 @@ public class AdminDoctorEnums {
     List<String> specialities;
     List<String> grades;
     List<String> classifications;
+    List<String> hospitals;
 }

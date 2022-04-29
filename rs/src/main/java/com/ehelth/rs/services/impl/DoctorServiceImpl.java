@@ -76,6 +76,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .classifications(new ArrayList<>(List.of(Arrays.toString(Classification.values()))))
                 .grades(new ArrayList<>(List.of(Arrays.toString(Grade.values()))))
                 .specialities(new ArrayList<>(List.of(Arrays.toString(Speciality.values()))))
+                .hospitals(Arrays.stream(hospitalService.getAll()).map(HospitalDTO::getHospitalName).collect(Collectors.toList()))
                 .build();
     }
 

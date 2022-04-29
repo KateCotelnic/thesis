@@ -19,6 +19,10 @@ public class Hospital {
     @Column(name = "hospital_name")
     private String hospitalName;
 
+    @Column(name = "is_enable")
+    @NonNull
+    private boolean isEnable;
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "city_area")
     @NonNull
@@ -34,6 +38,7 @@ public class Hospital {
     private String website;
 
     @Column(name = "address")
+    @NonNull
     private String address;
 
     @ManyToMany

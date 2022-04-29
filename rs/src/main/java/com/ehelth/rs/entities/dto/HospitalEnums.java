@@ -11,9 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminDoctorEnums {
-    List<String> specialities;
-    List<String> grades;
-    List<String> classifications;
-    List<String> hospitals;
+public class HospitalEnums {
+    List<String> areas;
 }
