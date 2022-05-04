@@ -69,15 +69,6 @@ public class RSServiceImpl implements RSService {
         restTemplate.delete(urlRS + "/doctors?email=" + email);
     }
 
-//    @Override
-//    public DoctorDetailsDTO updateDoctor(UpdateDoctorRequestDTO updateDoctorRequestDTO) {
-//            AuthResponseRSDTO authResponseRSDTO = getUserByUsername(updateDoctorRequestDTO.getEmail());
-//            if(!new BCryptPasswordEncoder(12).encode(updateDoctorRequestDTO.getOldPassword()).equals(authResponseRSDTO.getPassword()))
-//                throw new RuntimeException("wrong password");
-//        DoctorDetailsDTO doctorDetailsDTO = restTemplate.postForEntity(urlRS + "/doctors/update", updateDoctorRequestDTO, DoctorDetailsDTO.class).getBody();
-//        return doctorDetailsDTO;
-//    }
-
     @Override
     public DoctorDetailsDTO updateDoctorAsAdmin(DoctorUpdateAdminDTO doctorDTO){
         DoctorDetailsDTO doctorDetailsDTO = restTemplate.postForEntity(urlRS + "/doctors/update", doctorDTO, DoctorDetailsDTO.class).getBody();
@@ -160,4 +151,24 @@ public class RSServiceImpl implements RSService {
         restTemplate.postForEntity(urlRS + "/updatePassword?email=" + email, passwordDTO, HttpStatus.class);
     }
 
+    @Override
+    public List<CommentDTO> getCommentsByDoctor(String doctorEmail) {
+        CommentDTO[] commentDTOS = restTemplate.getForEntity(urlRS + "/comments/getAllByDoctor?doctorEmail=" + doctorEmail, CommentDTO[].class).getBody();
+        return Arrays.asList(commentDTOS);
+    }
+
+    @Override
+    public NewCommentDTO createComment(NewCommentDTO newCommentDTO) {
+        return restTemplate.postForEntity(urlRS + "/comments/new", newCommentDTO, NewCommentDTO.class).getBody();
+    }
+
+    @Override
+    public NewCommentDTO updateComment(UpdateCommentDTO updateCommentDTO) {
+        return restTemplate.postForEntity(urlRS + "/comments/update", updateCommentDTO, NewCommentDTO.class).getBody();
+    }
+
+    @Override
+    public void deleteComment(String id) {
+        restTemplate.delete(urlRS + "/comments/delete?id=" + id);
+    }
 }

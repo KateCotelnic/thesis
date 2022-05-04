@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> getUserByEmail(String email);
-    List<User> getAllByRole(String role);
+    List<User> getAllByRole(Role role);
     Optional<User> getUserByEmailAndRole(String email, Role role);
     @Query(value = "SELECT * from users u where u.is_enable is TRUE and u.role = 'DOCTOR'", nativeQuery = true)
     List<User> getDoctors();

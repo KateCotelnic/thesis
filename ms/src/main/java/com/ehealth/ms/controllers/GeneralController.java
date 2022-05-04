@@ -70,6 +70,20 @@ public class GeneralController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/commentsByDoctor")
+    public ResponseEntity<List<CommentDTO>> getComments(@RequestParam(name = "doctorEmail", defaultValue = "")String doctorEmail){
+        return ResponseEntity.ok(rsService.getCommentsByDoctor(doctorEmail));
+    }
+
+    @DeleteMapping("/deleteComment")
+    public ResponseEntity<HttpStatus> deleteComments(@RequestParam(name = "id", defaultValue = "")String id){
+        if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())){
+            throw new RuntimeException("user don't have permissions");
+        }
+        rsService.deleteComment(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     private String getCurrentUsername(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;

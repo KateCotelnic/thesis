@@ -2,6 +2,7 @@ package com.ehelth.rs.entities;
 
 
 import com.ehelth.rs.entities.dto.CommentDTO;
+import com.ehelth.rs.entities.dto.NewCommentDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -54,6 +55,17 @@ public class Comment {
                 .lastNamePatient(patient.getLastName())
                 .middleNamePatient(patient.getMiddleName())
                 .photoPatient(patient.getPhoto())
+                .build();
+    }
+
+    public NewCommentDTO toNewCommentDTO(){
+        return NewCommentDTO.builder()
+                .commentId(commentId + "")
+                .body(body)
+                .rating(rating + "")
+                .date(date.toString())
+                .patientEmail(patient.getEmail())
+                .doctorEmail(doctor.getEmail())
                 .build();
     }
 }

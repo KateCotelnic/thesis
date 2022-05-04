@@ -430,6 +430,39 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 }
 
+&nbsp; **get comments by doctor email**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/commentsByDoctor?doctorEmail=tommy@email.com
+<br/> response body:
+[
+{
+"body": "I liked the consultation, it went quickly and efficiently.",
+"rating": "5",
+"date": "2021-11-28",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
+},
+{
+"body": null,
+"rating": "4",
+"date": "2020-03-12",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"photoPatient": null
+}
+]
+
+&nbsp; **delete comment**
+<br/>
+<br/> method: DELETE
+<br/> URL: http://localhost:8090/api/patient/deleteComment?id=22
+<br/> response body:
+"OK"
+
 ## Unauthorized user
 
 &nbsp; **get all hospitals**
@@ -847,6 +880,80 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 }
 
+&nbsp; **get comments by doctor email**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/commentsByDoctor?doctorEmail=tommy@email.com
+<br/> response body:
+[
+{
+"body": "I liked the consultation, it went quickly and efficiently.",
+"rating": "5",
+"date": "2021-11-28",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
+},
+{
+"body": null,
+"rating": "4",
+"date": "2020-03-12",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"photoPatient": null
+}
+]
+
+&nbsp; **create new comment**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/patient/newComment
+<br/> request body:
+{
+"body": null,
+"rating": "5",
+"patientEmail": "jeffrey@email.com",
+"doctorEmail": "polly@email.com",
+"date": "2023-07-20"
+}
+<br/> response body:
+{
+"body": null,
+"rating": "5",
+"patientEmail": "jeffrey@email.com",
+"doctorEmail": "polly@email.com",
+"date": "2023-07-20"
+}
+
+&nbsp; **update comment**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/patient/updateComment
+<br/> request body:
+{
+"commentId": "21",
+"body": "updated comment",
+"rating": "5"
+}
+<br/> response body:
+{
+"commentId": "21",
+"body": "updated comment",
+"rating": "5",
+"date": "2022-05-05",
+"patientEmail": "jeffrey@email.com",
+"doctorEmail": "polly@email.com"
+}
+
+&nbsp; **delete comment**
+<br/>
+<br/> method: DELETE
+<br/> URL: http://localhost:8090/api/deleteComment?id=22
+<br/> response body:
+"OK"
+
 &nbsp; **create appointment**
 <br/>
 <br/> method: POST
@@ -975,4 +1082,40 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> response body:
 "OK"
 
+&nbsp; **get comments by doctor email**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/commentsByDoctor?doctorEmail=tommy@email.com
+<br/> response body:
+[
+{
+"body": "I liked the consultation, it went quickly and efficiently.",
+"rating": "5",
+"date": "2021-11-28",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
+},
+{
+"body": null,
+"rating": "4",
+"date": "2020-03-12",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"photoPatient": null
+}
+]
 
+&nbsp; **send a request to delete comment**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/doctor/deleteComments
+<br/> request body:
+{
+"commentId": 21,
+"reason": "not related comment"
+}
+<br/> response body:
+"OK"

@@ -5,6 +5,7 @@ import com.ehelth.rs.entities.dto.PasswordDTO;
 import com.ehelth.rs.entities.dto.RegisterUserDTO;
 import com.ehelth.rs.entities.dto.UserCredentialsDTO;
 import com.ehelth.rs.entities.dto.UserDetailsDTO;
+import com.ehelth.rs.entities.enums.Role;
 import com.ehelth.rs.repositories.UserRepository;
 import com.ehelth.rs.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -77,5 +78,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getUserByEmail(email).orElseThrow();
         user.setPassword(passwordDTO.getNewPassword());
         userRepository.save(user);
+    }
+
+    @Override
+    public String getAdmin() {
+        System.out.println(userRepository.getAllByRole(Role.PATIENT));
+//        String email = userRepository.getAdmin().get(0).getEmail();
+//        System.out.println(email);
+//        return email;
+        return null;
     }
 }

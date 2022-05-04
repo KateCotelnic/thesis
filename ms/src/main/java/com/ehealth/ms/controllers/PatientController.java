@@ -1,6 +1,8 @@
 package com.ehealth.ms.controllers;
 
 import com.ehealth.ms.entities.dto.AppointmentDTO;
+import com.ehealth.ms.entities.dto.NewCommentDTO;
+import com.ehealth.ms.entities.dto.UpdateCommentDTO;
 import com.ehealth.ms.entities.dto.UserDetailsDTO;
 import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
@@ -45,6 +47,18 @@ public class PatientController {
             username = principal.toString();
         }
         return ResponseEntity.ok(rsService.updateUser(username, userDetailsDTO));
+    }
+
+    @PostMapping("/newComment")
+    public ResponseEntity<NewCommentDTO> createAppointment(@RequestBody NewCommentDTO newCommentDTO) {
+        verifyIsPatient();
+        return ResponseEntity.ok(rsService.createComment(newCommentDTO));
+    }
+
+    @PostMapping("/updateComment")
+    public ResponseEntity<NewCommentDTO> createAppointment(@RequestBody UpdateCommentDTO updateCommentDTO) {
+        verifyIsPatient();
+        return ResponseEntity.ok(rsService.updateComment(updateCommentDTO));
     }
 
 //    @DeleteMapping("/deleteAppointment")

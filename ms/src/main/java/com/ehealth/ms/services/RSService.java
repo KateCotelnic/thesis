@@ -26,4 +26,8 @@ public interface RSService {
     UserDetailsDTO updateUser(String username, UserDetailsDTO userDetailsDTO);
     void deleteUser(String username);
     void updatePassword(String email, PasswordDTO passwordDTO);
+    List<CommentDTO> getCommentsByDoctor(String doctorEmail);
+    NewCommentDTO createComment(NewCommentDTO newCommentDTO);
+    NewCommentDTO updateComment(UpdateCommentDTO updateCommentDTO);
+    void deleteComment(String id);
 }

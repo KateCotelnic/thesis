@@ -15,6 +15,11 @@ public class UserController {
     private final UserService userService;
     private final DoctorService doctorService;
 
+    @GetMapping("/getAdminEmail")
+    public ResponseEntity<String> getAdmin(){
+        return ResponseEntity.ok(userService.getAdmin());
+    }
+
     @GetMapping("/getUserByEmail")
     public ResponseEntity<UserCredentialsDTO> getUser(@RequestParam(name = "email", defaultValue = "")String email){
         UserCredentialsDTO user = userService.getUserCredentials(email);
