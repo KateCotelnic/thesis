@@ -3,6 +3,7 @@ package com.ehelth.rs.entities;
 import com.ehelth.rs.entities.dto.DoctorDTO;
 import com.ehelth.rs.entities.dto.DoctorDetailsDTO;
 import com.ehelth.rs.entities.dto.UserCredentialsDTO;
+import com.ehelth.rs.entities.dto.UserDetailsDTO;
 import com.ehelth.rs.entities.enums.Classification;
 import com.ehelth.rs.entities.enums.Grade;
 import com.ehelth.rs.entities.enums.Role;
@@ -148,6 +149,18 @@ public class User {
                 .hospitals(hospitals.stream().map(Hospital::getHospitalName).collect(Collectors.toList()))
                 .comments(commentsForDoctors.stream().map(Comment::toCommentDTO).collect(Collectors.toList()))
                 .appointmentsDoctor(appointmentsForDoctor.stream().map(Appointment::toAppointmentDoctorDTO).collect(Collectors.toList()))
+                .build();
+    }
+
+    public UserDetailsDTO toUserDetailsDTO(){
+        return UserDetailsDTO.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .middleName(middleName)
+                .age(age + "")
+                .phoneNumber(phoneNumber)
+                .photo(photo)
+                .appointments(appointmentsForUsers.stream().map(Appointment::toAppointmentPatientDTO).collect(Collectors.toList()))
                 .build();
     }
 }

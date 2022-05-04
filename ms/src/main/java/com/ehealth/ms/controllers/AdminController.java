@@ -6,7 +6,6 @@ import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 public class AdminController {
     private final RSService rsService;
     private final CurrentUserService currentUserService;
-    private final AuthenticationManager authenticationManager;
 
     @GetMapping("/doctors")
     public ResponseEntity<List<DoctorRSDTO>> getDoctors(){
@@ -41,7 +39,9 @@ public class AdminController {
 
     @PostMapping("/updatedoctor")
     public ResponseEntity<DoctorDetailsDTO> updateDoctor(@RequestBody DoctorUpdateAdminDTO doctorDTO){
-        verifyIsAdmin();
+        if(!(currentUserService.verifyAdmin() || currentUserService.verifyDoctor())){
+            throw new RuntimeException("User doesn't have permission");
+        }
        return ResponseEntity.ok(rsService.updateDoctorAsAdmin(doctorDTO));
     }
 

@@ -106,6 +106,33 @@ All requests except authentication, registration and for unauthorized user shoul
 
 ## Admin panel
 
+&nbsp; **get current user/ admin details**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/details
+<br/> response body:
+{
+"firstName": "Catherine",
+"lastName": "Cot",
+"middleName": null,
+"age": "0",
+"phoneNumber": "049584732",
+"photo": null,
+"appointments": []
+}
+
+&nbsp; **change password**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/changePassword
+<br/> request body:
+{
+"oldPassword" : "ee123",
+"newPassword": "ee1234"
+}
+<br/> response body:
+"OK"
+
 &nbsp; **get all doctor**
 <br/>
 <br/> method: GET
@@ -569,9 +596,207 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 }
 
-## Current authorized user
-
 ## User authorized as patient
+
+&nbsp; **get current user details**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/details
+<br/> response body:
+{
+"firstName": "Emily",
+"lastName": "Muller",
+"middleName": null,
+"age": "0",
+"phoneNumber": "3215153425",
+"photo": null,
+"appointments": [
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-04-20T10:20",
+"duration": "15",
+"status": "DONE",
+"firstNameDoctor": "Polina",
+"lastNameDoctor": "Murphy",
+"middleNameDoctor": null,
+"emailDoctor": "polly@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "PSYCHIATRIST",
+"price": "300"
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-04-20T11:30",
+"duration": "30",
+"status": "DECLINED",
+"firstNameDoctor": "Polina",
+"lastNameDoctor": "Murphy",
+"middleNameDoctor": null,
+"emailDoctor": "polly@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "PSYCHIATRIST",
+"price": "300"
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-05-10T14:00",
+"duration": "60",
+"status": "REQUESTED",
+"firstNameDoctor": "Tom",
+"lastNameDoctor": "Reyes",
+"middleNameDoctor": null,
+"emailDoctor": "tommy@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "THERAPIST",
+"price": "200"
+},
+{
+"hospital": "Repromed",
+"date": "2022-05-01T12:00",
+"duration": "45",
+"status": "APPROVED",
+"firstNameDoctor": "Tom",
+"lastNameDoctor": "Reyes",
+"middleNameDoctor": null,
+"emailDoctor": "tommy@email.com",
+"phoneNumberHospital": null,
+"address": "Strada Cuza Vodă 29/1",
+"speciality": "THERAPIST",
+"price": "200"
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-07-20T10:20",
+"duration": "30",
+"status": "REQUESTED",
+"firstNameDoctor": "Polina",
+"lastNameDoctor": "Murphy",
+"middleNameDoctor": null,
+"emailDoctor": "polly@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "PSYCHIATRIST",
+"price": "300"
+}
+]
+}
+
+&nbsp; **update current user details**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/patient/update
+<br/> request body:
+{
+"firstName": "Emily",
+"lastName": "Muller",
+"middleName": null,
+"age": "17",
+"phoneNumber": "3215153425",
+"photo": null
+}
+<br/> response body:
+{
+"firstName": "Emily",
+"lastName": "Muller",
+"middleName": null,
+"age": "17",
+"phoneNumber": "3215153425",
+"photo": null,
+"appointments": [
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-04-20T10:20",
+"duration": "15",
+"status": "DONE",
+"firstNameDoctor": "Polina",
+"lastNameDoctor": "Murphy",
+"middleNameDoctor": null,
+"emailDoctor": "polly@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "PSYCHIATRIST",
+"price": "300"
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-04-20T11:30",
+"duration": "30",
+"status": "DECLINED",
+"firstNameDoctor": "Polina",
+"lastNameDoctor": "Murphy",
+"middleNameDoctor": null,
+"emailDoctor": "polly@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "PSYCHIATRIST",
+"price": "300"
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-05-10T14:00",
+"duration": "60",
+"status": "REQUESTED",
+"firstNameDoctor": "Tom",
+"lastNameDoctor": "Reyes",
+"middleNameDoctor": null,
+"emailDoctor": "tommy@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "THERAPIST",
+"price": "200"
+},
+{
+"hospital": "Repromed",
+"date": "2022-05-01T12:00",
+"duration": "45",
+"status": "APPROVED",
+"firstNameDoctor": "Tom",
+"lastNameDoctor": "Reyes",
+"middleNameDoctor": null,
+"emailDoctor": "tommy@email.com",
+"phoneNumberHospital": null,
+"address": "Strada Cuza Vodă 29/1",
+"speciality": "THERAPIST",
+"price": "200"
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-07-20T10:20",
+"duration": "30",
+"status": "REQUESTED",
+"firstNameDoctor": "Polina",
+"lastNameDoctor": "Murphy",
+"middleNameDoctor": null,
+"emailDoctor": "polly@email.com",
+"phoneNumberHospital": "022 400 040",
+"address": "Andrei Doga 24 street",
+"speciality": "PSYCHIATRIST",
+"price": "300"
+}
+]
+}
+
+&nbsp; **delete current user**
+<br/>
+<br/> method: DELETE
+<br/> URL: http://localhost:8090/api/delete
+<br/> response body:
+"OK"
+
+&nbsp; **change password**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/changePassword
+<br/> request body:
+{
+"oldPassword" : "ee123",
+"newPassword": "ee1234"
+}
+<br/> response body:
+"OK"
 
 &nbsp; **get doctor by email**
 <br/>
@@ -622,4 +847,132 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 }
 
+&nbsp; **create appointment**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/patient/newAppointment
+<br/> request body:
+{
+"doctorEmail": "polly@email.com",
+"patientEmail": "emily@email.com",
+"hospitalName": "Medpark International Hospital",
+"dateTime": "2022-07-20 10:20",
+"duration": "30"
+}
+<br/> request body:
+"CREATED"
+
+
 ## User authorized as doctor
+
+&nbsp; **get doctor by email**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/doctor?email=polly@email.com
+<br/> response body:
+{
+"email": "polly@email.com",
+"firstName": "Polina",
+"lastName": "Murphy",
+"middleName": null,
+"phoneNumber": "0948573035",
+"speciality": "PSYCHIATRIST",
+"price": "300",
+"photo": null,
+"grade": "FIRST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+],
+"comments": [],
+"appointmentsDoctor": [
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-04-20T10:20",
+"duration": "15",
+"status": "DONE",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "0",
+"phoneNumber": null
+},
+{
+"hospital": "Medpark International Hospital",
+"date": "2022-04-20T11:30",
+"duration": "30",
+"status": "DECLINED",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "0",
+"phoneNumber": null
+}
+]
+}
+
+&nbsp; **update the doctor**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/admin/updatedoctor
+<br/> request body:
+{
+"email": "newdoctor2@email.com",
+"firstName": "Updated",
+"lastName": "Doctor",
+"phoneNumber": "24325352",
+"speciality": "PSYCHOLOGIST",
+"price": "200",
+"grade": "SECOND",
+"experience": "10",
+"classification": "CHILDREN",
+"hospitals": [
+"Repromed", "Medpark International Hospital"
+]
+}
+<br/> response body:
+{
+"email": "newdoctor2@email.com",
+"firstName": "Updated",
+"lastName": "Doctor",
+"middleName": null,
+"phoneNumber": "24325352",
+"speciality": "PSYCHOLOGIST",
+"price": "200",
+"photo": null,
+"grade": "SECOND",
+"experience": "10",
+"description": null,
+"classification": "CHILDREN",
+"rating": "0.0",
+"hospitals": [
+"Repromed",
+"Medpark International Hospital"
+],
+"comments": [],
+"appointmentsDoctor": []
+}
+
+&nbsp; **delete current user**
+<br/>
+<br/> method: DELETE
+<br/> URL: http://localhost:8090/api/delete
+<br/> response body:
+"OK"
+
+&nbsp; **change password**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/changePassword
+<br/> request body:
+{
+"oldPassword" : "ee123",
+"newPassword": "ee1234"
+}
+<br/> response body:
+"OK"
+
+

@@ -12,7 +12,6 @@ public interface RSService {
     DoctorDetailsDTO getDoctorByEmail(String email);
     DoctorDetailsDTO createDoctor(NewDoctorDTO newDoctorDTO);
     void deleteDoctor(String email);
-    DoctorDetailsDTO updateDoctor(UpdateDoctorRequestDTO updateDoctorRequestDTO);
     DoctorDetailsDTO updateDoctorAsAdmin(DoctorUpdateAdminDTO doctorDTO);
     AdminDoctorEnums getAdminDoctorEnums();
     List<HospitalDTO> getHospitals();
@@ -23,4 +22,8 @@ public interface RSService {
     HospitalEnums getHospitalEnums();
     void deleteHospital(String hospitalName);
     HospitalDTO updateHospitalAsAdmin(HospitalDTO hospitalDTO);
+    UserDetailsDTO getUserDetails(String username);
+    UserDetailsDTO updateUser(String username, UserDetailsDTO userDetailsDTO);
+    void deleteUser(String username);
+    void updatePassword(String email, PasswordDTO passwordDTO);
 }

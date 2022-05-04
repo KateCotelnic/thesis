@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RSServiceImpl implements RSService {
     private final RestTemplate restTemplate = new RestTemplate();
+//    private final ValidationService validationService;
+//    private final CurrentUserService currentUserService;
+//    private final AuthenticationManager authenticationManager;
 
     private String urlRS = "http://localhost:8091/rs/";
 
@@ -66,14 +69,14 @@ public class RSServiceImpl implements RSService {
         restTemplate.delete(urlRS + "/doctors?email=" + email);
     }
 
-    @Override
-    public DoctorDetailsDTO updateDoctor(UpdateDoctorRequestDTO updateDoctorRequestDTO) {
-            AuthResponseRSDTO authResponseRSDTO = getUserByUsername(updateDoctorRequestDTO.getEmail());
-            if(!new BCryptPasswordEncoder(12).encode(updateDoctorRequestDTO.getOldPassword()).equals(authResponseRSDTO.getPassword()))
-                throw new RuntimeException("wrong password");
-        DoctorDetailsDTO doctorDetailsDTO = restTemplate.postForEntity(urlRS + "/doctors/update", updateDoctorRequestDTO, DoctorDetailsDTO.class).getBody();
-        return doctorDetailsDTO;
-    }
+//    @Override
+//    public DoctorDetailsDTO updateDoctor(UpdateDoctorRequestDTO updateDoctorRequestDTO) {
+//            AuthResponseRSDTO authResponseRSDTO = getUserByUsername(updateDoctorRequestDTO.getEmail());
+//            if(!new BCryptPasswordEncoder(12).encode(updateDoctorRequestDTO.getOldPassword()).equals(authResponseRSDTO.getPassword()))
+//                throw new RuntimeException("wrong password");
+//        DoctorDetailsDTO doctorDetailsDTO = restTemplate.postForEntity(urlRS + "/doctors/update", updateDoctorRequestDTO, DoctorDetailsDTO.class).getBody();
+//        return doctorDetailsDTO;
+//    }
 
     @Override
     public DoctorDetailsDTO updateDoctorAsAdmin(DoctorUpdateAdminDTO doctorDTO){
@@ -134,6 +137,27 @@ public class RSServiceImpl implements RSService {
 
     @Override
     public HospitalDTO updateHospitalAsAdmin(HospitalDTO hospitalDTO) {
-        return restTemplate.postForEntity(urlRS + "hospitals/update", hospitalDTO, HospitalDTO.class).getBody();
+        return restTemplate.postForEntity(urlRS + "/hospitals/update", hospitalDTO, HospitalDTO.class).getBody();
     }
+
+    @Override
+    public UserDetailsDTO getUserDetails(String username) {
+        return restTemplate.getForEntity(urlRS + "/getUserDetails?email=" + username, UserDetailsDTO.class).getBody();
+    }
+
+    @Override
+    public UserDetailsDTO updateUser(String username, UserDetailsDTO userDetailsDTO) {
+        return restTemplate.postForEntity(urlRS + "/updateUser?email=" + username, userDetailsDTO, UserDetailsDTO.class).getBody();
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        restTemplate.delete(urlRS + "/deleteUser?email=" + username);
+    }
+
+    @Override
+    public void updatePassword(String email, PasswordDTO passwordDTO) {
+        restTemplate.postForEntity(urlRS + "/updatePassword?email=" + email, passwordDTO, HttpStatus.class);
+    }
+
 }

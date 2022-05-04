@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppointmentDoctorDTO {
+public class AppointmentPatientDTO {
     private String hospital;
     private String date;
     private String duration;
     private String status;
-    private String firstNamePatient;
-    private String lastNamePatient;
-    private String middleNamePatient;
-    private String agePatient;
-    private String phoneNumberPatient;
+    private String firstNameDoctor;
+    private String lastNameDoctor;
+    private String middleNameDoctor;
+    private String emailDoctor;
+    private String phoneNumberHospital;
+    private String address;
+    private String speciality;
+    private String price;
 }

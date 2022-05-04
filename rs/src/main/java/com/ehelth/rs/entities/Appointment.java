@@ -1,7 +1,9 @@
 package com.ehelth.rs.entities;
 
 
+import com.ehelth.rs.entities.dto.AppointmentDTO;
 import com.ehelth.rs.entities.dto.AppointmentDoctorDTO;
+import com.ehelth.rs.entities.dto.AppointmentPatientDTO;
 import com.ehelth.rs.entities.enums.Status;
 import lombok.*;
 
@@ -64,6 +66,33 @@ public class Appointment {
                 .middleNamePatient(patient.getMiddleName())
                 .agePatient(patient.getAge() + "")
                 .phoneNumberPatient(patient.getPhoneNumber())
+                .build();
+    }
+
+    public AppointmentPatientDTO toAppointmentPatientDTO(){
+        return AppointmentPatientDTO.builder()
+                .hospital(hospital.getHospitalName())
+                .date(date.toString())
+                .duration(duration + "")
+                .status(status.toString())
+                .firstNameDoctor(doctor.getFirstName())
+                .lastNameDoctor(doctor.getLastName())
+                .middleNameDoctor(doctor.getMiddleName())
+                .emailDoctor(doctor.getEmail())
+                .phoneNumberHospital(hospital.getPhoneNumber())
+                .address(hospital.getAddress())
+                .speciality(doctor.getSpeciality().toString())
+                .price(doctor.getPrice() + "")
+                .build();
+    }
+    public AppointmentDTO toAppointmentDTO(){
+        return AppointmentDTO.builder()
+                .id(appointmentId + "")
+                .doctorEmail(doctor.getEmail())
+                .patientEmail(patient.getEmail())
+                .hospitalName(hospital.getHospitalName())
+                .dateTime(date.toString())
+                .duration(duration + "")
                 .build();
     }
 }
