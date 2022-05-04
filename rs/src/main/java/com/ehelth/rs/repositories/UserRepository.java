@@ -23,4 +23,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<User> getAllByHospitalsContaining(Hospital hospitals);
     List<User> getAllBySpeciality(Speciality speciality);
     List<User> getAllByClassification(Classification classification);
+    User getFirstByRole(Role role);
 }

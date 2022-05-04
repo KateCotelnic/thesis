@@ -16,17 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/as/doctors")
 @RequiredArgsConstructor
 public class DoctorController {
-    NSService nsService;
-    RSService rsService;
+    private final NSService nsService;
+    private final RSService rsService;
 
     @PostMapping("/requestDeleteComment")
     public ResponseEntity<HttpStatus> requestDeleteComment(@RequestBody RequestDeleteCommentDTO requestDeleteCommentDTO){
         String admin = rsService.getAdminEmail();
-        System.out.println(admin);
         CommentDTO commentDTO = rsService.getComment(requestDeleteCommentDTO.getCommentId());
         commentDTO.setReason(requestDeleteCommentDTO.getReason());
         commentDTO.setAdminEmail(admin);
-        System.out.println(commentDTO);
         nsService.sendAdminRequestDeleteComment(commentDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }

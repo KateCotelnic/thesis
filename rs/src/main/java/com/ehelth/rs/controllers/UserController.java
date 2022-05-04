@@ -17,7 +17,8 @@ public class UserController {
 
     @GetMapping("/getAdminEmail")
     public ResponseEntity<String> getAdmin(){
-        return ResponseEntity.ok(userService.getAdmin());
+        String admin = userService.getAdmin();
+        return ResponseEntity.ok(admin);
     }
 
     @GetMapping("/getUserByEmail")

@@ -82,10 +82,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getAdmin() {
-        System.out.println(userRepository.getAllByRole(Role.PATIENT));
-//        String email = userRepository.getAdmin().get(0).getEmail();
-//        System.out.println(email);
-//        return email;
-        return null;
+//        System.out.println(userRepository.getAllByRole(Role.ADMIN));
+        String email = userRepository.getFirstByRole(Role.ADMIN).getEmail();
+        System.out.println(email);
+        return email;
+//        return null;
     }
 }
