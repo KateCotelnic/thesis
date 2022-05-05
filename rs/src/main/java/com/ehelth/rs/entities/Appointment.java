@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Builder
@@ -59,7 +60,7 @@ public class Appointment {
         return AppointmentDoctorDTO.builder()
                 .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
-                .date(date.toString())
+                .date(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .duration(duration + "")
                 .status(status.toString())
                 .firstNamePatient(patient.getFirstName())
