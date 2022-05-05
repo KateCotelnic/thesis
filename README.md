@@ -17,7 +17,7 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "email": "polly@mail.com",
 "token": "eyJhbGc...uYP5Y",
-"role": "ADMIN"
+"role": "ADMIN" ("DOCTOR"/"PATIENT")
 }
 
 [//]: # (######requests between services &#40;for server&#41;)
