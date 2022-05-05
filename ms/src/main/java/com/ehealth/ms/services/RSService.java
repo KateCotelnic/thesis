@@ -30,4 +30,7 @@ public interface RSService {
     NewCommentDTO createComment(NewCommentDTO newCommentDTO);
     NewCommentDTO updateComment(UpdateCommentDTO updateCommentDTO);
     void deleteComment(String id);
+    AppointmentEnums getAppointmentEnums();
+    FreeTimeDTO addFreeTime(FreeTimeDTO freeTimeDTO);
+    void deleteFreeTime(String id);
 }

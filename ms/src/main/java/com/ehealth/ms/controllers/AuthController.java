@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
+//@CrossOrigin("http://localhost:3000/")
 @RequestMapping("/api/login")
 public class AuthController {
 //    private final RSService rsService;

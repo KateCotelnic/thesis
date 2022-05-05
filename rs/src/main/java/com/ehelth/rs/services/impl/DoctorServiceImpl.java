@@ -1,5 +1,6 @@
 package com.ehelth.rs.services.impl;
 
+import com.ehelth.rs.entities.FreeTime;
 import com.ehelth.rs.entities.Hospital;
 import com.ehelth.rs.entities.User;
 import com.ehelth.rs.entities.dto.*;
@@ -7,6 +8,7 @@ import com.ehelth.rs.entities.enums.Classification;
 import com.ehelth.rs.entities.enums.Grade;
 import com.ehelth.rs.entities.enums.Role;
 import com.ehelth.rs.entities.enums.Speciality;
+import com.ehelth.rs.repositories.FreeTimeRepository;
 import com.ehelth.rs.repositories.UserRepository;
 import com.ehelth.rs.services.DoctorService;
 import com.ehelth.rs.services.HospitalService;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class DoctorServiceImpl implements DoctorService {
     private final UserRepository userRepository;
     private final HospitalService hospitalService;
+    private final FreeTimeRepository freeTimeRepository;
 
     @Override
     public DoctorDTO[] getAllDoctors() {
@@ -111,6 +114,20 @@ public class DoctorServiceImpl implements DoctorService {
             doctors = userRepository.getAllByClassification(Classification.valueOf(parametersDoctorDTO.getClassification()));
         }
         return doctors.stream().map(User::toDoctorDetailsDTO).toArray(DoctorDetailsDTO[]::new);
+    }
+
+    @Override
+    public FreeTimeDTO addFreeTime(FreeTimeDTO freeTimeDTO) {
+        FreeTime freeTime = FreeTime.builder()
+                .cronExpression(freeTimeDTO.getCronExpression())
+                .doctor(userRepository.getUserByEmail(freeTimeDTO.getDoctorEmail()).orElseThrow())
+                .build();
+        return freeTimeRepository.save(freeTime).toFreeTimeDTO();
+    }
+
+    @Override
+    public void deleteFreeTime(String id) {
+        freeTimeRepository.deleteByFreetimeId(Long.parseLong(id));
     }
 
     private User newDoctorToUser(NewDoctorDTO newDoctorDTO){

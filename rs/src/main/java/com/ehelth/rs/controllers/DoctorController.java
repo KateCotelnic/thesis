@@ -46,4 +46,14 @@ public class DoctorController {
     public ResponseEntity<DoctorDetailsDTO[]> getByParam(@RequestBody ParametersDoctorDTO parametersDoctorDTO){
         return ResponseEntity.ok(doctorService.getWithParam(parametersDoctorDTO));
     }
+
+    @PostMapping("/addFreeTime")
+    public ResponseEntity<FreeTimeDTO> addFreeTime(@RequestBody FreeTimeDTO freeTimeDTO){
+        return ResponseEntity.ok(doctorService.addFreeTime(freeTimeDTO));
+    }
+
+    @DeleteMapping("/deleteFreeTime")
+    public void deleteFreeTime(@RequestParam(name = "id", defaultValue = "")String id){
+        doctorService.deleteFreeTime(id);
+    }
 }

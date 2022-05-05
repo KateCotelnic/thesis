@@ -4,6 +4,8 @@ import com.ehealth.ms.entities.dto.*;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -170,5 +172,28 @@ public class RSServiceImpl implements RSService {
     @Override
     public void deleteComment(String id) {
         restTemplate.delete(urlRS + "/comments/delete?id=" + id);
+    }
+
+    @Override
+    public AppointmentEnums getAppointmentEnums() {
+        return restTemplate.getForEntity(urlRS + "/appointment/enums", AppointmentEnums.class).getBody();
+    }
+
+    @Override
+    public FreeTimeDTO addFreeTime(FreeTimeDTO freeTimeDTO) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        freeTimeDTO.setDoctorEmail(username);
+        return restTemplate.postForEntity(urlRS + "/doctors/addFreeTime", freeTimeDTO, FreeTimeDTO.class).getBody();
+    }
+
+    @Override
+    public void deleteFreeTime(String id) {
+        restTemplate.delete(urlRS + "/doctors/deleteFreeTime?id=" + id);
     }
 }

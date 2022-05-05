@@ -85,6 +85,10 @@ public class User {
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
     @ToString.Exclude
+    private List<FreeTime> freeTimes;
+
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Comment> commentsForDoctors;
 
     @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)

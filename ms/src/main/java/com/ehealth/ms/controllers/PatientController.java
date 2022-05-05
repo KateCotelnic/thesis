@@ -1,9 +1,6 @@
 package com.ehealth.ms.controllers;
 
-import com.ehealth.ms.entities.dto.AppointmentDTO;
-import com.ehealth.ms.entities.dto.NewCommentDTO;
-import com.ehealth.ms.entities.dto.UpdateCommentDTO;
-import com.ehealth.ms.entities.dto.UserDetailsDTO;
+import com.ehealth.ms.entities.dto.*;
 import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
 import com.ehealth.ms.services.RSService;
@@ -26,6 +23,12 @@ public class PatientController {
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
         verifyIsPatient();
         return ResponseEntity.ok(asService.createAppointment(appointmentDTO));
+    }
+
+    @GetMapping("/getAppointmentEnums")
+    public ResponseEntity<AppointmentEnums> getEnums(){
+        verifyIsPatient();
+        return ResponseEntity.ok(rsService.getAppointmentEnums());
     }
 
     @DeleteMapping("/cancelAppointment")

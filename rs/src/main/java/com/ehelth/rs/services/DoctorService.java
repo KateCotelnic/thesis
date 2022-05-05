@@ -11,4 +11,6 @@ public interface DoctorService {
     AdminDoctorEnums getEnums();
     DoctorDetailsDTO[] getByHospital(String hospitalName);
     DoctorDetailsDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO);
+    FreeTimeDTO addFreeTime(FreeTimeDTO freeTimeDTO);
+    void deleteFreeTime(String id);
 }

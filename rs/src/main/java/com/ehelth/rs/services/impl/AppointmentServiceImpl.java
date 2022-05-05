@@ -2,6 +2,7 @@ package com.ehelth.rs.services.impl;
 
 import com.ehelth.rs.entities.Appointment;
 import com.ehelth.rs.entities.dto.AppointmentDTO;
+import com.ehelth.rs.entities.dto.AppointmentEnums;
 import com.ehelth.rs.entities.enums.Status;
 import com.ehelth.rs.repositories.AppointmentRepository;
 import com.ehelth.rs.services.AppointmentService;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +49,13 @@ public class AppointmentServiceImpl implements AppointmentService {
         Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
         appointment.setStatus(Status.DECLINED);
         return appointmentRepository.save(appointment).toAppointmentDTO();
+    }
+
+    @Override
+    public AppointmentEnums getEnums() {
+        return AppointmentEnums.builder()
+                .statuses(new ArrayList<>(List.of(Arrays.toString(Status.values()))))
+                .build();
     }
 
     private Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO){

@@ -28,7 +28,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public NewCommentDTO create(NewCommentDTO newCommentDTO) {
-        return commentRepository.save(toCommentFromNew(newCommentDTO)).toNewCommentDTO();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        newCommentDTO.setDate(LocalDate.now().format(formatter));
+        Comment comment = toCommentFromNew(newCommentDTO);
+        comment.setDate(LocalDate.now());
+        return commentRepository.save(comment).toNewCommentDTO();
     }
 
     @Override

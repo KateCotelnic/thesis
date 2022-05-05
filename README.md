@@ -1071,19 +1071,19 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> URL: http://localhost:8090/api/patient/newComment
 <br/> request body:
 {
-"body": null,
+"body": "body of new comment",
 "rating": "5",
 "patientEmail": "jeffrey@email.com",
-"doctorEmail": "polly@email.com",
-"date": "2023-07-20"
+"doctorEmail": "polly@email.com"
 }
 <br/> response body:
 {
-"body": null,
+"commentId": "23",
+"body": "body of new comment",
 "rating": "5",
+"date": "2022-05-05",
 "patientEmail": "jeffrey@email.com",
-"doctorEmail": "polly@email.com",
-"date": "2023-07-20"
+"doctorEmail": "polly@email.com"
 }
 
 &nbsp; **update comment**
@@ -1127,6 +1127,17 @@ All requests except authentication, registration and for unauthorized user shoul
 }
 <br/> response body:
 "CREATED"
+
+&nbsp; **get enums for creating an appointment**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/patient/getAppointmentEnums
+<br/> response body:
+{
+"statuses": [
+"[REQUESTED, APPROVED, DECLINED, DONE]"
+]
+}
 
 &nbsp; **cancel appointment**
 <br/>
@@ -1313,3 +1324,25 @@ All requests except authentication, registration and for unauthorized user shoul
 "dateTime": "2022-06-20T10:20",
 "duration": "60"
 }
+
+&nbsp; **add free time**
+<br/>
+<br/> method: POST
+<br/> URL: http://localhost:8090/api/doctor/addFreeTime
+<br/> request body:
+{
+"cronExpression": "0 0 9-17 * * MON-FRI"
+}
+<br/> response body:
+{
+"id": "27",
+"cronExpression": "0 0 9-17 * * MON-FRI",
+"doctorEmail": "polly@email.com"
+}
+
+&nbsp; **delete free time**
+<br/>
+<br/> method: DELETE
+<br/> URL: http://localhost:8090/api/doctor/freeTime?id=26
+<br/> response body:
+"OK"

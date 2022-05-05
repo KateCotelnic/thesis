@@ -1,6 +1,7 @@
 package com.ehealth.ms.controllers;
 
 import com.ehealth.ms.entities.dto.AppointmentDTO;
+import com.ehealth.ms.entities.dto.FreeTimeDTO;
 import com.ehealth.ms.entities.dto.RequestDeleteCommentDTO;
 import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
@@ -35,6 +36,19 @@ public class DoctorController {
     public ResponseEntity<AppointmentDTO> declineAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
         verifyIsDoctor();
         return ResponseEntity.ok(asService.declineAppointment(id));
+    }
+
+    @PostMapping("/freeTime")
+    public ResponseEntity<FreeTimeDTO> addFreeTime(@RequestBody FreeTimeDTO freeTimeDTO) {
+        verifyIsDoctor();
+        return ResponseEntity.ok(rsService.addFreeTime(freeTimeDTO));
+    }
+
+    @DeleteMapping("/freeTime")
+    public ResponseEntity<HttpStatus> deleteFreeTime(@RequestParam(name = "id", defaultValue = "")String id) {
+        verifyIsDoctor();
+        rsService.deleteFreeTime(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     private void verifyIsDoctor(){

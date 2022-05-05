@@ -1,6 +1,7 @@
 package com.ehelth.rs.controllers;
 
 import com.ehelth.rs.entities.dto.AppointmentDTO;
+import com.ehelth.rs.entities.dto.AppointmentEnums;
 import com.ehelth.rs.services.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AppointmentController {
     private final AppointmentService appointmentService;
+
+    @GetMapping("/enums")
+    public ResponseEntity<AppointmentEnums> getEnums(){
+        return ResponseEntity.ok(appointmentService.getEnums());
+    }
 
     @PostMapping("/new")
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO){
