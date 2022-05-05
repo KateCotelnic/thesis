@@ -4,7 +4,7 @@ All requests except authentication, registration and for unauthorized user shoul
 
 ## Authentication
 
-&nbsp; **login doctor**
+&nbsp; **login**
 <br/>
 <br/> method: POST
 <br/> URL: http://localhost:8090/api/login
