@@ -30,4 +30,19 @@ public class RSServiceImpl implements RSService {
     public CommentDTO getComment(String id) {
         return restTemplate.getForEntity(urlRS + "/comments?id=" + id, CommentDTO.class).getBody();
     }
+
+    @Override
+    public AppointmentDTO cancelAppointment(String id) {
+        return restTemplate.getForEntity(urlRS + "/appointment/cancel?id=" + id, AppointmentDTO.class).getBody();
+    }
+
+    @Override
+    public AppointmentDTO acceptAppointment(String id) {
+        return restTemplate.getForEntity(urlRS + "/appointment/accept?id=" + id, AppointmentDTO.class).getBody();
+    }
+
+    @Override
+    public AppointmentDTO declineAppointment(String id) {
+        return restTemplate.getForEntity(urlRS + "/appointment/decline?id=" + id, AppointmentDTO.class).getBody();
+    }
 }

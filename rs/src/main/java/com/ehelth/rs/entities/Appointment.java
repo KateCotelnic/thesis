@@ -57,6 +57,7 @@ public class Appointment {
 
     public AppointmentDoctorDTO toAppointmentDoctorDTO(){
         return AppointmentDoctorDTO.builder()
+                .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
                 .date(date.toString())
                 .duration(duration + "")
@@ -71,6 +72,7 @@ public class Appointment {
 
     public AppointmentPatientDTO toAppointmentPatientDTO(){
         return AppointmentPatientDTO.builder()
+                .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
                 .date(date.toString())
                 .duration(duration + "")

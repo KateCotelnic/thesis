@@ -48,6 +48,7 @@ public class Comment {
 
     public CommentDTO toCommentDTO(){
         return CommentDTO.builder()
+                .id(commentId + "")
                 .body(body)
                 .date(date.toString())
                 .rating(rating + "")

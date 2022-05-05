@@ -23,4 +23,19 @@ public class ASServiceImpl implements ASService {
     public void requestDeleteComment(RequestDeleteCommentDTO requestDeleteCommentDTO) {
         restTemplate.postForEntity(urlAS + "/doctors/requestDeleteComment", requestDeleteCommentDTO, HttpStatus.class);
     }
+
+    @Override
+    public void cancelAppointment(String id) {
+        restTemplate.delete(urlAS + "/patients/cancelAppointment?id=" + id);
+    }
+
+    @Override
+    public AppointmentDTO acceptAppointment(String id) {
+        return restTemplate.getForEntity(urlAS + "/doctors/acceptAppointment?id=" + id, AppointmentDTO.class).getBody();
+    }
+
+    @Override
+    public AppointmentDTO declineAppointment(String id) {
+        return restTemplate.getForEntity(urlAS + "/doctors/declineAppointment?id=" + id, AppointmentDTO.class).getBody();
+    }
 }

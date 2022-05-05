@@ -7,4 +7,7 @@ public interface RSService {
     AppointmentDTO createAppointment(AppointmentDTO appointmentDTO);
     String getAdminEmail();
     CommentDTO getComment(String id);
+    AppointmentDTO cancelAppointment(String id);
+    AppointmentDTO acceptAppointment(String id);
+    AppointmentDTO declineAppointment(String id);
 }

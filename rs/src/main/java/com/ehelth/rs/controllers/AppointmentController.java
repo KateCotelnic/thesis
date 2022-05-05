@@ -3,12 +3,8 @@ package com.ehelth.rs.controllers;
 import com.ehelth.rs.entities.dto.AppointmentDTO;
 import com.ehelth.rs.services.AppointmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rs/appointment")
@@ -19,5 +15,20 @@ public class AppointmentController {
     @PostMapping("/new")
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO){
         return ResponseEntity.ok(appointmentService.createAppointment(appointmentDTO));
+    }
+
+    @GetMapping("/cancel")
+    public ResponseEntity<AppointmentDTO> cancelAppointment(@RequestParam(name = "id", defaultValue = "")String id){
+        return ResponseEntity.ok(appointmentService.cancelAppointment(id));
+    }
+
+    @GetMapping("/accept")
+    public ResponseEntity<AppointmentDTO> acceptAppointment(@RequestParam(name = "id", defaultValue = "")String id){
+        return ResponseEntity.ok(appointmentService.acceptAppointment(id));
+    }
+
+    @GetMapping("/decline")
+    public ResponseEntity<AppointmentDTO> declineAppointment(@RequestParam(name = "id", defaultValue = "")String id){
+        return ResponseEntity.ok(appointmentService.declineAppointment(id));
     }
 }

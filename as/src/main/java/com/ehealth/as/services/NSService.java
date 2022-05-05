@@ -7,4 +7,7 @@ import com.ehealth.as.entities.dto.RequestDeleteCommentDTO;
 public interface NSService {
     void sendDoctorNewAppointment(AppointmentDTO appointmentDTO);
     void sendAdminRequestDeleteComment(CommentDTO commentDTO);
+    void sendDoctorCanceledAppointment(AppointmentDTO appointmentDTO);
+    void sendPatientAcceptAppointment(AppointmentDTO appointmentDTO);
+    void sendPatientDeclineAppointment(AppointmentDTO appointmentDTO);
 }

@@ -1,5 +1,6 @@
 package com.ehealth.ms.controllers;
 
+import com.ehealth.ms.entities.dto.AppointmentDTO;
 import com.ehealth.ms.entities.dto.RequestDeleteCommentDTO;
 import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
@@ -7,10 +8,7 @@ import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,8 +25,20 @@ public class DoctorController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PostMapping("/acceptAppointment")
+    public ResponseEntity<AppointmentDTO> acceptAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
+        verifyIsDoctor();
+        return ResponseEntity.ok(asService.acceptAppointment(id));
+    }
+
+    @PostMapping("/declineAppointment")
+    public ResponseEntity<AppointmentDTO> declineAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
+        verifyIsDoctor();
+        return ResponseEntity.ok(asService.declineAppointment(id));
+    }
+
     private void verifyIsDoctor(){
-        if(!currentUserService.verifyPatient()){
+        if(!currentUserService.verifyDoctor()){
             throw new RuntimeException("User is not doctor");
         }
     }

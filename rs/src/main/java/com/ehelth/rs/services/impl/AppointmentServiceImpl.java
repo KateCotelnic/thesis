@@ -26,6 +26,27 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.save(appointment).toAppointmentDTO();
     }
 
+    @Override
+    public AppointmentDTO cancelAppointment(String id) {
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        appointment.setStatus(Status.DECLINED);
+        return appointmentRepository.save(appointment).toAppointmentDTO();
+    }
+
+    @Override
+    public AppointmentDTO acceptAppointment(String id) {
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        appointment.setStatus(Status.APPROVED);
+        return appointmentRepository.save(appointment).toAppointmentDTO();
+    }
+
+    @Override
+    public AppointmentDTO declineAppointment(String id) {
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        appointment.setStatus(Status.DECLINED);
+        return appointmentRepository.save(appointment).toAppointmentDTO();
+    }
+
     private Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return Appointment.builder()

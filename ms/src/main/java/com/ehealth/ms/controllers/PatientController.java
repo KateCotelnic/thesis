@@ -8,13 +8,11 @@ import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +26,13 @@ public class PatientController {
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
         verifyIsPatient();
         return ResponseEntity.ok(asService.createAppointment(appointmentDTO));
+    }
+
+    @DeleteMapping("/cancelAppointment")
+    public ResponseEntity<HttpStatus> cancelAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
+        verifyIsPatient();
+        asService.cancelAppointment(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     private void verifyIsPatient(){
