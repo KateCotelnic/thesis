@@ -15,10 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin("http://localhost:3000/")
 @RequestMapping("/api/login")
 public class AuthController {
-//    private final RSService rsService;
     private final CurrentUserService currentUserService;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -26,7 +24,6 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request){
         AuthResponseRSDTO user = currentUserService.authenticate(request.getEmail(), request.getPassword());
         String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole());
-
         return ResponseEntity.ok(AuthResponseDTO.builder()
                 .email(request.getEmail())
                 .token(token)

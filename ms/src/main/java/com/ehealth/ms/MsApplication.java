@@ -10,4 +10,13 @@ public class MsApplication {
         SpringApplication.run(MsApplication.class, args);
     }
 
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/api/login").allowedOrigins("http://localhost:3000/");
+//            }
+//        };
+//    }
 }
