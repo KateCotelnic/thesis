@@ -153,6 +153,7 @@ public class User {
                 .hospitals(hospitals.stream().map(Hospital::getHospitalName).collect(Collectors.toList()))
                 .comments(commentsForDoctors.stream().map(Comment::toCommentDTO).collect(Collectors.toList()))
                 .appointmentsDoctor(appointmentsForDoctor.stream().map(Appointment::toAppointmentDoctorDTO).collect(Collectors.toList()))
+                .freeTime(freeTimes.stream().map(FreeTime::toFreeTimeForDoctorDTO).collect(Collectors.toList()))
                 .build();
     }
 

@@ -1,6 +1,7 @@
 package com.ehelth.rs.entities;
 
 import com.ehelth.rs.entities.dto.FreeTimeDTO;
+import com.ehelth.rs.entities.dto.FreeTimeForDoctorDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,13 @@ public class FreeTime {
         return FreeTimeDTO.builder()
                 .id(freetimeId + "")
                 .doctorEmail(doctor.getEmail())
+                .cronExpression(cronExpression)
+                .build();
+    }
+
+    public FreeTimeForDoctorDTO toFreeTimeForDoctorDTO(){
+        return FreeTimeForDoctorDTO.builder()
+                .id(freetimeId + "")
                 .cronExpression(cronExpression)
                 .build();
     }

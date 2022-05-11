@@ -9,8 +9,8 @@ public interface DoctorService {
     void delete(String email);
     DoctorDetailsDTO update(DoctorUpdateAdminDTO doctorDTO);
     AdminDoctorEnums getEnums();
-    DoctorDetailsDTO[] getByHospital(String hospitalName);
-    DoctorDetailsDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO);
+    DoctorDTO[] getByHospital(String hospitalName);
+    DoctorDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO);
     FreeTimeDTO addFreeTime(FreeTimeDTO freeTimeDTO);
     void deleteFreeTime(String id);
 }

@@ -38,12 +38,12 @@ public class DoctorController {
     }
 
     @GetMapping()
-    public ResponseEntity<DoctorDetailsDTO[]> getByHospital(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
+    public ResponseEntity<DoctorDTO[]> getByHospital(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
         return ResponseEntity.ok(doctorService.getByHospital(hospitalName));
     }
 
     @PostMapping("/param")
-    public ResponseEntity<DoctorDetailsDTO[]> getByParam(@RequestBody ParametersDoctorDTO parametersDoctorDTO){
+    public ResponseEntity<DoctorDTO[]> getByParam(@RequestBody ParametersDoctorDTO parametersDoctorDTO){
         return ResponseEntity.ok(doctorService.getWithParam(parametersDoctorDTO));
     }
 

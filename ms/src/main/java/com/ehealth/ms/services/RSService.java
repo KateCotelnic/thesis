@@ -16,8 +16,8 @@ public interface RSService {
     AdminDoctorEnums getAdminDoctorEnums();
     List<HospitalDTO> getHospitals();
     SearchEnums getSearchEnums();
-    List<DoctorDetailsDTO> getDoctorsByHospital(String hospitalName);
-    List<DoctorDetailsDTO> getDoctorsByParam(String area, String classification, String speciality);
+    List<DoctorRSDTO> getDoctorsByHospital(String hospitalName);
+    List<DoctorRSDTO> getDoctorsByParam(String area, String classification, String speciality);
     HospitalDTO createHospital(HospitalDTO hospitalDTO);
     HospitalEnums getHospitalEnums();
     void deleteHospital(String hospitalName);

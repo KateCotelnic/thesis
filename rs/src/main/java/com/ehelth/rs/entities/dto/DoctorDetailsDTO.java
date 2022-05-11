@@ -28,4 +28,5 @@ public class DoctorDetailsDTO {
     private List<String> hospitals;
     private List<CommentDTO> comments;
     private List<AppointmentDoctorDTO> appointmentsDoctor;
+    private List<FreeTimeForDoctorDTO> freeTime;
 }

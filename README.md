@@ -183,7 +183,7 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> method: GET
 <br/> URL: http://localhost:8090/api/doctor?email=polly@email.com
 <br/> response body:
-{{
+{
 "email": "polly@email.com",
 "firstName": "Polina",
 "lastName": "Murphy",
@@ -220,13 +220,23 @@ All requests except authentication, registration and for unauthorized user shoul
 "lastNamePatient": "Jef",
 "middleNamePatient": null,
 "photoPatient": null
+},
+{
+"id": "23",
+"body": "body of new comment",
+"rating": "5",
+"date": "2022-05-05",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
 }
 ],
 "appointmentsDoctor": [
 {
 "id": "13",
 "hospital": "Medpark International Hospital",
-"date": "2022-04-20T10:20",
+"date": "2022-04-20 10:20",
 "duration": "15",
 "status": "DONE",
 "firstNamePatient": "Emily",
@@ -238,7 +248,7 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "id": "14",
 "hospital": "Medpark International Hospital",
-"date": "2022-04-20T11:30",
+"date": "2022-04-20 11:30",
 "duration": "30",
 "status": "DECLINED",
 "firstNamePatient": "Emily",
@@ -250,20 +260,8 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "id": "17",
 "hospital": "Medpark International Hospital",
-"date": "2022-07-20T10:20",
+"date": "2022-07-20 10:20",
 "duration": "30",
-"status": "REQUESTED",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"agePatient": "17",
-"phoneNumber": null
-},
-{
-"id": "18",
-"hospital": "Medpark International Hospital",
-"date": "2022-06-20T10:20",
-"duration": "60",
 "status": "REQUESTED",
 "firstNamePatient": "Emily",
 "lastNamePatient": "Muller",
@@ -274,7 +272,7 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "id": "19",
 "hospital": "Medpark International Hospital",
-"date": "2023-06-20T10:20",
+"date": "2023-06-20 10:20",
 "duration": "60",
 "status": "DECLINED",
 "firstNamePatient": "Emily",
@@ -282,6 +280,24 @@ All requests except authentication, registration and for unauthorized user shoul
 "middleNamePatient": null,
 "agePatient": "17",
 "phoneNumber": null
+},
+{
+"id": "18",
+"hospital": "Medpark International Hospital",
+"date": "2022-06-20 10:20",
+"duration": "60",
+"status": "APPROVED",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "17",
+"phoneNumber": null
+}
+],
+"freeTime": [
+{
+"id": "25",
+"cronExpression": "0 0 9-17 * * MON-FRI"
 }
 ]
 }
@@ -377,7 +393,8 @@ All requests except authentication, registration and for unauthorized user shoul
 "Medpark International Hospital"
 ],
 "comments": [],
-"appointmentsDoctor": []
+"appointmentsDoctor": [],
+"freeTime": []
 }
 
 &nbsp; **get enums for updating and creating of new doctor**
@@ -555,7 +572,6 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> response body:
 [
 {
-"email": "tommy@email.com",
 "firstName": "Tom",
 "lastName": "Reyes",
 "middleName": null,
@@ -571,54 +587,6 @@ All requests except authentication, registration and for unauthorized user shoul
 "hospitals": [
 "Medpark International Hospital",
 "Repromed"
-],
-"comments": [
-{
-"id": "7",
-"body": "I liked the consultation, it went quickly and efficiently.",
-"rating": "5",
-"date": "2021-11-28",
-"firstNamePatient": "Jeffrey",
-"lastNamePatient": "Jef",
-"middleNamePatient": null,
-"photoPatient": null
-},
-{
-"id": "8",
-"body": null,
-"rating": "4",
-"date": "2020-03-12",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"photoPatient": null
-}
-],
-"appointmentsDoctor": [
-{
-"id": "15",
-"hospital": "Medpark International Hospital",
-"date": "2022-05-10T14:00",
-"duration": "60",
-"status": "REQUESTED",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"agePatient": "17",
-"phoneNumber": null
-},
-{
-"id": "16",
-"hospital": "Repromed",
-"date": "2022-05-01T12:00",
-"duration": "45",
-"status": "APPROVED",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"agePatient": "17",
-"phoneNumber": null
-}
 ]
 }
 ]
@@ -630,50 +598,24 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> response body:
 [
 {
-"email": "polly@email.com",
-"firstName": "Polina",
-"lastName": "Murphy",
+"firstName": "Tom",
+"lastName": "Reyes",
 "middleName": null,
-"phoneNumber": "0948573035",
-"speciality": "PSYCHIATRIST",
-"price": "300",
+"phoneNumber": "05948386785",
+"speciality": "THERAPIST",
+"price": "200",
 "photo": null,
-"grade": "FIRST",
-"experience": "3",
-"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
-"classification": "ADULT",
-"rating": "0.0",
+"grade": "HIGHEST",
+"experience": "12",
+"description": null,
+"classification": "FAMILY",
+"rating": "4.5",
 "hospitals": [
-"Medpark International Hospital"
-],
-"comments": [],
-"appointmentsDoctor": [
-{
-"hospital": "Medpark International Hospital",
-"date": "2022-04-20T10:20",
-"duration": "15",
-"status": "DONE",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"agePatient": "0",
-"phoneNumber": null
-},
-{
-"hospital": "Medpark International Hospital",
-"date": "2022-04-20T11:30",
-"duration": "30",
-"status": "DECLINED",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"agePatient": "0",
-"phoneNumber": null
-}
+"Medpark International Hospital",
+"Repromed"
 ]
 }
 ]
-
 
 &nbsp; **get speciality, areas and classification are for search**
 <br/>
@@ -971,13 +913,23 @@ All requests except authentication, registration and for unauthorized user shoul
 "lastNamePatient": "Jef",
 "middleNamePatient": null,
 "photoPatient": null
+},
+{
+"id": "23",
+"body": "body of new comment",
+"rating": "5",
+"date": "2022-05-05",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
 }
 ],
 "appointmentsDoctor": [
 {
 "id": "13",
 "hospital": "Medpark International Hospital",
-"date": "2022-04-20T10:20",
+"date": "2022-04-20 10:20",
 "duration": "15",
 "status": "DONE",
 "firstNamePatient": "Emily",
@@ -989,7 +941,7 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "id": "14",
 "hospital": "Medpark International Hospital",
-"date": "2022-04-20T11:30",
+"date": "2022-04-20 11:30",
 "duration": "30",
 "status": "DECLINED",
 "firstNamePatient": "Emily",
@@ -1001,20 +953,8 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "id": "17",
 "hospital": "Medpark International Hospital",
-"date": "2022-07-20T10:20",
+"date": "2022-07-20 10:20",
 "duration": "30",
-"status": "REQUESTED",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
-"agePatient": "17",
-"phoneNumber": null
-},
-{
-"id": "18",
-"hospital": "Medpark International Hospital",
-"date": "2022-06-20T10:20",
-"duration": "60",
 "status": "REQUESTED",
 "firstNamePatient": "Emily",
 "lastNamePatient": "Muller",
@@ -1025,7 +965,7 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "id": "19",
 "hospital": "Medpark International Hospital",
-"date": "2023-06-20T10:20",
+"date": "2023-06-20 10:20",
 "duration": "60",
 "status": "DECLINED",
 "firstNamePatient": "Emily",
@@ -1033,6 +973,24 @@ All requests except authentication, registration and for unauthorized user shoul
 "middleNamePatient": null,
 "agePatient": "17",
 "phoneNumber": null
+},
+{
+"id": "18",
+"hospital": "Medpark International Hospital",
+"date": "2022-06-20 10:20",
+"duration": "60",
+"status": "APPROVED",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "17",
+"phoneNumber": null
+}
+],
+"freeTime": [
+{
+"id": "25",
+"cronExpression": "0 0 9-17 * * MON-FRI"
 }
 ]
 }
@@ -1171,29 +1129,104 @@ All requests except authentication, registration and for unauthorized user shoul
 "hospitals": [
 "Medpark International Hospital"
 ],
-"comments": [],
+"comments": [
+{
+"id": "20",
+"body": "body",
+"rating": "4",
+"date": "2023-06-20",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
+},
+{
+"id": "21",
+"body": "updated comment",
+"rating": "5",
+"date": "2022-05-05",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
+},
+{
+"id": "23",
+"body": "body of new comment",
+"rating": "5",
+"date": "2022-05-05",
+"firstNamePatient": "Jeffrey",
+"lastNamePatient": "Jef",
+"middleNamePatient": null,
+"photoPatient": null
+}
+],
 "appointmentsDoctor": [
 {
+"id": "13",
 "hospital": "Medpark International Hospital",
-"date": "2022-04-20T10:20",
+"date": "2022-04-20 10:20",
 "duration": "15",
 "status": "DONE",
 "firstNamePatient": "Emily",
 "lastNamePatient": "Muller",
 "middleNamePatient": null,
-"agePatient": "0",
+"agePatient": "17",
 "phoneNumber": null
 },
 {
+"id": "14",
 "hospital": "Medpark International Hospital",
-"date": "2022-04-20T11:30",
+"date": "2022-04-20 11:30",
 "duration": "30",
 "status": "DECLINED",
 "firstNamePatient": "Emily",
 "lastNamePatient": "Muller",
 "middleNamePatient": null,
-"agePatient": "0",
+"agePatient": "17",
 "phoneNumber": null
+},
+{
+"id": "17",
+"hospital": "Medpark International Hospital",
+"date": "2022-07-20 10:20",
+"duration": "30",
+"status": "REQUESTED",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "17",
+"phoneNumber": null
+},
+{
+"id": "19",
+"hospital": "Medpark International Hospital",
+"date": "2023-06-20 10:20",
+"duration": "60",
+"status": "DECLINED",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "17",
+"phoneNumber": null
+},
+{
+"id": "18",
+"hospital": "Medpark International Hospital",
+"date": "2022-06-20 10:20",
+"duration": "60",
+"status": "APPROVED",
+"firstNamePatient": "Emily",
+"lastNamePatient": "Muller",
+"middleNamePatient": null,
+"agePatient": "17",
+"phoneNumber": null
+}
+],
+"freeTime": [
+{
+"id": "25",
+"cronExpression": "0 0 9-17 * * MON-FRI"
 }
 ]
 }
@@ -1237,7 +1270,8 @@ All requests except authentication, registration and for unauthorized user shoul
 "Medpark International Hospital"
 ],
 "comments": [],
-"appointmentsDoctor": []
+"appointmentsDoctor": [],
+"freeTime": []
 }
 
 &nbsp; **delete current user**

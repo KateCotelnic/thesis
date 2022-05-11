@@ -84,14 +84,14 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDetailsDTO[] getByHospital(String hospitalName) {
+    public DoctorDTO[] getByHospital(String hospitalName) {
         Hospital hospital = hospitalService.getHospitalByName(hospitalName);
         List<User> doctors = userRepository.getAllByHospitalsContainingAndRole(hospital, Role.DOCTOR);
-        return doctors.stream().map(User::toDoctorDetailsDTO).toArray(DoctorDetailsDTO[]::new);
+        return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
     }
 
     @Override
-    public DoctorDetailsDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO) {
+    public DoctorDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO) {
         List<User> doctors = new ArrayList<>();
         if(!(parametersDoctorDTO.getArea().isEmpty())){
             List<Hospital> hospitals = hospitalService.getAllByArea(parametersDoctorDTO.getArea());
@@ -113,7 +113,7 @@ public class DoctorServiceImpl implements DoctorService {
         else if(!(parametersDoctorDTO.getClassification().isEmpty())){
             doctors = userRepository.getAllByClassification(Classification.valueOf(parametersDoctorDTO.getClassification()));
         }
-        return doctors.stream().map(User::toDoctorDetailsDTO).toArray(DoctorDetailsDTO[]::new);
+        return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
     }
 
     @Override

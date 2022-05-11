@@ -38,12 +38,12 @@ public class GeneralController {
     }
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<DoctorDetailsDTO>> getDoctorsByHospital(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
+    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByHospital(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
         return ResponseEntity.ok(rsService.getDoctorsByHospital(hospitalName));
     }
 
     @GetMapping("/doctors/param")
-    public ResponseEntity<List<DoctorDetailsDTO>> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "")String area, @RequestParam(name = "speciality", defaultValue = "")String speciality, @RequestParam(name = "classification", defaultValue = "")String classification){
+    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "")String area, @RequestParam(name = "speciality", defaultValue = "")String speciality, @RequestParam(name = "classification", defaultValue = "")String classification){
         return ResponseEntity.ok(rsService.getDoctorsByParam(area, classification, speciality));
     }
 

@@ -95,15 +95,15 @@ public class RSServiceImpl implements RSService {
     }
 
     @Override
-    public List<DoctorDetailsDTO> getDoctorsByHospital(String hospitalName) {
-        DoctorDetailsDTO[] doctorDetailsDTOS = restTemplate.getForEntity(urlRS + "/doctors?hospitalName=" + hospitalName, DoctorDetailsDTO[].class).getBody();
+    public List<DoctorRSDTO> getDoctorsByHospital(String hospitalName) {
+        DoctorRSDTO[] doctorDetailsDTOS = restTemplate.getForEntity(urlRS + "/doctors?hospitalName=" + hospitalName, DoctorRSDTO[].class).getBody();
         return Arrays.stream(doctorDetailsDTOS).collect(Collectors.toList());
     }
 
     @Override
-    public List<DoctorDetailsDTO> getDoctorsByParam(String area, String classification, String speciality) {
+    public List<DoctorRSDTO> getDoctorsByParam(String area, String classification, String speciality) {
         ParametersDoctorDTO parametersDoctorDTO = ParametersDoctorDTO.builder().area(area).classification(classification).speciality(speciality).build();
-        DoctorDetailsDTO[] doctorDetailsDTOS = restTemplate.postForEntity(urlRS + "/doctors/param", parametersDoctorDTO, DoctorDetailsDTO[].class).getBody();
+        DoctorRSDTO[] doctorDetailsDTOS = restTemplate.postForEntity(urlRS + "/doctors/param", parametersDoctorDTO, DoctorRSDTO[].class).getBody();
         return Arrays.stream(doctorDetailsDTOS).collect(Collectors.toList());
     }
 
