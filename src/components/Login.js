@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import valid from '../api/validation';
 import { api } from '../api/api';
+import axios from "axios";
 
 const classes = ( theme ) => ( {
     root : {
@@ -57,20 +58,20 @@ class Login extends Component {
         document.title = "Login";
     }
     login = () => {
-        console.log(this.state.email, this.state.password);
         if( this.state.email === "" || this.state.password === "" ) {
+            alert("Login or password field can't be empty!");
             return;
         }
-        const url = api.app.login();
         const data = {
             email: this.state.email,
             password: this.state.password
-        };
-        valid.post( url, data, { responseType : "json" } )
+        }
+        axios.post( "http://localhost:8090/api/login", data )
             .then( ( response ) => {
-                this.props.login( response.data.user.email, response.data.user.token );
+                localStorage.setItem( "token", response.data.token );
+                console.log("Success! Data is ", response.data)
             } )
-            .catch( ( error ) => {
+            .catch( error => {
                 alert( error.response.data.message );
             } );
     }
@@ -79,16 +80,27 @@ class Login extends Component {
         this.setState( { email: event.target.value } );
     }
     password_Change = ( event ) => {
-        this.setState( { email: event.target.value } );
+        this.setState( { password: event.target.value } );
     }
 
     handleKeyPress = ( event ) => {
-        if( this.state.email === "" || this.state.email === "" ) {
-            return;
-        }
         if( event.key === "Enter" ) {
+            if( this.state.email === "" || this.state.password === "" ) {
+                alert("Login or password field can't be empty!");
+                return;
+            }
             this.login();
         }
+    }
+
+    getTest = () => {
+        console.log("test")
+        axios
+            .get( "http://localhost:8090/api/login/hi")
+            .then( ( response ) => {
+                const testString = response.data;
+                    console.log(testString);
+            } );
     }
 
     render() {
@@ -122,6 +134,7 @@ class Login extends Component {
                     />
                     <div style={ { marginTop: 20, textAlign: 'center' } }>
                         <Button onClick= { this.login }>Login</Button>
+                        <Button onClick= { this.getTest }>Test</Button>
                     </div>
                 </form>
             </div>
