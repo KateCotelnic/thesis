@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class AppointmentDoctorDTO {
     private String id;
     private String hospital;
-    private String date;
-    private String duration;
+    private String startDate;
+    private String endDate;
     private String status;
     private String firstNamePatient;
     private String lastNamePatient;

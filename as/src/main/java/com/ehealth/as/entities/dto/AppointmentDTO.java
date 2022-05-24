@@ -14,6 +14,6 @@ public class AppointmentDTO {
     private String doctorEmail;
     private String patientEmail;
     private String hospitalName;
-    private String dateTime;
-    private String duration;
+    private String startDate;
+    private String endDate;
 }

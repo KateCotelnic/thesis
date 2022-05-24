@@ -43,13 +43,13 @@ public class Appointment {
     @NonNull
     private Hospital hospital;
 
-    @Column(name = "date")
+    @Column(name = "start_date")
     @NonNull
-    private LocalDateTime date;
+    private LocalDateTime startDate;
 
-    @Column(name = "duration")
+    @Column(name = "end_date")
     @NonNull
-    private int duration;
+    private LocalDateTime endDate;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
@@ -60,8 +60,8 @@ public class Appointment {
         return AppointmentDoctorDTO.builder()
                 .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
-                .date(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                .duration(duration + "")
+                .startDate(startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .endDate(endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .status(status.toString())
                 .firstNamePatient(patient.getFirstName())
                 .lastNamePatient(patient.getLastName())
@@ -75,8 +75,8 @@ public class Appointment {
         return AppointmentPatientDTO.builder()
                 .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
-                .date(date.toString())
-                .duration(duration + "")
+                .startDate(startDate.toString())
+                .endDate(endDate.toString())
                 .status(status.toString())
                 .firstNameDoctor(doctor.getFirstName())
                 .lastNameDoctor(doctor.getLastName())
@@ -94,8 +94,8 @@ public class Appointment {
                 .doctorEmail(doctor.getEmail())
                 .patientEmail(patient.getEmail())
                 .hospitalName(hospital.getHospitalName())
-                .dateTime(date.toString())
-                .duration(duration + "")
+                .startDate(startDate.toString())
+                .endDate(endDate.toString())
                 .build();
     }
 }

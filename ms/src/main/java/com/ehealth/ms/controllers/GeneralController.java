@@ -24,6 +24,7 @@ public class GeneralController {
         if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient() || currentUserService.verifyDoctor())) {
             throw new RuntimeException("user don't have permissions");
         }
+        System.out.println("email = " + email);
         return ResponseEntity.ok(rsService.getDoctorByEmail(email));
     }
 

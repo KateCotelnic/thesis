@@ -55,6 +55,7 @@ public class RSServiceImpl implements RSService {
     @Override
     public DoctorDetailsDTO getDoctorByEmail(String email){
         DoctorDetailsDTO doctorDetailsDTO = restTemplate.getForEntity(urlRS + "/getDoctorDetailsByEmail?email=" + email, DoctorDetailsDTO.class).getBody();
+        System.out.println(doctorDetailsDTO);
         return doctorDetailsDTO;
     }
 

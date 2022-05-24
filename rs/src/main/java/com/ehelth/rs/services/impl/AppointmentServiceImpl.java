@@ -64,8 +64,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .doctor(userService.getUserByEmail(appointmentDTO.getDoctorEmail()))
                 .patient(userService.getUserByEmail(appointmentDTO.getPatientEmail()))
                 .hospital(hospitalService.getHospitalByName(appointmentDTO.getHospitalName()))
-                .date(LocalDateTime.parse(appointmentDTO.getDateTime(),formatter))
-                .duration(Integer.parseInt(appointmentDTO.getDuration()))
+                .startDate(LocalDateTime.parse(appointmentDTO.getStartDate(),formatter))
+                .endDate(LocalDateTime.parse(appointmentDTO.getEndDate(),formatter))
                 .status(Status.REQUESTED)
                 .build();
     }

@@ -47,7 +47,9 @@ public class UserController {
 
     @GetMapping("/getDoctorDetailsByEmail")
     public ResponseEntity<DoctorDetailsDTO> getDoctorByEmail(@RequestParam(name = "email", defaultValue = "")String email){
+        System.out.println("email = " + email);
         DoctorDetailsDTO doctorDetailsDTO = doctorService.getDoctorByEmail(email);
+        System.out.println(doctorDetailsDTO);
         return ResponseEntity.ok(doctorDetailsDTO);
     }
 
