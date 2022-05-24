@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import moment from 'moment';
 import Paper from '@mui/material/Paper';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import { styled } from '@mui/material/styles';
@@ -20,12 +22,94 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import appointments from './demo-data/today-appointments';
+import { api } from './api';
 
 const PREFIX = 'Demo';
 
+const currentDate = moment();
+let date = currentDate.date();
+
+const makeTodayAppointment = (startDate, endDate) => {
+  const days = moment(startDate).diff(endDate, 'days');
+  const nextStartDate = moment(startDate)
+    .year(currentDate.year())
+    .month(currentDate.month())
+    .date(date);
+  const nextEndDate = moment(endDate)
+    .year(currentDate.year())
+    .month(currentDate.month())
+    .date(date + days);
+
+  return {
+    startDate: nextStartDate.toDate(),
+    endDate: nextEndDate.toDate(),
+  };
+};
+
+// const myData = () => {
+//   const myEmail = localStorage.getItem("email");
+//   const accessToken = localStorage.getItem("token");
+//   return axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
+//     .then( ( response ) => {
+//       const appointments = response.data.appointmentsDoctor;
+//       const appointmentsInfo = appointments.map((appointment) => {
+//         const mapData = [{
+//             id: appointment.id,
+//             hospital: appointment.hospital,
+//             startDate: new Date(appointment.startDate),
+//             endDate: new Date(appointment.endDate),
+//             status: appointment.status,
+//             firstNamePatient: appointment.firstNamePatient,
+//             lastNamePatient: appointment.lastNamePatient,
+//             agePatient: appointment.agePatient
+//           }];
+//         return mapData;
+//       })
+//       console.log(appointmentsInfo);
+//     } )
+//     .catch( error => {
+//       alert( error.response.data.message );
+//     } );
+// }
+
+// const myData = () => {
+//   const myEmail = localStorage.getItem("email");
+//   const accessToken = localStorage.getItem("token");
+//   return axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
+//     .then( ( response ) => {
+//       const appointments = response.data.appointmentsDoctor;
+//       const appointmentsInfo = appointments.map((appointment) => {
+//         const mapData = {
+//           id: appointment.id,
+//           hospital: appointment.hospital,
+//           startDate: new Date(appointment.startDate),
+//           endDate: new Date(appointment.endDate),
+//           status: appointment.status,
+//           firstNamePatient: appointment.firstNamePatient,
+//           lastNamePatient: appointment.lastNamePatient,
+//           agePatient: appointment.agePatient
+//         };
+//         return mapData;
+//       })
+//       const calendar = appointmentsInfo.map(({ startDate, endDate, ...restArgs }) => {
+//         const result = {
+//           ...makeTodayAppointment(startDate, endDate),
+//           ...restArgs,
+//         };
+//         date += 1;
+//         if (date > 31) date = 1;
+//         return result;
+//       });
+//       console.log(calendar);
+//     } )
+//     .catch( error => {
+//       alert( error.response.data.message );
+//     } );
+// }
 const classes = {
   checkBoxContainer: `${PREFIX}-checkBoxContainer`,
   textField: `${PREFIX}-textField`,
@@ -46,6 +130,7 @@ const StyledTextField = styled(TextField)(({ theme: { spacing } }) => ({
     width: '120px',
   },
 }));
+
 // #FOLD_BLOCK
 const ShadeCellsCheckBox = ({ shadePreviousCells, handleChange }) => (
   <FormControlLabel
@@ -119,8 +204,19 @@ export default class Calendar extends React.PureComponent {
     super(props);
     this.state = {
       data: appointments,
+      // data: [],
       currentDate: new Date(),
-
+      // appointmentsDoctor: [{
+      //     id: "",
+      //     hospital: "",
+      //     startDate: startDateDefault.toISOString(),
+      //     endDate: "",
+      //     status: "",
+      //     firstNamePatient: "",
+      //     lastNamePatient: "",
+      //     agePatient: "",
+      //     phoneNumber: ""
+      //   }],
       addedAppointment: {},
       appointmentChanges: {},
       editingAppointment: undefined,
@@ -149,6 +245,43 @@ export default class Calendar extends React.PureComponent {
   //     [stateField]: !fieldToChange,
   //   });
   // }
+
+ componentDidMount() {
+   const myEmail = localStorage.getItem("email");
+   const accessToken = localStorage.getItem("token");
+   const fdk = axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
+     .then( ( response ) => {
+       const appointments = response.data.appointmentsDoctor;
+       const appointmentsInfo = appointments.map((appointment) => {
+         const mapData = {
+           id: appointment.id,
+           hospital: appointment.hospital,
+           startDate: new Date(appointment.startDate),
+           endDate: new Date(appointment.endDate),
+           status: appointment.status,
+           firstNamePatient: appointment.firstNamePatient,
+           lastNamePatient: appointment.lastNamePatient,
+           agePatient: appointment.agePatient
+         };
+         return mapData;
+       })
+       const calendar = appointmentsInfo.map(({ startDate, endDate, ...restArgs }) => {
+         const result = {
+           ...makeTodayAppointment(startDate, endDate),
+           ...restArgs,
+         };
+         date += 1;
+         if (date > 31) date = 1;
+         return result;
+       });
+       console.log(calendar);
+       console.log(appointments);
+     })
+     .catch( error => {
+       alert( error.response.data.message );
+     } );
+   console.log(fdk);
+ }
 
   changeAddedAppointment(addedAppointment) {
     this.setState({ addedAppointment });
@@ -185,10 +318,10 @@ export default class Calendar extends React.PureComponent {
       currentDate, data, addedAppointment, appointmentChanges, editingAppointment, shadePreviousCells,
       updateInterval, shadePreviousAppointments,
     } = this.state;
-
+    console.log(data);
     return (
-
       <Paper>
+        {/* <button onClick={myData}>Here</button> */}
         <Scheduler
           data={data}
           height={930}

@@ -5,5 +5,6 @@ export const api = {
   register: () => `${host}/register`,
   dashboard: {
     getTes: () => `${host}/dashboard/test`,
+    getDoctorData: () => `${host}/doctor`,
   },
 }

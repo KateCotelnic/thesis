@@ -44,8 +44,9 @@ export default function RegisterForm() {
       lastName,
       phoneNumber
     });
-    if ('token' in response) {
-      window.location.href = "/dashboard";
+    console.log(response)
+    if ('token' in localStorage) {
+      window.location.href = "/dashboard/app";
     } else {
       alert("Registration failed. Try again");
     }

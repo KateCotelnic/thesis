@@ -15,7 +15,7 @@ async function loginUser(credentials) {
   return axios.post( api.login(), credentials )
     .then( ( response ) => {
       localStorage.setItem( "logined", "1" );
-      localStorage.setItem( "role", this.state.role );
+      localStorage.setItem( "role", response.data.role );
       localStorage.setItem( "token", response.data.token );
       // window.location = "/dashboard";
     } )
@@ -37,12 +37,13 @@ export default function LoginForm() {
       email,
       password
     });
-    if ('token' in response) {
-          window.location.href = "/dashboard";
+    console.log(response)
+    if ('token' in localStorage) {
+          localStorage.setItem("email", email);
+          window.location.href = "/dashboard/app";
     } else {
       alert("Unauthorized");
     }
-    console.log(email, password);
   }
 
   const LoginSchema = Yup.object().shape({
