@@ -1,0 +1,3 @@
+https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/views/
+https://javascript.plainenglish.io/basic-react-login-using-external-api-e33322e480cd
+https://www.youtube.com/watch?v=yfU7lKgOnRw
