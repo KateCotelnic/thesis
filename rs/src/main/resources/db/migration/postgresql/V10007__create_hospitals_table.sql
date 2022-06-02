@@ -1,5 +1,4 @@
-CREATE TABLE hospitals
-(
+CREATE TABLE hospitals(
     hospital_name    varchar(255) NOT NULL,
     is_enable boolean,
     photo    varchar(255),

@@ -22,7 +22,7 @@ public class RSServiceImpl implements RSService {
 //    private final CurrentUserService currentUserService;
 //    private final AuthenticationManager authenticationManager;
 
-    private String urlRS = "http://localhost:8091/rs/";
+    private String urlRS = "http://rs:8091/rs/";
 
     @Override
 //    @PreAuthorize("hasAuthority('doctor:write')")

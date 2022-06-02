@@ -1,0 +1,142 @@
+version: '2'
+
+services:
+  ms:
+    image: 'ms'
+    ports:
+      - 8090:8090
+    build:
+      context: ../ms
+    container_name: ms
+#    depends_on:
+#      - discovery-service
+    environment:
+#      - SPRING_APPLICATION_NAME=ms
+      - SERVER_PORT=8090
+  as:
+    image: 'as'
+    ports:
+      - 8092:8092
+    build:
+      context: ../as
+    container_name: as
+#    depends_on:
+#      - db
+    environment:
+#      - SPRING_APPLICATION_NAME=cache1
+      - SERVER_PORT=8092
+  ns:
+    image: 'ns'
+    ports:
+      - 8093:8093
+    build:
+      context: ../ns
+    container_name: ns
+    #    depends_on:
+    #      - db
+    environment:
+      #      - SPRING_APPLICATION_NAME=cache1
+      - SERVER_PORT=8093
+  rs:
+    image: 'rs'
+    ports:
+      - 8091:8091
+    build:
+      context: ../rs
+    container_name: rs
+    depends_on:
+      - db
+    environment:
+#      - SPRING_APPLICATION_NAME=cache2
+      - SERVER_PORT=8091
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ehealth
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_FLYWAY_SCHEMAS=public
+      - SPRING_FLYWAY_LOCATIONS=classpath:db/migration
+      - JPA_DEFAULT_SCHEMA_NAME=public
+      - FLYWAY_MIGRATION_URL=jdbc:postgresql://db:5432/ehealth
+      - FLYWAY_USERNAME=postgres
+      - FLYWAY_PASSWORD=postgres
+#  app1:
+#    image: 'newtrip:latest'
+#    ports:
+#      - 9191:9191
+#    build:
+#      context: .
+#    container_name: newtrip1
+#    depends_on:
+#      - db
+#      - discovery-service
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SPRING_APPLICATION_NAME=newtrip1
+#      - SERVER_PORT=9191
+#  app2:
+#    image: 'newtrip:latest'
+#    ports:
+#      - 9192:9192
+#    build:
+#      context: .
+#    container_name: newtrip2
+#    depends_on:
+#      - db
+#      - discovery-service
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SPRING_APPLICATION_NAME=newtrip2
+#      - SERVER_PORT=9192
+#  app3:
+#    image: 'newtrip:latest'
+#    ports:
+#      - 9193:9193
+#    build:
+#      context: .
+#    container_name: newtrip3
+#    depends_on:
+#      - db
+#      - discovery-service
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SPRING_APPLICATION_NAME=newtrip3
+#      - SERVER_PORT=9193
+#
+#  node:
+#    image: 'node:latest'
+#    ports:
+#      - 8080:8080
+#    build:
+#      context: ../../../test/
+#    container_name: node
+#    environment:
+#      - SPRING_APPLICATION_NAME=node
+#      - SERVER_PORT=8080
+
+  #  node:
+  #    restart: always
+  #    container_name: node
+  #    build:
+  #      context: ../mongo/
+  #    ports:
+  #      - 8080:8080
+  #    volumes:
+  #      - ./:/code
+  db:
+    image: 'postgres:13.4-alpine'
+    ports:
+      - 5442:5432
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ehealth

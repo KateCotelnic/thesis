@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class ASServiceImpl implements ASService {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private String urlAS = "http://localhost:8092/as/";
+    private String urlAS = "http://as:8092/as/";
 
 
     @Override

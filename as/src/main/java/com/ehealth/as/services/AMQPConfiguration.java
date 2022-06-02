@@ -27,7 +27,7 @@ public class AMQPConfiguration {
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("foo.bar.#");
+        return BindingBuilder.bind(queue).to(exchange).with("ehealth.not.#");
     }
 
     @Bean

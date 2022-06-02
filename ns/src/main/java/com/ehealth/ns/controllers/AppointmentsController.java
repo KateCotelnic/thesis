@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+//@RestController
 @RequestMapping("/ns")
 @RequiredArgsConstructor
 public class AppointmentsController {
     private final AppointmentsService appointmentsService;
 
-    @PostMapping("/")
+//    @PostMapping("/")
 }
