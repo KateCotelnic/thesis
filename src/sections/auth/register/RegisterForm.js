@@ -18,7 +18,6 @@ async function registerUser(credentials) {
       localStorage.setItem( "logined", "1" );
       localStorage.setItem( "role", this.state.role );
       localStorage.setItem( "token", response.data.token );
-      // window.location = "/dashboard";
     } )
     .catch( error => {
       alert( "error.response.data.message" );

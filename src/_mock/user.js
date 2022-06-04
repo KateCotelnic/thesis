@@ -18,7 +18,6 @@ const users = [...Array(24)].map((_, index) => ({
   isVerified: sample([
     '45 min',
     '30 min',
-    '60 min',
     '25 min',
     '15 min',
     '35 min',

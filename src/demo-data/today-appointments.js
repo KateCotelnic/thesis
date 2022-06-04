@@ -67,7 +67,7 @@ export default appointments.map(({ startDate, endDate, ...restArgs }) => {
     ...makeTodayAppointment(startDate, endDate),
     ...restArgs,
   };
-  date += 1;
+  // date += 1;
   if (date > 31) date = 1;
   return result;
 });
