@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rs/appointment")
 @RequiredArgsConstructor
@@ -36,5 +38,20 @@ public class AppointmentController {
     @GetMapping("/decline")
     public ResponseEntity<AppointmentDTO> declineAppointment(@RequestParam(name = "id", defaultValue = "")String id){
         return ResponseEntity.ok(appointmentService.declineAppointment(id));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments(){
+        return ResponseEntity.ok(appointmentService.getAll());
+    }
+
+    @GetMapping("/done")
+    public ResponseEntity<AppointmentDTO> setDone(@RequestParam(name = "id", defaultValue = "")String id){
+        return ResponseEntity.ok(appointmentService.setDone(id));
+    }
+
+    @GetMapping("/notification")
+    public ResponseEntity<AppointmentDTO> setNotificationSent(@RequestParam(name = "id", defaultValue = "")String id){
+        return ResponseEntity.ok(appointmentService.sendNotification(id));
     }
 }

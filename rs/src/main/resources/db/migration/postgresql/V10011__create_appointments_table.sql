@@ -6,5 +6,6 @@ CREATE TABLE appointments
     hospital_name    varchar(255) NOT NULL,
     start_date         timestamp NOT NULL,
     end_date         timestamp NOT NULL,
-    status      varchar(255) NOT NULL
+    status      varchar(255) NOT NULL,
+    sent_notification  boolean default false
 );

@@ -6,6 +6,8 @@ import com.ehealth.as.entities.dto.RequestDeleteCommentDTO;
 import com.ehealth.as.services.NSService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -34,5 +36,10 @@ public class NSServiceImpl implements NSService {
     @Override
     public void sendPatientDeclineAppointment(AppointmentDTO appointmentDTO) {
         //TODO send patient a notification that doctor has declined the appointment
+    }
+
+    @Override
+    public void sendNotification(AppointmentDTO appointmentDTO) {
+        //TODO send notification for patient a day before
     }
 }

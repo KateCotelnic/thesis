@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,15 +59,42 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .build();
     }
 
+    @Override
+    public AppointmentDTO setDone(String id) {
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        appointment.setStatus(Status.DONE);
+        appointmentRepository.save(appointment);
+        return appointment.toAppointmentDTO();
+    }
+
+    @Override
+    public List<AppointmentDTO> getAll() {
+        return appointmentRepository.getAllBy().stream().map(Appointment::toAppointmentDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public AppointmentDTO sendNotification(String id) {
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        appointment.setSentNotification(true);
+        return appointmentRepository.save(appointment).toAppointmentDTO();
+    }
+
     private Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO){
+        System.out.println(appointmentDTO);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return Appointment.builder()
+        System.out.println(userService.getUserByEmail(appointmentDTO.getDoctorEmail()));
+        System.out.println(userService.getUserByEmail(appointmentDTO.getPatientEmail()));
+        System.out.println(hospitalService.getHospitalByName(appointmentDTO.getHospitalName()));
+        Appointment appointment = Appointment.builder()
                 .doctor(userService.getUserByEmail(appointmentDTO.getDoctorEmail()))
                 .patient(userService.getUserByEmail(appointmentDTO.getPatientEmail()))
                 .hospital(hospitalService.getHospitalByName(appointmentDTO.getHospitalName()))
                 .startDate(LocalDateTime.parse(appointmentDTO.getStartDate(),formatter))
                 .endDate(LocalDateTime.parse(appointmentDTO.getEndDate(),formatter))
                 .status(Status.REQUESTED)
+                .sentNotification(false)
                 .build();
+        System.out.println(appointment);
+        return appointment;
     }
 }

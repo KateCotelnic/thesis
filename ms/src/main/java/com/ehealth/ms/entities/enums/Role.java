@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @Getter
 public enum Role {
     DOCTOR(Stream.of(Permission.DOCTOR_READ, Permission.DOCTOR_WRITE).collect(Collectors.toSet())),
-    PATIENT(Stream.of(Permission.PATIENTS_READ, Permission.PATIENTS_WRITE).collect(Collectors.toSet())),
+    PATIENT(Stream.of(Permission.PATIENT_READ, Permission.PATIENT_WRITE).collect(Collectors.toSet())),
     ADMIN(Stream.of(Permission.ADMIN_WRITE).collect(Collectors.toSet()));
 
     private final Set<Permission> permissions;

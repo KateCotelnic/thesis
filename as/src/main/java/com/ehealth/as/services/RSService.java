@@ -2,6 +2,8 @@ package com.ehealth.as.services;
 
 import com.ehealth.as.entities.dto.AppointmentDTO;
 import com.ehealth.as.entities.dto.CommentDTO;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 public interface RSService {
     AppointmentDTO createAppointment(AppointmentDTO appointmentDTO);

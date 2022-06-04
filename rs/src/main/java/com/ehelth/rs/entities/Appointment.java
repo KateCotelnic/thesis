@@ -56,6 +56,9 @@ public class Appointment {
     @NonNull
     private Status status;
 
+    @Column(name = "sent_notification")
+    private boolean sentNotification;
+
     public AppointmentDoctorDTO toAppointmentDoctorDTO(){
         return AppointmentDoctorDTO.builder()
                 .id(appointmentId + "")
@@ -96,6 +99,8 @@ public class Appointment {
                 .hospitalName(hospital.getHospitalName())
                 .startDate(startDate.toString())
                 .endDate(endDate.toString())
+                .status(status.toString())
+                .sentNotification(sentNotification + "")
                 .build();
     }
 }

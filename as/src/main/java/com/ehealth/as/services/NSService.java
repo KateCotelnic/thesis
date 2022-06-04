@@ -10,4 +10,5 @@ public interface NSService {
     void sendDoctorCanceledAppointment(AppointmentDTO appointmentDTO);
     void sendPatientAcceptAppointment(AppointmentDTO appointmentDTO);
     void sendPatientDeclineAppointment(AppointmentDTO appointmentDTO);
+    void sendNotification(AppointmentDTO appointmentDTO);
 }
