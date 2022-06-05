@@ -21,7 +21,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping()
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request) {
         AuthResponseRSDTO user = currentUserService.authenticate(request.getEmail(), request.getPassword());
         String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole());
         return ResponseEntity.ok(AuthResponseDTO.builder()
@@ -38,7 +38,7 @@ public class AuthController {
     }
 
     @GetMapping("/hi")
-    public ResponseEntity<String> hello(){
+    public ResponseEntity<String> hello() {
         return ResponseEntity.ok("HELLO");
     }
 }

@@ -54,12 +54,12 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.getCommentByCommentId(Long.parseLong(id)).toNewCommentDTO();
     }
 
-    Comment toCommentFromNew(NewCommentDTO commentDTO){
+    Comment toCommentFromNew(NewCommentDTO commentDTO) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return Comment.builder()
                 .body(commentDTO.getBody())
                 .rating(Integer.parseInt(commentDTO.getRating()))
-                .date(LocalDate.parse(commentDTO.getDate(),formatter))
+                .date(LocalDate.parse(commentDTO.getDate(), formatter))
                 .patient(userService.getUserByEmail(commentDTO.getPatientEmail()))
                 .doctor(userService.getUserByEmail(commentDTO.getDoctorEmail()))
                 .build();

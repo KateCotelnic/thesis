@@ -4,44 +4,39 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import javax.sound.midi.Receiver;
-
+@Configuration
 public class AMQPConfiguration {
-    static final String topicExchangeName = "as-ns-exchange";
-    static final String queueName = "notification-queue";
+    public static final String EXCHANGE_NAME = "ehealthExchange";
+    public static final String QUEUE_EMAIL_NAME = "mailQueue";
+    public static final String QUEUE_APP_NAME = "appQueue";
+    public static final String ROUTING_KEY_EMAIL = "emailQueue";
+    public static final String ROUTING_KEY_APP = "appQueue";
 
     @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
+    public TopicExchange appExchange() {
+        return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
+    public Queue emailQueue() {
+        return new Queue(QUEUE_EMAIL_NAME, false);
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("ehealth.not.#");
+    public Queue appQueue() {
+        return new Queue(QUEUE_APP_NAME, false);
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
+    public Binding declareBindingEmail() {
+        return BindingBuilder.bind(emailQueue()).to(appExchange()).with(ROUTING_KEY_EMAIL);
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
+    public Binding declareBindingApp() {
+        return BindingBuilder.bind(appQueue()).to(appExchange()).with(ROUTING_KEY_APP);
     }
 }

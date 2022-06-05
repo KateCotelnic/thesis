@@ -34,7 +34,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDetailsDTO getDoctorByEmail(String email){
+    public DoctorDetailsDTO getDoctorByEmail(String email) {
         User doctor = userRepository.getUserByEmailAndRole(email, Role.DOCTOR).orElseThrow(() -> new RuntimeException("No such user"));
         DoctorDetailsDTO doctorDetailsDTO = doctor.toDoctorDetailsDTO();
         return doctorDetailsDTO;
@@ -93,24 +93,22 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO) {
         List<User> doctors = new ArrayList<>();
-        if(!(parametersDoctorDTO.getArea().isEmpty())){
+        if (!(parametersDoctorDTO.getArea().isEmpty())) {
             List<Hospital> hospitals = hospitalService.getAllByArea(parametersDoctorDTO.getArea());
             List<User> finalDoctors = doctors;
             hospitals.forEach(hospital -> finalDoctors.addAll(userRepository.getAllByHospitalsContaining(hospital)));
-            if(!(parametersDoctorDTO.getClassification().isEmpty())){
+            if (!(parametersDoctorDTO.getClassification().isEmpty())) {
                 doctors.removeIf(doctor -> !doctor.getClassification().toString().equals(parametersDoctorDTO.getClassification()));
             }
-            if(!(parametersDoctorDTO.getSpeciality().isEmpty())){
+            if (!(parametersDoctorDTO.getSpeciality().isEmpty())) {
                 doctors.removeIf(doctor -> !doctor.getSpeciality().toString().equals(parametersDoctorDTO.getSpeciality()));
             }
-        }
-        else if(!(parametersDoctorDTO.getSpeciality().isEmpty())){
+        } else if (!(parametersDoctorDTO.getSpeciality().isEmpty())) {
             doctors = userRepository.getAllBySpeciality(Speciality.valueOf(parametersDoctorDTO.getSpeciality()));
-            if(!(parametersDoctorDTO.getClassification().isEmpty())){
+            if (!(parametersDoctorDTO.getClassification().isEmpty())) {
                 doctors.removeIf(doctor -> !doctor.getClassification().toString().equals(parametersDoctorDTO.getClassification()));
             }
-        }
-        else if(!(parametersDoctorDTO.getClassification().isEmpty())){
+        } else if (!(parametersDoctorDTO.getClassification().isEmpty())) {
             doctors = userRepository.getAllByClassification(Classification.valueOf(parametersDoctorDTO.getClassification()));
         }
         return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
@@ -130,7 +128,7 @@ public class DoctorServiceImpl implements DoctorService {
         freeTimeRepository.deleteByFreetimeId(Long.parseLong(id));
     }
 
-    private User newDoctorToUser(NewDoctorDTO newDoctorDTO){
+    private User newDoctorToUser(NewDoctorDTO newDoctorDTO) {
         return User.builder()
                 .email(newDoctorDTO.getEmail())
                 .password(newDoctorDTO.getPassword())

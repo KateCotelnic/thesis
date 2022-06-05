@@ -18,13 +18,13 @@ public class AdminController {
     private final CurrentUserService currentUserService;
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<DoctorRSDTO>> getDoctors(){
+    public ResponseEntity<List<DoctorRSDTO>> getDoctors() {
         verifyIsAdmin();
         return ResponseEntity.ok(rsService.getAllDoctors());
     }
 
     @PostMapping("/newdoctor")
-    private ResponseEntity<DoctorDetailsDTO> insertNewDoctor(@RequestBody NewDoctorDTO newDoctorDTO){
+    private ResponseEntity<DoctorDetailsDTO> insertNewDoctor(@RequestBody NewDoctorDTO newDoctorDTO) {
         verifyIsAdmin();
         DoctorDetailsDTO doctorDetailsDTO = rsService.createDoctor(newDoctorDTO);
         return ResponseEntity.ok(doctorDetailsDTO);
@@ -38,46 +38,46 @@ public class AdminController {
     }
 
     @PostMapping("/updatedoctor")
-    public ResponseEntity<DoctorDetailsDTO> updateDoctor(@RequestBody DoctorUpdateAdminDTO doctorDTO){
-        if(!(currentUserService.verifyAdmin() || currentUserService.verifyDoctor())){
+    public ResponseEntity<DoctorDetailsDTO> updateDoctor(@RequestBody DoctorUpdateAdminDTO doctorDTO) {
+        if (!(currentUserService.verifyAdmin() || currentUserService.verifyDoctor())) {
             throw new RuntimeException("User doesn't have permission");
         }
-       return ResponseEntity.ok(rsService.updateDoctorAsAdmin(doctorDTO));
+        return ResponseEntity.ok(rsService.updateDoctorAsAdmin(doctorDTO));
     }
 
-    private void verifyIsAdmin(){
-        if(!currentUserService.verifyAdmin()){
+    private void verifyIsAdmin() {
+        if (!currentUserService.verifyAdmin()) {
             throw new RuntimeException("User is not admin");
         }
     }
 
     @GetMapping("/enums")
-    public ResponseEntity<AdminDoctorEnums> getEnumsForDoctors(){
+    public ResponseEntity<AdminDoctorEnums> getEnumsForDoctors() {
         verifyIsAdmin();
         return ResponseEntity.ok(rsService.getAdminDoctorEnums());
     }
 
     @PostMapping("/newhospital")
-    public ResponseEntity<HospitalDTO> createHospital(@RequestBody HospitalDTO hospitalDTO){
+    public ResponseEntity<HospitalDTO> createHospital(@RequestBody HospitalDTO hospitalDTO) {
         verifyIsAdmin();
         return ResponseEntity.ok(rsService.createHospital(hospitalDTO));
     }
 
     @GetMapping("/hospitalEnums")
-    public ResponseEntity<HospitalEnums> getEnums(){
+    public ResponseEntity<HospitalEnums> getEnums() {
         verifyIsAdmin();
         return ResponseEntity.ok(rsService.getHospitalEnums());
     }
 
     @DeleteMapping("/hospital")
-    public ResponseEntity<HttpStatus> delete(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName){
+    public ResponseEntity<HttpStatus> delete(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName) {
         verifyIsAdmin();
         rsService.deleteHospital(hospitalName);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/updatehospital")
-    public ResponseEntity<HospitalDTO> updateHospital(@RequestBody HospitalDTO hospitalDTO){
+    public ResponseEntity<HospitalDTO> updateHospital(@RequestBody HospitalDTO hospitalDTO) {
         verifyIsAdmin();
         return ResponseEntity.ok(rsService.updateHospitalAsAdmin(hospitalDTO));
     }

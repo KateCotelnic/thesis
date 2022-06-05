@@ -32,7 +32,7 @@ public class FreeTime {
     @NonNull
     private User doctor;
 
-    public FreeTimeDTO toFreeTimeDTO(){
+    public FreeTimeDTO toFreeTimeDTO() {
         return FreeTimeDTO.builder()
                 .id(freetimeId + "")
                 .doctorEmail(doctor.getEmail())
@@ -40,7 +40,7 @@ public class FreeTime {
                 .build();
     }
 
-    public FreeTimeForDoctorDTO toFreeTimeForDoctorDTO(){
+    public FreeTimeForDoctorDTO toFreeTimeForDoctorDTO() {
         return FreeTimeForDoctorDTO.builder()
                 .id(freetimeId + "")
                 .cronExpression(cronExpression)

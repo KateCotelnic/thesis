@@ -5,7 +5,7 @@ CREATE TABLE users
     role         varchar(255) NOT NULL,
     is_enable    boolean NOT NULL,
     first_name   varchar(255) NOT NULL,
-    middle_name  varchar(255),
+    middle_name  varchar(255) DEFAULT(''),
     last_name    varchar(255) NOT NULL,
     age          integer DEFAULT 0,
     phone_number varchar(255) NOT NULL,

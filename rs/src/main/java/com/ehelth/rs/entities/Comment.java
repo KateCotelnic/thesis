@@ -46,7 +46,7 @@ public class Comment {
     @NonNull
     private User doctor;
 
-    public CommentDTO toCommentDTO(){
+    public CommentDTO toCommentDTO() {
         return CommentDTO.builder()
                 .id(commentId + "")
                 .body(body)
@@ -59,7 +59,7 @@ public class Comment {
                 .build();
     }
 
-    public NewCommentDTO toNewCommentDTO(){
+    public NewCommentDTO toNewCommentDTO() {
         return NewCommentDTO.builder()
                 .commentId(commentId + "")
                 .body(body)

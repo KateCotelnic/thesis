@@ -59,7 +59,7 @@ public class Appointment {
     @Column(name = "sent_notification")
     private boolean sentNotification;
 
-    public AppointmentDoctorDTO toAppointmentDoctorDTO(){
+    public AppointmentDoctorDTO toAppointmentDoctorDTO() {
         return AppointmentDoctorDTO.builder()
                 .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
@@ -74,7 +74,7 @@ public class Appointment {
                 .build();
     }
 
-    public AppointmentPatientDTO toAppointmentPatientDTO(){
+    public AppointmentPatientDTO toAppointmentPatientDTO() {
         return AppointmentPatientDTO.builder()
                 .id(appointmentId + "")
                 .hospital(hospital.getHospitalName())
@@ -91,7 +91,8 @@ public class Appointment {
                 .price(doctor.getPrice() + "")
                 .build();
     }
-    public AppointmentDTO toAppointmentDTO(){
+
+    public AppointmentDTO toAppointmentDTO() {
         return AppointmentDTO.builder()
                 .id(appointmentId + "")
                 .doctorEmail(doctor.getEmail())

@@ -3,8 +3,8 @@ package com.ehealth.as.controllers;
 import com.ehealth.as.entities.dto.AppointmentDTO;
 import com.ehealth.as.services.NSService;
 import com.ehealth.as.services.RSService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +16,14 @@ public class PatientController {
     private final NSService nsService;
 
     @PostMapping("/appointment")
-    public ResponseEntity<AppointmentDTO> create(@RequestBody AppointmentDTO appointmentDTO){
+    public ResponseEntity<AppointmentDTO> create(@RequestBody AppointmentDTO appointmentDTO) throws JsonProcessingException {
         appointmentDTO = rsService.createAppointment(appointmentDTO);
         nsService.sendDoctorNewAppointment(appointmentDTO);
         return ResponseEntity.ok(appointmentDTO);
     }
 
     @DeleteMapping("/cancelAppointment")
-    public void cancel(@RequestParam(name = "id", defaultValue = "")String id){
+    public void cancel(@RequestParam(name = "id", defaultValue = "") String id) throws JsonProcessingException {
         AppointmentDTO appointmentDTO = rsService.cancelAppointment(id);
         System.out.println(appointmentDTO);
         nsService.sendDoctorCanceledAppointment(appointmentDTO);

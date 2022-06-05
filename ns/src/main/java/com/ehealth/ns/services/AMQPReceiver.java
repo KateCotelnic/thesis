@@ -1,21 +1,14 @@
 package com.ehealth.ns.services;
 
-import org.springframework.stereotype.Component;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CountDownLatch;
-
-@Component
+@Service
 public class AMQPReceiver {
 
-    private CountDownLatch latch = new CountDownLatch(1);
-
+    @RabbitListener(queues = AMQPConfiguration.QUEUE_NAME)
     public void receiveMessage(String message) {
-        System.out.println("Received <" + message + ">");
-        latch.countDown();
-    }
-
-    public CountDownLatch getLatch() {
-        return latch;
+        System.out.println("Received message as a generic AMQP 'Message' wrapper: {}" + message);
     }
 
 }

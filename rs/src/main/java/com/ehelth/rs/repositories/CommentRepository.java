@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface CommentRepository  extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> getAllByDoctor_Email(String email);
     @Transactional
     void deleteByCommentId(long id);

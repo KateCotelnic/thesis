@@ -16,28 +16,28 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/getAllByDoctor")
-    public ResponseEntity<CommentDTO[]> getAllComments(@RequestParam(name = "doctorEmail", defaultValue = "")String doctorEmail){
+    public ResponseEntity<CommentDTO[]> getAllComments(@RequestParam(name = "doctorEmail", defaultValue = "") String doctorEmail) {
         return ResponseEntity.ok(commentService.getCommentsByDoctor(doctorEmail));
     }
 
     @PostMapping("/new")
-    public ResponseEntity<NewCommentDTO> createComment(@RequestBody NewCommentDTO newCommentDTO){
+    public ResponseEntity<NewCommentDTO> createComment(@RequestBody NewCommentDTO newCommentDTO) {
         return ResponseEntity.ok(commentService.create(newCommentDTO));
     }
 
     @PostMapping("/update")
-    public ResponseEntity<NewCommentDTO> updateComment(@RequestBody UpdateCommentDTO updateCommentDTO){
+    public ResponseEntity<NewCommentDTO> updateComment(@RequestBody UpdateCommentDTO updateCommentDTO) {
         return ResponseEntity.ok(commentService.update(updateCommentDTO));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<HttpStatus> deleteComment(@RequestParam(name = "id", defaultValue = "")String id){
+    public ResponseEntity<HttpStatus> deleteComment(@RequestParam(name = "id", defaultValue = "") String id) {
         commentService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity<NewCommentDTO> getComment(@RequestParam(name = "id", defaultValue = "")String id){
+    public ResponseEntity<NewCommentDTO> getComment(@RequestParam(name = "id", defaultValue = "") String id) {
         return ResponseEntity.ok(commentService.getComment(id));
     }
 }

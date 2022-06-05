@@ -26,31 +26,31 @@ public class PatientController {
     }
 
     @GetMapping("/getAppointmentEnums")
-    public ResponseEntity<AppointmentEnums> getEnums(){
+    public ResponseEntity<AppointmentEnums> getEnums() {
         verifyIsPatient();
         return ResponseEntity.ok(rsService.getAppointmentEnums());
     }
 
     @DeleteMapping("/cancelAppointment")
-    public ResponseEntity<HttpStatus> cancelAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
+    public ResponseEntity<HttpStatus> cancelAppointment(@RequestParam(name = "id", defaultValue = "") String id) {
         verifyIsPatient();
         asService.cancelAppointment(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    private void verifyIsPatient(){
-        if(!currentUserService.verifyPatient()){
+    private void verifyIsPatient() {
+        if (!currentUserService.verifyPatient()) {
             throw new RuntimeException("User is not patient");
         }
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UserDetailsDTO> updateUser(@RequestBody UserDetailsDTO userDetailsDTO){
+    public ResponseEntity<UserDetailsDTO> updateUser(@RequestBody UserDetailsDTO userDetailsDTO) {
         verifyIsPatient();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }
@@ -69,10 +69,4 @@ public class PatientController {
         return ResponseEntity.ok(rsService.updateComment(updateCommentDTO));
     }
 
-//    @DeleteMapping("/deleteAppointment")
-//    public ResponseEntity<HttpStatus> deleteAppointment() {
-//        verifyIsPatient();
-//        asService.createAppointment(appointmentDTO);
-//        return ResponseEntity.ok(HttpStatus.CREATED);
-//    }
 }

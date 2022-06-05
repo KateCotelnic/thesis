@@ -29,36 +29,36 @@ public class GeneralController {
     }
 
     @GetMapping("/hospitals")
-    public ResponseEntity<List<HospitalDTO>> getHospitals(){
+    public ResponseEntity<List<HospitalDTO>> getHospitals() {
         return ResponseEntity.ok(rsService.getHospitals());
     }
 
     @GetMapping("/searchenums")
-    public ResponseEntity<SearchEnums> getSearchEnums(){
+    public ResponseEntity<SearchEnums> getSearchEnums() {
         return ResponseEntity.ok(rsService.getSearchEnums());
     }
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByHospital(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
+    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByHospital(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName) {
         return ResponseEntity.ok(rsService.getDoctorsByHospital(hospitalName));
     }
 
     @GetMapping("/doctors/param")
-    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "")String area, @RequestParam(name = "speciality", defaultValue = "")String speciality, @RequestParam(name = "classification", defaultValue = "")String classification){
+    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "") String area, @RequestParam(name = "speciality", defaultValue = "") String speciality, @RequestParam(name = "classification", defaultValue = "") String classification) {
         return ResponseEntity.ok(rsService.getDoctorsByParam(area, classification, speciality));
     }
 
     @GetMapping("/details")
-    public ResponseEntity<UserDetailsDTO> getMyDetails(){
-        if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())){
+    public ResponseEntity<UserDetailsDTO> getMyDetails() {
+        if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())) {
             throw new RuntimeException("user don't have permissions");
         }
         return ResponseEntity.ok(rsService.getUserDetails(getCurrentUsername()));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<HttpStatus> deleteUser(){
-        if (!(currentUserService.verifyDoctor() || currentUserService.verifyPatient())){
+    public ResponseEntity<HttpStatus> deleteUser() {
+        if (!(currentUserService.verifyDoctor() || currentUserService.verifyPatient())) {
             throw new RuntimeException("user don't have permissions");
         }
         rsService.deleteUser(getCurrentUsername());
@@ -66,30 +66,30 @@ public class GeneralController {
     }
 
     @PostMapping("/changePassword")
-    public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordDTO passwordDTO){
+    public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordDTO passwordDTO) {
         currentUserService.changePassword(getCurrentUsername(), passwordDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/commentsByDoctor")
-    public ResponseEntity<List<CommentDTO>> getComments(@RequestParam(name = "doctorEmail", defaultValue = "")String doctorEmail){
+    public ResponseEntity<List<CommentDTO>> getComments(@RequestParam(name = "doctorEmail", defaultValue = "") String doctorEmail) {
         return ResponseEntity.ok(rsService.getCommentsByDoctor(doctorEmail));
     }
 
     @DeleteMapping("/deleteComment")
-    public ResponseEntity<HttpStatus> deleteComments(@RequestParam(name = "id", defaultValue = "")String id){
-        if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())){
+    public ResponseEntity<HttpStatus> deleteComments(@RequestParam(name = "id", defaultValue = "") String id) {
+        if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())) {
             throw new RuntimeException("user don't have permissions");
         }
         rsService.deleteComment(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    private String getCurrentUsername(){
+    private String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }

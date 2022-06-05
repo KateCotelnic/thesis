@@ -18,14 +18,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RSServiceImpl implements RSService {
     private final RestTemplate restTemplate = new RestTemplate();
-//    private final ValidationService validationService;
-//    private final CurrentUserService currentUserService;
-//    private final AuthenticationManager authenticationManager;
 
     private String urlRS = "http://rs:8091/rs/";
 
     @Override
-//    @PreAuthorize("hasAuthority('doctor:write')")
     public AuthResponseRSDTO getUserByUsername(String username) {
         AuthResponseRSDTO response = restTemplate.getForEntity(urlRS + "/getUserByEmail?email=" + username, AuthResponseRSDTO.class).getBody();
         return response;
@@ -35,7 +31,7 @@ public class RSServiceImpl implements RSService {
     public boolean existUserByUsername(String username) {
         String response = restTemplate.getForEntity(urlRS + "/existUserByEmail?email=" + username, String.class).getBody();
         System.out.println("response from get: " + response);
-        if(response.equals("yes")){
+        if (response.equals("yes")) {
             return true;
         }
         return false;
@@ -47,13 +43,13 @@ public class RSServiceImpl implements RSService {
     }
 
     @Override
-    public List<DoctorRSDTO> getAllDoctors(){
+    public List<DoctorRSDTO> getAllDoctors() {
         DoctorRSDTO[] doctors = restTemplate.getForEntity(urlRS + "/doctors/getAll", DoctorRSDTO[].class).getBody();
         return Arrays.asList(doctors);
     }
 
     @Override
-    public DoctorDetailsDTO getDoctorByEmail(String email){
+    public DoctorDetailsDTO getDoctorByEmail(String email) {
         DoctorDetailsDTO doctorDetailsDTO = restTemplate.getForEntity(urlRS + "/getDoctorDetailsByEmail?email=" + email, DoctorDetailsDTO.class).getBody();
         System.out.println(doctorDetailsDTO);
         return doctorDetailsDTO;
@@ -73,7 +69,7 @@ public class RSServiceImpl implements RSService {
     }
 
     @Override
-    public DoctorDetailsDTO updateDoctorAsAdmin(DoctorUpdateAdminDTO doctorDTO){
+    public DoctorDetailsDTO updateDoctorAsAdmin(DoctorUpdateAdminDTO doctorDTO) {
         DoctorDetailsDTO doctorDetailsDTO = restTemplate.postForEntity(urlRS + "/doctors/update", doctorDTO, DoctorDetailsDTO.class).getBody();
         return doctorDetailsDTO;
     }
@@ -112,7 +108,7 @@ public class RSServiceImpl implements RSService {
     public HospitalDTO createHospital(HospitalDTO hospitalDTO) {
         try {
             HospitalDTO hospital = restTemplate.getForEntity(urlRS + "/hospitals/byname?hospitalName=" + hospitalDTO.getHospitalName(), HospitalDTO.class).getBody();
-        }catch (Exception e){
+        } catch (Exception e) {
             restTemplate.postForEntity(urlRS + "/hospitals/new", hospitalDTO, HttpStatus.class);
             return hospitalDTO;
         }
@@ -185,7 +181,7 @@ public class RSServiceImpl implements RSService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }

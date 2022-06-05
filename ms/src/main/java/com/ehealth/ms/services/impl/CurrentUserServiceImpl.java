@@ -22,17 +22,17 @@ public class CurrentUserServiceImpl implements CurrentUserService {
     private final AuthenticationManager authenticationManager;
     private final ValidationService validationService;
 
-    public boolean verifyPatient(){
+    public boolean verifyPatient() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }
 //        System.out.println("current user = " + username);
         AuthResponseRSDTO user = rsService.getUserByUsername(username);
-        if(user.getRole().equals(Role.PATIENT.name())){
+        if (user.getRole().equals(Role.PATIENT.name())) {
             return true;
         }
         return false;
@@ -43,44 +43,42 @@ public class CurrentUserServiceImpl implements CurrentUserService {
         AuthResponseRSDTO user;
         try {
             user = rsService.getUserByUsername(email);
-            if(!user.isEnable()){
+            if (!user.isEnable()) {
                 throw new RuntimeException("User is not enable");
             }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             return user;
 //        } catch (AuthenticationException e) {
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new BadCredentialsException("Incorrect combination of email and/or password");
         }
     }
 
-    public boolean verifyAdmin(){
+    public boolean verifyAdmin() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }
-//        System.out.println("current user = " + username);
         AuthResponseRSDTO user = rsService.getUserByUsername(username);
-        if(user.getRole().equals(Role.ADMIN.name())){
+        if (user.getRole().equals(Role.ADMIN.name())) {
             return true;
         }
         return false;
     }
 
-    public boolean verifyDoctor(){
+    public boolean verifyDoctor() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
             username = principal.toString();
         }
-//        System.out.println("current user = " + username);
         AuthResponseRSDTO user = rsService.getUserByUsername(username);
-        if(user.getRole().equals(Role.DOCTOR.name())){
+        if (user.getRole().equals(Role.DOCTOR.name())) {
             return true;
         }
         return false;
@@ -89,10 +87,7 @@ public class CurrentUserServiceImpl implements CurrentUserService {
     @Override
     public void changePassword(String email, PasswordDTO passwordDTO) {
         authenticate(email, passwordDTO.getOldPassword());
-//        if(!encodedPas.equals(authResponseRSDTO.getPassword()))
-//                throw new RuntimeException("wrong password");
         validationService.verifyPassword(passwordDTO.getNewPassword());
-//        encodedPas = new BCryptPasswordEncoder(12).encode(passwordDTO.getNewPassword());
         passwordDTO.setNewPassword(new BCryptPasswordEncoder(12).encode(passwordDTO.getNewPassword()));
         rsService.updatePassword(email, passwordDTO);
     }

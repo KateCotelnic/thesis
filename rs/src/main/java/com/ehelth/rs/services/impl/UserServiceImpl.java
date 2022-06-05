@@ -29,15 +29,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserCredentialsDTO insertUser(RegisterUserDTO userDTO) {
         User user = userDTO.toUser();
-        System.out.println(user);
         userRepository.save(user);
         return user.toUserCredentialsDTO();
     }
 
     @Override
-    public String existUser(String email){
+    public String existUser(String email) {
         Optional<User> user = userRepository.getUserByEmail(email);
-        if(user.isPresent())
+        if (user.isPresent())
             return "yes";
         return "no";
     }
@@ -82,10 +81,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getAdmin() {
-//        System.out.println(userRepository.getAllByRole(Role.ADMIN));
         String email = userRepository.getFirstByRole(Role.ADMIN).getEmail();
         System.out.println(email);
         return email;
-//        return null;
     }
 }

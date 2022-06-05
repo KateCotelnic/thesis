@@ -79,7 +79,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.save(appointment).toAppointmentDTO();
     }
 
-    private Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO){
+    private Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO) {
         System.out.println(appointmentDTO);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         System.out.println(userService.getUserByEmail(appointmentDTO.getDoctorEmail()));
@@ -89,8 +89,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .doctor(userService.getUserByEmail(appointmentDTO.getDoctorEmail()))
                 .patient(userService.getUserByEmail(appointmentDTO.getPatientEmail()))
                 .hospital(hospitalService.getHospitalByName(appointmentDTO.getHospitalName()))
-                .startDate(LocalDateTime.parse(appointmentDTO.getStartDate(),formatter))
-                .endDate(LocalDateTime.parse(appointmentDTO.getEndDate(),formatter))
+                .startDate(LocalDateTime.parse(appointmentDTO.getStartDate(), formatter))
+                .endDate(LocalDateTime.parse(appointmentDTO.getEndDate(), formatter))
                 .status(Status.REQUESTED)
                 .sentNotification(false)
                 .build();

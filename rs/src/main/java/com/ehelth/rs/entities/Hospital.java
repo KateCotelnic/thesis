@@ -45,7 +45,7 @@ public class Hospital {
     @JoinTable(name = "hospitals_doctors", joinColumns = @JoinColumn(name = "hospital_name"), inverseJoinColumns = @JoinColumn(name = "doctor_email"))
     private List<User> doctors;
 
-    public HospitalDTO toHospitalDTO(){
+    public HospitalDTO toHospitalDTO() {
         return HospitalDTO.builder()
                 .hospitalName(hospitalName)
                 .phoneNumber(phoneNumber)

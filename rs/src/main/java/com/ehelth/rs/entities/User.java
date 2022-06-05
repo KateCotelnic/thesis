@@ -83,15 +83,15 @@ public class User {
     @Column(name = "rating")
     private double rating;
 
-    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<FreeTime> freeTimes;
 
-    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Comment> commentsForDoctors;
 
-    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Comment> commentsForUser;
 
@@ -107,7 +107,7 @@ public class User {
     @ToString.Exclude
     private List<Appointment> appointmentsForUsers;
 
-    public UserCredentialsDTO toUserCredentialsDTO(){
+    public UserCredentialsDTO toUserCredentialsDTO() {
         return UserCredentialsDTO.builder()
                 .email(this.email)
                 .password(this.password)
@@ -116,7 +116,7 @@ public class User {
                 .build();
     }
 
-    public DoctorDTO toDoctorDTO(){
+    public DoctorDTO toDoctorDTO() {
         return DoctorDTO.builder()
                 .email(email)
                 .classification(classification.toString())
@@ -135,7 +135,7 @@ public class User {
                 .build();
     }
 
-    public DoctorDetailsDTO toDoctorDetailsDTO(){
+    public DoctorDetailsDTO toDoctorDetailsDTO() {
         return DoctorDetailsDTO.builder()
                 .email(email)
                 .firstName(firstName)
@@ -157,7 +157,7 @@ public class User {
                 .build();
     }
 
-    public UserDetailsDTO toUserDetailsDTO(){
+    public UserDetailsDTO toUserDetailsDTO() {
         return UserDetailsDTO.builder()
                 .firstName(firstName)
                 .lastName(lastName)

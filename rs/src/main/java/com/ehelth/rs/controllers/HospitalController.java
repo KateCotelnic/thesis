@@ -16,38 +16,44 @@ public class HospitalController {
     private final HospitalService hospitalService;
 
     @GetMapping
-    public ResponseEntity<HospitalDTO[]> getAllHospitals(){
+    public ResponseEntity<HospitalDTO[]> getAllHospitals() {
         return ResponseEntity.ok(hospitalService.getAll());
     }
 
     @GetMapping("/enums")
-    public ResponseEntity<SearchEnums> getAllEnumsForSearch(){
+    public ResponseEntity<SearchEnums> getAllEnumsForSearch() {
         return ResponseEntity.ok(hospitalService.getSearchEnums());
     }
 
     @PostMapping("/new")
-    public ResponseEntity<HttpStatus> createHospital(@RequestBody HospitalDTO hospitalDTO){
+    public ResponseEntity<HttpStatus> createHospital(@RequestBody HospitalDTO hospitalDTO) {
         hospitalService.createHospital(hospitalDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/byname")
-    public ResponseEntity<HospitalDTO> getByName(@RequestParam(name = "hospitalName", defaultValue = "")String hospitalName){
+    public ResponseEntity<HospitalDTO> getByName(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName) {
         return ResponseEntity.ok(hospitalService.getHospitalByName(hospitalName).toHospitalDTO());
     }
 
     @DeleteMapping()
-    public void deleteHospital(@RequestParam(name = "hospitalName")String hospitalName){
+    public void deleteHospital(@RequestParam(name = "hospitalName") String hospitalName) {
         hospitalService.delete(hospitalName);
     }
 
     @PostMapping("/update")
-    public ResponseEntity<HospitalDTO> updateHospital(@RequestBody HospitalDTO hospitalDTO){
+    public ResponseEntity<HospitalDTO> updateHospital(@RequestBody HospitalDTO hospitalDTO) {
         return ResponseEntity.ok(hospitalService.update(hospitalDTO));
     }
 
     @GetMapping("/hospitalEnums")
-    public ResponseEntity<HospitalEnums> getHospitalEnums(){
+    public ResponseEntity<HospitalEnums> getHospitalEnums() {
         return ResponseEntity.ok(hospitalService.getHospitalsEnums());
+    }
+
+    @GetMapping("/getAddress")
+    public ResponseEntity<String> getAdressByName(@RequestParam(name = "hospital", defaultValue = "") String hospitalName) {
+        HospitalDTO hospitalDTO = hospitalService.getHospitalByName(hospitalName).toHospitalDTO();
+        return ResponseEntity.ok(hospitalDTO.getAddress());
     }
 }

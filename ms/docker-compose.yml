@@ -8,11 +8,9 @@ services:
     build:
       context: ../ms
     container_name: ms
-#    depends_on:
-#      - discovery-service
     environment:
-#      - SPRING_APPLICATION_NAME=ms
       - SERVER_PORT=8090
+
   as:
     image: 'as'
     ports:
@@ -20,11 +18,12 @@ services:
     build:
       context: ../as
     container_name: as
-#    depends_on:
-#      - db
+    depends_on:
+      - rabbitmq
     environment:
-#      - SPRING_APPLICATION_NAME=cache1
       - SERVER_PORT=8092
+      - SPRING_RABBITMQ_HOST=rabbitmq
+
   ns:
     image: 'ns'
     ports:
@@ -32,11 +31,16 @@ services:
     build:
       context: ../ns
     container_name: ns
-    #    depends_on:
-    #      - db
+    depends_on:
+      - rabbitmq
     environment:
-      #      - SPRING_APPLICATION_NAME=cache1
       - SERVER_PORT=8093
+#      - SPRING_RABBITMQ_HOST=rabbitmq
+#      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - SPRING_RABBITMQ_ADDRESSES=rabbitmq:5672
+
   rs:
     image: 'rs'
     ports:
@@ -47,7 +51,6 @@ services:
     depends_on:
       - db
     environment:
-#      - SPRING_APPLICATION_NAME=cache2
       - SERVER_PORT=8091
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ehealth
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -59,57 +62,27 @@ services:
       - FLYWAY_MIGRATION_URL=jdbc:postgresql://db:5432/ehealth
       - FLYWAY_USERNAME=postgres
       - FLYWAY_PASSWORD=postgres
-#  app1:
-#    image: 'newtrip:latest'
-#    ports:
-#      - 9191:9191
-#    build:
-#      context: .
-#    container_name: newtrip1
-#    depends_on:
-#      - db
-#      - discovery-service
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=postgres
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#      - SPRING_APPLICATION_NAME=newtrip1
-#      - SERVER_PORT=9191
-#  app2:
-#    image: 'newtrip:latest'
-#    ports:
-#      - 9192:9192
-#    build:
-#      context: .
-#    container_name: newtrip2
-#    depends_on:
-#      - db
-#      - discovery-service
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=postgres
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#      - SPRING_APPLICATION_NAME=newtrip2
-#      - SERVER_PORT=9192
-#  app3:
-#    image: 'newtrip:latest'
-#    ports:
-#      - 9193:9193
-#    build:
-#      context: .
-#    container_name: newtrip3
-#    depends_on:
-#      - db
-#      - discovery-service
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=postgres
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#      - SPRING_APPLICATION_NAME=newtrip3
-#      - SERVER_PORT=9193
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+  db:
+    image: 'postgres:13.4-alpine'
+    ports:
+      - 5442:5432
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ehealth
+
 #
 #  node:
 #    image: 'node:latest'
@@ -131,12 +104,3 @@ services:
   #      - 8080:8080
   #    volumes:
   #      - ./:/code
-  db:
-    image: 'postgres:13.4-alpine'
-    ports:
-      - 5442:5432
-    container_name: db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ehealth

@@ -20,20 +20,20 @@ public class DoctorController {
     private final ASService asService;
 
     @PostMapping("/deleteComment")
-    public ResponseEntity<HttpStatus> deleteComment(@RequestBody RequestDeleteCommentDTO requestDeleteCommentDTO){
+    public ResponseEntity<HttpStatus> deleteComment(@RequestBody RequestDeleteCommentDTO requestDeleteCommentDTO) {
         verifyIsDoctor();
         asService.requestDeleteComment(requestDeleteCommentDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/acceptAppointment")
-    public ResponseEntity<AppointmentDTO> acceptAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
+    public ResponseEntity<AppointmentDTO> acceptAppointment(@RequestParam(name = "id", defaultValue = "") String id) {
         verifyIsDoctor();
         return ResponseEntity.ok(asService.acceptAppointment(id));
     }
 
     @PostMapping("/declineAppointment")
-    public ResponseEntity<AppointmentDTO> declineAppointment(@RequestParam(name = "id", defaultValue = "")String id) {
+    public ResponseEntity<AppointmentDTO> declineAppointment(@RequestParam(name = "id", defaultValue = "") String id) {
         verifyIsDoctor();
         return ResponseEntity.ok(asService.declineAppointment(id));
     }
@@ -45,14 +45,14 @@ public class DoctorController {
     }
 
     @DeleteMapping("/freeTime")
-    public ResponseEntity<HttpStatus> deleteFreeTime(@RequestParam(name = "id", defaultValue = "")String id) {
+    public ResponseEntity<HttpStatus> deleteFreeTime(@RequestParam(name = "id", defaultValue = "") String id) {
         verifyIsDoctor();
         rsService.deleteFreeTime(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    private void verifyIsDoctor(){
-        if(!currentUserService.verifyDoctor()){
+    private void verifyIsDoctor() {
+        if (!currentUserService.verifyDoctor()) {
             throw new RuntimeException("User is not doctor");
         }
     }

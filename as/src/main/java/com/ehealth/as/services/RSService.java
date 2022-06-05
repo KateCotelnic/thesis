@@ -2,8 +2,8 @@ package com.ehealth.as.services;
 
 import com.ehealth.as.entities.dto.AppointmentDTO;
 import com.ehealth.as.entities.dto.CommentDTO;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 public interface RSService {
     AppointmentDTO createAppointment(AppointmentDTO appointmentDTO);
@@ -12,4 +12,8 @@ public interface RSService {
     AppointmentDTO cancelAppointment(String id);
     AppointmentDTO acceptAppointment(String id);
     AppointmentDTO declineAppointment(String id);
+    List<AppointmentDTO> getAllAppointments();
+    void setSentNotification(String id);
+    String getNameByEmail(String email);
+    String getHospitalAddress(String hospitalName);
 }
