@@ -4,6 +4,9 @@ import com.ehealth.ms.entities.dto.*;
 import com.ehealth.ms.services.CurrentUserService;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,8 +47,9 @@ public class GeneralController {
     }
 
     @GetMapping("/doctors/param")
-    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "") String area, @RequestParam(name = "speciality", defaultValue = "") String speciality, @RequestParam(name = "classification", defaultValue = "") String classification) {
-        return ResponseEntity.ok(rsService.getDoctorsByParam(area, classification, speciality));
+    public ResponseEntity<Page<DoctorRSDTO>> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "") String area, @RequestParam(name = "speciality", defaultValue = "") String speciality, @RequestParam(name = "classification", defaultValue = "") String classification, @RequestParam(name = "page", defaultValue = "1") String page) {
+        List<DoctorRSDTO> list = rsService.getDoctorsByParam(area, classification, speciality);
+        return ResponseEntity.ok(new PageImpl<>(list, PageRequest.of(Integer.parseInt(page), 1), list.size()));
     }
 
     @GetMapping("/details")

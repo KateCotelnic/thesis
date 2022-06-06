@@ -93,6 +93,9 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO[] getWithParam(ParametersDoctorDTO parametersDoctorDTO) {
         List<User> doctors = new ArrayList<>();
+        if(parametersDoctorDTO.getArea().isEmpty() && parametersDoctorDTO.getClassification().isEmpty() && parametersDoctorDTO.getSpeciality().isEmpty()){
+            return getAllDoctors();
+        }
         if (!(parametersDoctorDTO.getArea().isEmpty())) {
             List<Hospital> hospitals = hospitalService.getAllByArea(parametersDoctorDTO.getArea());
             List<User> finalDoctors = doctors;

@@ -44,6 +44,7 @@ public class DoctorController {
 
     @PostMapping("/param")
     public ResponseEntity<DoctorDTO[]> getByParam(@RequestBody ParametersDoctorDTO parametersDoctorDTO) {
+        System.out.println(parametersDoctorDTO);
         return ResponseEntity.ok(doctorService.getWithParam(parametersDoctorDTO));
     }
 
