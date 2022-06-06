@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +36,9 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public SearchEnums getSearchEnums() {
         return SearchEnums.builder()
-                .specialities(new ArrayList<>(List.of(Arrays.toString(Speciality.values()))))
-                .areas(new ArrayList<>(List.of(Arrays.toString(Area.values()))))
-                .classifications(new ArrayList<>(List.of(Arrays.toString(Classification.values()))))
+                .specialities(Arrays.stream(Speciality.values()).map(Enum::toString).collect(Collectors.toList()))
+                .areas(Arrays.stream(Area.values()).map(Enum::toString).collect(Collectors.toList()))
+                .classifications(Arrays.stream(Classification.values()).map(Enum::toString).collect(Collectors.toList()))
                 .build();
     }
 

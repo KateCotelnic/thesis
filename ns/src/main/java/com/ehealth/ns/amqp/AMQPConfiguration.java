@@ -1,4 +1,4 @@
-package com.ehealth.ns.services;
+package com.ehealth.ns.amqp;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

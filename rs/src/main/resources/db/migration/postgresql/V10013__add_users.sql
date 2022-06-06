@@ -10,7 +10,7 @@ VALUES ('katie@email.com', '$2a$12$6OxG/l4ROLHeUXyvfrvRge9/w8PHt9gZZjY37uL15bUXe
         'ADMIN', true, 'Catherine', 'Cot', '049584732', 27),
        ('jeffrey@email.com', '$2a$12$20kvXa6CZ5/JHuib0kIeOevbCFAF4mZJR7W6PiEbBQDqhbKrLpPOi',
         'PATIENT', false, 'Jeffrey', 'Jef', '304874032', 12),
-       ('emily@email.com', '$2a$12$fVQwXxgEV.abCSLpjN7V6uXV4Qm4cvRqANCXmnpwXZ5dTixXrBNBe',
+       ('ecaterina.cotelnic@isa.utm.md', '$2a$12$fVQwXxgEV.abCSLpjN7V6uXV4Qm4cvRqANCXmnpwXZ5dTixXrBNBe',
         'PATIENT', true, 'Emily', 'Muller', '3215153425', 16),
        ('catal@email.com', '$2a$12$C5gDWeIRojjxAjPgG1XacugzdAb6HrJeHzFqIIM96nicRF9ISOQdy',
         'PATIENT', true, 'Catalin', 'Kelly', '4932754930', 45);
@@ -29,7 +29,7 @@ INSERT INTO users (email,
                    description,
                    classification,
                    rating)
-VALUES ('polly@email.com', '$2a$12$s39m9a4.s8NXuIZ0GzmkrugfSEF3FBpMJKusthZwohRgy1f1pcKVu',
+VALUES ('kotkatea@gmail.com', '$2a$12$s39m9a4.s8NXuIZ0GzmkrugfSEF3FBpMJKusthZwohRgy1f1pcKVu',
         'DOCTOR', true, 'Polina', 'Murphy', '0948573035', 'PSYCHIATRIST', 300, 'FIRST', 3, 'Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.',
         'ADULT', 0);
 

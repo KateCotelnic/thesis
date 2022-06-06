@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class MessageDTO {
     private String receiverEmail;
     private String message;
+    private String subject;
 }

@@ -30,14 +30,14 @@ public class NSServiceImpl implements NSService {
         String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_EMAIL, message);
         messageText = "New appointment!\nDate: " + appointmentDTO.getStartDate() + " - " + appointmentDTO.getEndDate() + "\nHospital: " + appointmentDTO.getHospitalName() + "\nPatient email: " + appointmentDTO.getPatientEmail();
-        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
+        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).subject("Request for a new subject").build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
     }
 
     @Override
     public void sendAdminRequestDeleteComment(CommentDTO commentDTO) throws JsonProcessingException {
         String messageText = "There is a new request for removing the comment.\nDoctor email:" + commentDTO.getDoctorEmail() + ".\nPatient email:" + commentDTO.getPatientEmail() + ".\nDate: " + commentDTO.getDate() + ".\nRating: " + commentDTO.getRating() + ".\ncomment body: " + commentDTO.getBody() + ".\nComment id: " + commentDTO.getCommentId() + ".\nReason: " + commentDTO.getReason();
-        String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(commentDTO.getAdminEmail()).message(messageText).build());
+        String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(commentDTO.getAdminEmail()).message(messageText).subject("Request for removing a comment").build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_EMAIL, message);
     }
@@ -48,18 +48,19 @@ public class NSServiceImpl implements NSService {
         String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
         messageText = "Hello " + rsService.getNameByEmail(appointmentDTO.getDoctorEmail()) + ", \n\n" + messageText + "\n\nBest regards,\neHealth team";
-        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
+        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).subject("Canceled appointment").build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_EMAIL, message);
     }
 
     @Override
     public void sendPatientAppointment(AppointmentDTO appointmentDTO, boolean accepted) throws JsonProcessingException {
         String acceptedMessage = accepted ? "accepted" : "declined";
+        String subject = accepted ? "Accepted " : "Declined ";
         String messageText = "The appointment was " + acceptedMessage + " by doctor " + rsService.getNameByEmail(appointmentDTO.getDoctorEmail()) + ".\nDate: " + appointmentDTO.getStartDate() + " - " + appointmentDTO.getEndDate() + ".\nHospital: " + appointmentDTO.getHospitalName() + ".\nHospital address: " + rsService.getHospitalAddress(appointmentDTO.getHospitalName());
         String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
         messageText = "Hello " + rsService.getNameByEmail(appointmentDTO.getPatientEmail()) + ", \n\n" + messageText + "\n\nBest regards,\neHealth team";
-        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
+        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).subject(subject + "request for the appointment").build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_EMAIL, message);
     }
 
@@ -68,7 +69,7 @@ public class NSServiceImpl implements NSService {
         String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
         messageText = "Hello " + rsService.getNameByEmail(appointmentDTO.getPatientEmail()) + ", \n\n" + messageText + "\n\nBest regards,\neHealth team";
-        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).build());
+        message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getDoctorEmail()).message(messageText).subject("Reminder for the appointment").build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_EMAIL, message);
     }
 

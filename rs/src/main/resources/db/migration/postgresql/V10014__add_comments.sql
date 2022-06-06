@@ -14,4 +14,4 @@ INSERT INTO comments ( comment_id,
                        patient_email,
                        doctor_email)
 VALUES (nextval('ehealth_sequence'),
-        4, '2020-03-12', 'emily@email.com', 'tommy@email.com');
+        4, '2020-03-12', 'ecaterina.cotelnic@isa.utm.md', 'tommy@email.com');
