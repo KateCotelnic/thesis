@@ -28,6 +28,9 @@ public class AuthController {
                 .email(request.getEmail())
                 .token(token)
                 .role(user.getRole())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .middleName(user.getMiddleName())
                 .build());
     }
 

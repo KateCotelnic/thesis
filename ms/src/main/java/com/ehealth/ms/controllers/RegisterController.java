@@ -1,8 +1,6 @@
 package com.ehealth.ms.controllers;
 
-import com.ehealth.ms.entities.dto.RegisterRequestDTO;
-import com.ehealth.ms.entities.dto.RegisterResponseDTO;
-import com.ehealth.ms.entities.dto.RegisterUserRSDTO;
+import com.ehealth.ms.entities.dto.*;
 import com.ehealth.ms.security.JwtTokenProvider;
 import com.ehealth.ms.services.RSService;
 import com.ehealth.ms.services.ValidationService;
@@ -23,7 +21,7 @@ public class RegisterController {
     private final ValidationService validationService;
 
     @PostMapping()
-    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO request){
+    public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO request){
         System.out.println(request);
         validationService.verifyEmail(request.getEmail());
         validationService.verifyPassword(request.getPassword());
@@ -44,9 +42,13 @@ public class RegisterController {
                 .build();
         rsService.insertUser(userRSDTO);
         String token = jwtTokenProvider.createToken(request.getEmail(), "PATIENT");
-        RegisterResponseDTO response = RegisterResponseDTO.builder()
+        AuthResponseDTO response = AuthResponseDTO.builder()
                 .email(request.getEmail())
                 .token(token)
+                .firstName(request.getFirstName())
+                .middleName(request.getMiddleName())
+                .lastName(request.getLastName())
+                .role("PATIENT")
                 .build();
         return ResponseEntity.ok(response);
     }

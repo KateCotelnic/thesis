@@ -14,6 +14,9 @@ public class AuthResponseRSDTO {
     private String password;
     private String role;
     private boolean isEnable;
+    private String firstName;
+    private String lastName;
+    private String middleName;
 
     public UserDetail toUserDetail(){
         return UserDetail.builder()

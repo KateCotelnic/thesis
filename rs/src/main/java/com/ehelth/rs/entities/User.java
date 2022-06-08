@@ -113,6 +113,9 @@ public class User {
                 .password(this.password)
                 .role(this.role.toString())
                 .isEnable(this.isEnable)
+                .firstName(this.firstName)
+                .lastName(this.lastName)
+                .middleName(this.middleName)
                 .build();
     }
 

@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b34a0bb0-30d6-4b84-b1fe-5a6f64e19e9b" name="Changes" comment="rs initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10014__add_comments.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10014__add_comments.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/AuthResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/AuthResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/AuthResponseRSDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/AuthResponseRSDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/java/com/ehelth/rs/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/java/com/ehelth/rs/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/java/com/ehelth/rs/entities/dto/UserCredentialsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/java/com/ehelth/rs/entities/dto/UserCredentialsDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
