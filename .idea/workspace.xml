@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b34a0bb0-30d6-4b84-b1fe-5a6f64e19e9b" name="Changes" comment="rs initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/GeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/GeneralController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/DoctorPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10013__add_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10013__add_users.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10014__add_comments.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10014__add_comments.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10016__add_hospitals_doctors.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10016__add_hospitals_doctors.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10017__add_appointments.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10017__add_appointments.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10020__add_free_time.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10020__add_free_time.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +90,7 @@
       <workItem from="1650213674892" duration="1228000" />
       <workItem from="1650216136733" duration="722000" />
       <workItem from="1650220370250" duration="657000" />
-      <workItem from="1654688662853" duration="631000" />
+      <workItem from="1654688662853" duration="1278000" />
     </task>
     <task id="LOCAL-00001" summary="rs initial">
       <created>1650214300836</created>
