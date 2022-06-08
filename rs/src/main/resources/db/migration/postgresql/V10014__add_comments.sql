@@ -6,7 +6,7 @@ INSERT INTO comments ( comment_id,
                        doctor_email)
 VALUES (nextval('ehealth_sequence'),
         'I liked the consultation, it went quickly and efficiently.',
-        5, '2021-11-28', 'jeffrey@email.com', 'catalin.schiopu@isa.utm.md');
+        5, '2021-11-28', 'jeffrey@gmail.com', 'catalin.schiopu@isa.utm.md');
 
 INSERT INTO comments ( comment_id,
                        rating,

@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b34a0bb0-30d6-4b84-b1fe-5a6f64e19e9b" name="Changes" comment="rs initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10013__add_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10013__add_users.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10014__add_comments.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10014__add_comments.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10016__add_hospitals_doctors.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10016__add_hospitals_doctors.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10017__add_appointments.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10017__add_appointments.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10020__add_free_time.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/resources/db/migration/postgresql/V10020__add_free_time.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
