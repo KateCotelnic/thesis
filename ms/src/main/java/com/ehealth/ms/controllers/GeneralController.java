@@ -29,8 +29,9 @@ public class GeneralController {
     }
 
     @GetMapping("/hospitals")
-    public ResponseEntity<List<HospitalDTO>> getHospitals() {
-        return ResponseEntity.ok(rsService.getHospitals());
+    public ResponseEntity<Page> getHospitals(@RequestParam(name = "page", defaultValue = "1") String page) {
+        List<HospitalDTO> list = rsService.getHospitals();
+        return ResponseEntity.ok(constructPage(page, list));
     }
 
     @GetMapping("/searchenums")
@@ -39,32 +40,15 @@ public class GeneralController {
     }
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<DoctorRSDTO>> getDoctorsByHospital(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName) {
-        return ResponseEntity.ok(rsService.getDoctorsByHospital(hospitalName));
+    public ResponseEntity<Page> getDoctorsByHospital(@RequestParam(name = "hospitalName", defaultValue = "") String hospitalName, @RequestParam(name = "page", defaultValue = "1") String page) {
+        List<DoctorRSDTO> list = rsService.getDoctorsByHospital(hospitalName);
+        return ResponseEntity.ok(constructPage(page, list));
     }
 
     @GetMapping("/doctors/param")
-    public ResponseEntity<DoctorPage> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "") String area, @RequestParam(name = "speciality", defaultValue = "") String speciality, @RequestParam(name = "classification", defaultValue = "") String classification, @RequestParam(name = "page", defaultValue = "1") String page) {
+    public ResponseEntity<Page> getDoctorsByParam(@RequestParam(name = "area", defaultValue = "") String area, @RequestParam(name = "speciality", defaultValue = "") String speciality, @RequestParam(name = "classification", defaultValue = "") String classification, @RequestParam(name = "page", defaultValue = "1") String page) {
         List<DoctorRSDTO> list = rsService.getDoctorsByParam(area, classification, speciality);
-        int size = list.size();
-        System.out.println("total = " + size);
-        int totalPages = size / 10;
-        if(list.size() % 10 != 0){
-            totalPages ++;
-        }
-        System.out.println("totalPage = " + totalPages);
-        if(Integer.parseInt(page) * 10 <= list.size()) {
-            list = list.subList((Integer.parseInt(page) - 1) * 10, Integer.parseInt(page) * 10);
-        }
-        else {
-            list = list.subList((Integer.parseInt(page) - 1) * 10, list.size());
-        }
-        DoctorPage doctorPage = DoctorPage.builder()
-                .list(list)
-                .totalElements(size)
-                .totalPages(totalPages)
-                .build();
-        return ResponseEntity.ok(doctorPage);
+        return ResponseEntity.ok(constructPage(page, list));
     }
 
     @GetMapping("/details")
@@ -114,4 +98,25 @@ public class GeneralController {
         }
         return username;
     }
+
+    public static Page constructPage(String pageNumber, List list){
+        int size = list.size();
+        int totalPages = size / 10;
+        if(list.size() % 10 != 0){
+            totalPages ++;
+        }
+        if(Integer.parseInt(pageNumber) * 10 <= list.size()) {
+            list = list.subList((Integer.parseInt(pageNumber) - 1) * 10, Integer.parseInt(pageNumber) * 10);
+        }
+        else {
+            list = list.subList((Integer.parseInt(pageNumber) - 1) * 10, list.size());
+        }
+        Page page = Page.builder()
+                .list(list)
+                .totalElements(size)
+                .totalPages(totalPages)
+                .build();
+        return page;
+    }
+
 }

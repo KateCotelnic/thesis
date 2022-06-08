@@ -18,9 +18,10 @@ public class AdminController {
     private final CurrentUserService currentUserService;
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<DoctorRSDTO>> getDoctors() {
+    public ResponseEntity<Page> getDoctors(@RequestParam(name = "page", defaultValue = "1") String page) {
         verifyIsAdmin();
-        return ResponseEntity.ok(rsService.getAllDoctors());
+        List<DoctorRSDTO> list = rsService.getAllDoctors();
+        return ResponseEntity.ok(GeneralController.constructPage(page, list));
     }
 
     @PostMapping("/newdoctor")

@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b34a0bb0-30d6-4b84-b1fe-5a6f64e19e9b" name="Changes" comment="rs initial" />
+    <list default="true" id="b34a0bb0-30d6-4b84-b1fe-5a6f64e19e9b" name="Changes" comment="rs initial">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/GeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/controllers/GeneralController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/DoctorPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms/src/main/java/com/ehealth/ms/entities/dto/Page.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,6 +89,7 @@
       <workItem from="1650213674892" duration="1228000" />
       <workItem from="1650216136733" duration="722000" />
       <workItem from="1650220370250" duration="657000" />
+      <workItem from="1654688662853" duration="631000" />
     </task>
     <task id="LOCAL-00001" summary="rs initial">
       <created>1650214300836</created>

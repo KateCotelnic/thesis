@@ -114,8 +114,8 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "firstName": "Catherine",
 "lastName": "Cot",
-"middleName": null,
-"age": "0",
+"middleName": "",
+"age": "27",
 "phoneNumber": "049584732",
 "photo": null,
 "appointments": []
@@ -133,17 +133,18 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> response body:
 "OK"
 
-&nbsp; **get all doctor**
+&nbsp; **get all doctors**
 <br/>
 <br/> method: GET
-<br/> URL: http://localhost:8090/api/admin/doctors
+<br/> URL: http://localhost:8090/api/admin/doctors?page=1
 <br/> response body:
-[
 {
-"email": "polly@email.com",
+"list": [
+{
+"id": null,
 "firstName": "Polina",
 "lastName": "Murphy",
-"middleName": null,
+"middleName": "",
 "phoneNumber": "0948573035",
 "speciality": "PSYCHIATRIST",
 "price": "300",
@@ -158,10 +159,10 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 },
 {
-"email": "tommy@email.com",
+"id": null,
 "firstName": "Tom",
 "lastName": "Reyes",
-"middleName": null,
+"middleName": "",
 "phoneNumber": "05948386785",
 "speciality": "THERAPIST",
 "price": "200",
@@ -176,7 +177,10 @@ All requests except authentication, registration and for unauthorized user shoul
 "Repromed"
 ]
 }
-]
+],
+"totalPages": 1,
+"totalElements": 2
+}
 
 &nbsp; **get doctor by email**
 <br/>
@@ -421,9 +425,10 @@ All requests except authentication, registration and for unauthorized user shoul
 &nbsp; **get all hospitals**
 <br/>
 <br/> method: GET
-<br/> URL: http://localhost:8090/api/hospitals
+<br/> URL: http://localhost:8090/api/hospitals?page=1
 <br/> response body:
-[
+{
+"list": [
 {
 "hospitalName": "Medpark International Hospital",
 "cityArea": "CIOCANA",
@@ -440,7 +445,10 @@ All requests except authentication, registration and for unauthorized user shoul
 "website": null,
 "address": "Strada Cuza Vodă 29/1"
 }
-]
+],
+"totalPages": 1,
+"totalElements": 2
+}
 
 &nbsp; **create new hospital**
 <br/>
@@ -544,9 +552,10 @@ All requests except authentication, registration and for unauthorized user shoul
 &nbsp; **get all hospitals**
 <br/>
 <br/> method: GET
-<br/> URL: http://localhost:8090/api/hospitals
+<br/> URL: http://localhost:8090/api/hospitals?page=1
 <br/> response body:
-[
+{
+"list": [
 {
 "hospitalName": "Medpark International Hospital",
 "cityArea": "CIOCANA",
@@ -563,18 +572,23 @@ All requests except authentication, registration and for unauthorized user shoul
 "website": null,
 "address": "Strada Cuza Vodă 29/1"
 }
-]
+],
+"totalPages": 1,
+"totalElements": 2
+}
 
 &nbsp; **get doctors by hospital**
 <br/>
 <br/> method: GET
-<br/> URL: http://localhost:8090/api/doctors?hospitalName=Repromed
+<br/> URL: http://localhost:8090/api/doctors?hospitalName=Repromed&page=1
 <br/> response body:
-[
 {
+"list": [
+{
+"id": null,
 "firstName": "Tom",
 "lastName": "Reyes",
-"middleName": null,
+"middleName": "",
 "phoneNumber": "05948386785",
 "speciality": "THERAPIST",
 "price": "200",
@@ -589,18 +603,41 @@ All requests except authentication, registration and for unauthorized user shoul
 "Repromed"
 ]
 }
-]
+],
+"totalPages": 1,
+"totalElements": 1
+}
 
 &nbsp; **get doctors by area/speciality/classification (any combination is allowed)**
 <br/>
 <br/> method: GET
-<br/> URL: http://localhost:8090/api/doctors/param?area=BOTANICA&speciality=PSYCHIATRIST&classification=ADULT
+<br/> URL: http://localhost:8090/api/doctors/param?area=&speciality=&classification=&page=1
 <br/> response body:
-[
 {
+"list": [
+{
+"id": null,
+"firstName": "Polina",
+"lastName": "Murphy",
+"middleName": "",
+"phoneNumber": "0948573035",
+"speciality": "PSYCHIATRIST",
+"price": "300",
+"photo": null,
+"grade": "FIRST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"id": null,
 "firstName": "Tom",
 "lastName": "Reyes",
-"middleName": null,
+"middleName": "",
 "phoneNumber": "05948386785",
 "speciality": "THERAPIST",
 "price": "200",
@@ -615,7 +652,10 @@ All requests except authentication, registration and for unauthorized user shoul
 "Repromed"
 ]
 }
-]
+],
+"totalPages": 1,
+"totalElements": 2
+}
 
 &nbsp; **get speciality, areas and classification are for search**
 <br/>

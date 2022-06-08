@@ -11,8 +11,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorPage {
-    List<DoctorRSDTO> list;
+public class Page {
+    List<Object> list;
     int totalPages;
     int totalElements;
 }
