@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './routes';
 import ThemeProvider from './theme';
 // components
@@ -6,7 +7,6 @@ import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import Login from './pages/Login';
 import Products from './pages/Products';
-
 
 // ----------------------------------------------------------------------
 
@@ -28,19 +28,26 @@ import Products from './pages/Products';
 // }
 
 export default function App() {
+  const queryClient = new QueryClient();
 
   const token = localStorage.getItem('token');
   const logined = localStorage.getItem("logined") === "1";
 
   if(!token) {
     return <Login />
+  // const logined = localStorage.getItem('logined') === '1';
+  // //
+  // if (!token) {
+  //   return <Login />;
   }
 
   return (
-    <ThemeProvider>
-      <ScrollToTop />
-      <BaseOptionChartStyle />
-      <Router />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <ScrollToTop />
+        <BaseOptionChartStyle />
+        <Router />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
