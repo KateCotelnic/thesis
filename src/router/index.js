@@ -1,30 +1,61 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Router from "vue-router";
+import HomePage from "@/views/Home/index";
+import DashboardPage from "@/views/Dashboard";
+import { role } from "@/helpers/role";
+import LoginPage from "@/views/Login";
+import RegisterPage from "@/views/Register";
+import CalendarPage from "@/views/Calendar";
 
-Vue.use(VueRouter);
+Vue.use(Router);
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-];
-
-const router = new VueRouter({
+export const router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,
-  routes,
+  routes: [
+    {
+      path: "/",
+      component: HomePage,
+      meta: { authorize: [] },
+    },
+    {
+      path: "/dashboard",
+      component: DashboardPage,
+      meta: { authorize: [role.admin] },
+    },
+    {
+      path: "/login",
+      component: LoginPage,
+    },
+    {
+      path: "/register",
+      component: RegisterPage,
+    },
+    {
+      path: "/calendar",
+      component: CalendarPage,
+    },
+
+    // otherwise redirect to home
+    { path: "*", redirect: "/" },
+  ],
 });
 
-export default router;
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const { authorize } = to.meta;
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  if (authorize) {
+    if (!currentUser) {
+      // not logged in so redirect to login page with the return url
+      return next({ path: "/login", query: { returnUrl: to.path } });
+    }
+
+    // check if route is restricted by role
+    if (authorize.length && !authorize.includes(currentUser.role)) {
+      // role not authorised so redirect to home page
+      return next({ path: "/" });
+    }
+  }
+  next();
+});

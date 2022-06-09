@@ -1,50 +1,108 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+    <div class="app-container d-flex">
+      <v-navigation-drawer
+        permanent
+        v-if="$route.path !== '/login' && $route.path !== '/register'"
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+        <v-list-item class="logo-container">
+          <LogoComponent />
+        </v-list-item>
 
-    <v-main>
-      <router-view />
-    </v-main>
+        <v-list nav class="mt-8">
+          <v-list-item link to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link to="/dashboard" v-if="isAdmin">
+            <v-list-item-icon>
+              <v-icon>mdi-view-dashboard</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link to="/calendar">
+            <v-list-item-icon>
+              <v-icon>mdi-help-box</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Calendar</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      <div class="app-container__right-side">
+        <v-app-bar
+          elevation="0"
+          height="68"
+          class="d-flex justify-end"
+          v-if="$route.path !== '/login' && $route.path !== '/register'"
+        >
+          <AvatarMenu />
+        </v-app-bar>
+        <v-main class="content">
+          <router-view />
+        </v-main>
+      </div>
+    </div>
   </v-app>
 </template>
 
 <script>
+import { role } from "@/helpers/role";
+import LogoComponent from "@/components/LogoComponent";
+import AvatarMenu from "@/components/AvatarMenu";
+import { avatarMenu } from "@/helpers/avatarMenu";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "App",
-
+  components: { AvatarMenu, LogoComponent },
+  avatarMenu,
   data: () => ({
-    //
+    items: [
+      { title: "Home", icon: "mdi-home", link: "/" },
+      { title: "Dashboard", icon: "mdi-view-dashboard", link: "/dashboard" },
+      { title: "Logout", icon: "mdi-help-box", link: "/login" }
+    ],
+    right: null,
+    role: JSON.parse(localStorage.getItem("currentUser")).role
   }),
+  methods: {
+    ...mapActions({
+      getUserDetails: "userDetails"
+    })
+  },
+  computed: {
+    ...mapGetters({
+      getUser: "currentUser"
+    }),
+    isAdmin() {
+      return this.getUser.role === role.admin;
+    }
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+.app-container {
+  height: 100%;
+
+  &__right-side {
+    width: 100%;
+  }
+}
+
+.content {
+  height: calc(100% - 68px);
+}
+
+.logo-container {
+  height: 68px !important;
+}
+</style>
