@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Box, Container, Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import { useSearchEnums } from '../sections/doctors/useSearchEnums';
 import Page from '../components/Page';
 import FilterSelect from '../sections/doctors/FilterSelect';
 import { useFilters } from '../sections/doctors/useFilters';
+import PaginationContainer from '../sections/doctors/PaginationContainer';
 
 const doctorsFiltersContainerStyle = {
   display: 'flex',
@@ -24,8 +26,6 @@ export default function Doctors() {
   const searchEnums = useSearchEnums();
   const results = useFilters(filters);
 
-  console.log(results.data);
-
   const handleFiltersChange = (e, select) => {
     setFilters((filters) => ({
       ...filters,
@@ -36,7 +36,7 @@ export default function Doctors() {
 
   return (
     <Page title="Dashboard: Doctors">
-      <Container>
+      <Container sx={{ padding: '40px', minWidth: '320px' }}>
         <Typography variant="h4" sx={{ mb: 5 }}>
           Doctors
         </Typography>
@@ -65,23 +65,35 @@ export default function Doctors() {
         )}
 
         {results.data && (
-          <Box sx={{ marginTop: '40px', display: 'flex', gap: '50px' }}>
-            {results.data.map((doctor) => (
-              <Box>
-                <Box>firstName: {doctor.firstName}</Box>
-                <Box>lastName: {doctor.lastName}</Box>
-                <Box>speciality: {doctor.speciality}</Box>
-                <Box>classification: {doctor.classification}</Box>
-                <Box>experience: {doctor.experience}</Box>
-                <Box>grade: {doctor.grade}</Box>
-                <Box>hospitals: {doctor.hospitals}</Box>
-                <Box>price: {doctor.price}</Box>
-                <Box>rating: {doctor.rating}</Box>
-                <Box>phoneNumber: {doctor.phoneNumber}</Box>
-              </Box>
+          <Box
+            sx={{
+              paddingTop: '40px',
+              display: 'flex',
+              gap: '50px',
+              flexWrap: 'wrap',
+            }}
+          >
+            {results.data?.list.map((doctor) => (
+              <Paper
+                elevation={3}
+                sx={{ padding: '20px', maxWidth: '300px' }}
+                key={doctor.phoneNumber}
+              >
+                <Box>First Name: {doctor.firstName}</Box>
+                <Box>Last Name: {doctor.lastName}</Box>
+                <Box>Speciality: {doctor.speciality}</Box>
+                <Box>Classification: {doctor.classification}</Box>
+                <Box>Experience: {doctor.experience}</Box>
+                <Box>Grade: {doctor.grade}</Box>
+                <Box>Hospitals: {doctor.hospitals.join(', ')}</Box>
+                <Box>Price: {doctor.price}</Box>
+                <Box>Rating: {doctor.rating}</Box>
+                <Box>Phone Number: {doctor.phoneNumber}</Box>
+              </Paper>
             ))}
           </Box>
         )}
+        <PaginationContainer filters={filters} setFilters={setFilters} />
       </Container>
     </Page>
   );
