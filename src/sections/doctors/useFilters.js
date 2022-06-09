@@ -14,7 +14,7 @@ const fetchApi = async (context) => {
   const _classification = classification === 'All' ? '' : classification;
 
   const res = await axios.get(
-    `http://localhost:8090/api/doctors/param?area=${_area}&speciality=${_speciality}&classification=${_classification}`
+    `http://localhost:8090/api/doctors/param?area=${_area}&speciality=${_speciality}&classification=${_classification}&page=${page}`
   );
   return res.data;
 };
