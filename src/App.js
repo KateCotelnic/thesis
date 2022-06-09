@@ -5,6 +5,7 @@ import ThemeProvider from './theme';
 import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import Login from './pages/Login';
+import Products from './pages/Products';
 
 
 // ----------------------------------------------------------------------
@@ -30,7 +31,7 @@ export default function App() {
 
   const token = localStorage.getItem('token');
   const logined = localStorage.getItem("logined") === "1";
-  //
+
   if(!token) {
     return <Login />
   }

@@ -1,220 +1,331 @@
-import { faker } from '@faker-js/faker';
-// @mui
-import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
-// components
-import Page from '../components/Page';
-import Iconify from '../components/Iconify';
-import Calendar from '../Calendar';
-// sections
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import moment from 'moment';
+import Paper from '@mui/material/Paper';
+import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+import { styled } from '@mui/material/styles';
 import {
-  AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppWidgetSummary,
-  AppCurrentSubject,
-  AppConversionRates,
-} from '../sections/@dashboard/app';
+  Scheduler,
+  Appointments,
+  AppointmentForm,
+  AppointmentTooltip,
+  WeekView,
+  EditRecurrenceMenu,
+  AllDayPanel,
+  ConfirmationDialog,
+  CurrentTimeIndicator,
+  Toolbar,
+  DateNavigator,
+  TodayButton,
+  Resources
+} from '@devexpress/dx-react-scheduler-material-ui';
+import { blue, green, red, yellow } from '@mui/material/colors';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import appointments from '../demo-data/today-appointments';
+import { api } from '../api';
 
-// ----------------------------------------------------------------------
 
-export default function DashboardApp() {
-  const theme = useTheme();
+const PREFIX = 'Demo';
 
-  return (
-    <Page title="Calendar">
-      <Container maxWidth="xl">
+const currentDate = moment();
+const date = currentDate.date();
 
-        {/*
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
-        </Typography>
+const makeTodayAppointment = (startDate, endDate) => {
+  const days = moment(startDate).diff(endDate, 'days');
+  const nextStartDate = moment(startDate)
+    .year(currentDate.year())
+    .month(currentDate.month())
+    .date(date);
+  const nextEndDate = moment(endDate)
+    .year(currentDate.year())
+    .month(currentDate.month())
+    .date(date + days);
+  const next = startDate;
+  const last = endDate;
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-          </Grid>
+  return {
+    // startDate: nextStartDate.toDate(),
+    // endDate: nextEndDate.toDate(),
+    // SWITCH WHEN APPOINTMENTS ARE AVAILABLE
+    startDate: next,
+    endDate: last,
+  };
+};
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-          </Grid>
+const classes = {
+  checkBoxContainer: `${PREFIX}-checkBoxContainer`,
+  textField: `${PREFIX}-textField`,
+};
+// #FOLD_BLOCK
+const StyledGrid = styled(Grid)(({ theme: { spacing } }) => ({
+  [`&.${classes.checkBoxContainer}`]: {
+    paddingTop: spacing(1),
+    paddingBottom: spacing(1),
+    paddingLeft: spacing(4),
+  },
+}));
+// #FOLD_BLOCK
+const StyledTextField = styled(TextField)(({ theme: { spacing } }) => ({
+  [`&.${classes.textField}`]: {
+    marginRight: spacing(4),
+    marginLeft: spacing(1),
+    width: '120px',
+  },
+}));
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-          </Grid>
+// #FOLD_BLOCK
+const ShadeCellsCheckBox = ({ shadePreviousCells, handleChange }) => (
+  <FormControlLabel
+    control={(
+      <Checkbox
+        checked={shadePreviousCells}
+        onChange={() => handleChange('shadePreviousCells')}
+        color="primary"
+      />
+    )}
+    label="Shade previous cells"
+  />
+);
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-          </Grid>
+// #FOLD_BLOCK
+const ShadePreviousAppointmentsCheckBox = ({ shadePreviousAppointments, handleChange }) => (
+  <FormControlLabel
+    control={(
+      <Checkbox
+        checked={shadePreviousAppointments}
+        onChange={() => handleChange('shadePreviousAppointments')}
+        color="primary"
+      />
+    )}
+    label="Shade previous appointments"
+  />
+);
+// #FOLD_BLOCK
+// const CheckBoxContainer = (({
+//                               shadePreviousCells, shadePreviousAppointments, handleCheckboxChange,
+//                               // #FOLD_BLOCK
+//                             }) => (
+//   <StyledGrid item container direction="column" className={classes.checkBoxContainer} xs={6}>
+//     <ShadeCellsCheckBox
+//       shadePreviousCells={shadePreviousCells}
+//       handleChange={handleCheckboxChange}
+//     />
+//     <ShadePreviousAppointmentsCheckBox
+//       shadePreviousAppointments={shadePreviousAppointments}
+//       handleChange={handleCheckboxChange}
+//     />
+//   </StyledGrid>
+// ));
+//
+// // #FOLD_BLOCK
+// const UpdateIntervalBox = (({
+//                               updateInterval, onValueChange,
+//                               // #FOLD_BLOCK
+//                             }) => (
+//   <Grid item container xs={6} alignItems="center" justifyContent="flex-end">
+//     <Typography>
+//       Update every:
+//     </Typography>
+//     <StyledTextField
+//       className={classes.textField}
+//       variant="outlined"
+//       onChange={event => onValueChange(event.target.value)}
+//       value={updateInterval / 1000}
+//       type="number"
+//       InputProps={{
+//         endAdornment: <InputAdornment position="end">s</InputAdornment>,
+//       }}
+//     />
+//   </Grid>
+// ));
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits
-              title="Website Visits"
-              subheader="(+43%) than last year"
-              chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
-              ]}
-              chartData={[
-                {
-                  name: 'Team A',
-                  type: 'column',
-                  fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-                },
-                {
-                  name: 'Team B',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Team C',
-                  type: 'line',
-                  fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
-              ]}
-            />
-          </Grid>
+const current = new Date();
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits
-              title="Current Visits"
-              chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
-              ]}
-              chartColors={[
-                theme.palette.primary.main,
-                theme.palette.chart.blue[0],
-                theme.palette.chart.violet[0],
-                theme.palette.chart.yellow[0],
-              ]}
-            />
-          </Grid>
+export default class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: appointments,
+      currentDate: new Date(),
+      apiDoctorAppointments: [],
+      addedAppointment: [],
+      appointmentChanges: [],
+      editingAppointment: undefined,
+      shadePreviousCells: true,
+      shadePreviousAppointments: true,
+      updateInterval: 10000,
+      mainResourceName: 'status',
+      resources: [
+        {
+          id: 0,
+          fieldName: 'status',
+          title: 'Status',
+          // allowMultiple: true,
+          instances: [
+            { id: 'REQUESTED', text: 'REQUESTED', color: '#FFC107' },
+            { id: 'APPROVED', text: 'APPROVED', color: blue },
+            { id: 'DECLINED', text: 'DECLINED', color: red },
+            { id: 'DONE', text: 'DONE', color: green },
+          ],
+        },
+      ],
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates
-              title="Conversion Rates"
-              subheader="(+43%) than last year"
-              chartData={[
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
-              ]}
-            />
-          </Grid>
+    };
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject
-              title="Current Subject"
-              chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
-              chartData={[
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
-              ]}
-              chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
-            />
-          </Grid>
+    this.currentDateChange = (currentDate) => { this.setState({ currentDate }) };
+    this.commitChanges = this.commitChanges.bind(this);
+    this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
+    this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
+    this.changeEditingAppointment = this.changeEditingAppointment.bind(this);
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate
-              title="News Update"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: faker.name.jobTitle(),
-                description: faker.name.jobTitle(),
-                image: `/static/mock-images/covers/cover_${index + 1}.jpg`,
-                postedAt: faker.date.recent(),
-              }))}
-            />
-          </Grid>
+    // this.onCommitChanges = this.commitChanges.bind(this);
+    // this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    // this.handleUpdateIntervalChange = (nextValue) => {
+    //   this.setState({
+    //     updateInterval: nextValue * 1000,
+    //   });
+    // };
+  }
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline
-              title="Order Timeline"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: [
-                  '1983, orders, $4220',
-                  '12 Invoices have been paid',
-                  'Order #37745 from September',
-                  'New order placed #XF-2356',
-                  'New order placed #XF-2346',
-                ][index],
-                type: `order${index + 1}`,
-                time: faker.date.past(),
-              }))}
-            />
-          </Grid>
+  // handleCheckboxChange(stateField) {
+  //   const { [stateField]: fieldToChange } = this.state;
+  //   this.setState({
+  //     [stateField]: !fieldToChange,
+  //   });
+  // }
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite
-              title="Traffic by Site"
-              list={[
-                {
-                  name: 'FaceBook',
-                  value: 323234,
-                  icon: <Iconify icon={'eva:facebook-fill'} color="#1877F2" width={32} height={32} />,
-                },
-                {
-                  name: 'Google',
-                  value: 341212,
-                  icon: <Iconify icon={'eva:google-fill'} color="#DF3E30" width={32} height={32} />,
-                },
-                {
-                  name: 'Linkedin',
-                  value: 411213,
-                  icon: <Iconify icon={'eva:linkedin-fill'} color="#006097" width={32} height={32} />,
-                },
-                {
-                  name: 'Twitter',
-                  value: 443232,
-                  icon: <Iconify icon={'eva:twitter-fill'} color="#1C9CEA" width={32} height={32} />,
-                },
-              ]}
-            />
-          </Grid>
+  componentDidMount() {
+    this.getAppointments();
+  }
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
-              ]}
-            />
-          </Grid>
-        </Grid>
-        */}
-        <Calendar />
-      </Container>
-    </Page>
-  );
+  getAppointments = () => {
+    let date = currentDate.date();
+    const accessToken = localStorage.getItem("token");
+    axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
+      .then( ( response ) => {
+        const appointments = response.data.appointmentsDoctor;
+        const appointmentsInfo = appointments.map((appointment) => {
+          const mapData = {
+            id: appointment.id,
+            hospital: appointment.hospital,
+            startDate: new Date(appointment.startDate),
+            endDate: new Date(appointment.endDate),
+            status: appointment.status,
+            title: `${appointment.firstNamePatient} ${appointment.lastNamePatient}: ${appointment.hospital}`,
+            agePatient: appointment.agePatient
+          };
+          return mapData;
+        })
+        const calendar = appointmentsInfo.map(({ startDate, endDate, ...restArgs }) => {
+          const result = {
+            ...makeTodayAppointment(startDate, endDate),
+            ...restArgs,
+          };
+          date += 1;
+          if (date > 31) date = 1;
+          return result;
+        });
+        this.setState({
+          apiDoctorAppointments: calendar
+        })
+        console.log(this.state.apiDoctorAppointments);
+      } )
+      .catch( error => {
+        alert( error.response.data.message );
+      } );
+  }
+
+  changeAddedAppointment(addedAppointment) {
+    this.setState({ addedAppointment });
+    console.log(this.setState({ addedAppointment }));
+  }
+
+  changeAppointmentChanges(appointmentChanges) {
+    this.setState({ appointmentChanges });
+  }
+
+  changeEditingAppointment(editingAppointment) {
+    this.setState({ editingAppointment });
+  }
+
+  commitChanges({ added, changed, deleted }) {
+    this.setState((state) => {
+      let { data } = state;
+      if (added) {
+        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        data = [...data, { id: startingAddedId, ...added }];
+      }
+      if (changed) {
+        data = data.map(appointment => (
+          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+      }
+      if (deleted !== undefined) {
+        data = data.filter(appointment => appointment.id !== deleted);
+      }
+      return { data };
+    });
+  }
+
+  render() {
+    const {
+      currentDate, data, addedAppointment, appointmentChanges, editingAppointment, shadePreviousCells,
+      updateInterval, shadePreviousAppointments, apiDoctorAppointments, resources, mainResourceName,
+    } = this.state;
+    // console.log(data);
+    return (
+      <Paper>
+        {/* <button onClick={myData}>Here</button> */}
+        <Scheduler
+          data={apiDoctorAppointments}
+          height={930}
+          firstDayOfWeek={1}
+        >
+          <ViewState
+            // currentDate={currentDate}
+            onCurrentDateChange={this.currentDateChange}
+            defaultCurrentDate={currentDate}
+          />
+          <EditingState
+            onCommitChanges={this.commitChanges}
+            addedAppointment={addedAppointment}
+            onAddedAppointmentChange={this.changeAddedAppointment}
+            appointmentChanges={appointmentChanges}
+            onAppointmentChangesChange={this.changeAppointmentChanges}
+            editingAppointment={editingAppointment}
+            onEditingAppointmentChange={this.changeEditingAppointment}
+          />
+          <WeekView
+            startDayHour={9}
+            endDayHour={17}
+          />
+          <AllDayPanel />
+          <EditRecurrenceMenu />
+          <Toolbar />
+          <DateNavigator />
+          <TodayButton />
+          <ConfirmationDialog />
+          <Appointments />
+          <AppointmentTooltip
+            showOpenButton
+            showDeleteButton
+          />
+          <AppointmentForm />
+          <CurrentTimeIndicator
+            shadePreviousCells={shadePreviousCells}
+            shadePreviousAppointments={shadePreviousAppointments}
+            updateInterval={updateInterval}
+          />
+          <Resources
+            data={resources}
+            mainResourceName="status"
+          />
+        </Scheduler>
+      </Paper>
+    );
+  }
 }
+

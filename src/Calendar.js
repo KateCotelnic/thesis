@@ -217,7 +217,7 @@ export default class Calendar extends React.Component {
       //     agePatient: "",
       //     phoneNumber: ""
       //   }],
-      apiDoctorAppointments: [],
+      // apiDoctorAppointments: [],
       addedAppointment: {},
       appointmentChanges: {},
       editingAppointment: undefined,
@@ -282,51 +282,41 @@ export default class Calendar extends React.Component {
   //   });
   // }
 
- componentDidMount = async () => {
+ componentDidMount() {
    const myEmail = localStorage.getItem("email");
    const accessToken = localStorage.getItem("token");
-   let fdk;
-   try {
-     fdk = await axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
-     // .then( ( response ) => {
-     //   const appointments = response.data.appointmentsDoctor;
-     //   const appointmentsInfo = appointments.map((appointment) => {
-     //     const mapData = {
-     //       id: appointment.id,
-     //       hospital: appointment.hospital,
-     //       startDate: new Date(appointment.startDate),
-     //       endDate: new Date(appointment.endDate),
-     //       status: appointment.status,
-     //       firstNamePatient: appointment.firstNamePatient,
-     //       lastNamePatient: appointment.lastNamePatient,
-     //       agePatient: appointment.agePatient
-     //     };
-     //     return mapData;
-     //   })
-     // };
-   } catch( e ) {
-       alert( "Error happened! Call developer!" );
-     } this.setState(
-     {
-       apiDoctorAppointments: fdk.data
-     }
-   );
-   //     const calendar = appointmentsInfo.map(({ startDate, endDate, ...restArgs }) => {
-   //       const result = {
-   //         ...makeTodayAppointment(startDate, endDate),
-   //         ...restArgs,
-   //       };
-   //       date += 1;
-   //       if (date > 31) date = 1;
-   //       return result;
-   //     });
-   //     console.log(calendar);
-   //     console.log(appointments);
-   //   })
-   //   .catch( error => {
-   //     alert( error.response.data.message );
-   //   } );
-   console.log(this.apiDoctorAppointments);
+    const fdk = axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
+         .then( ( response ) => {
+           const appointments = response.data.appointmentsDoctor;
+           const appointmentsInfo = appointments.map((appointment) => {
+             const mapData = {
+               id: appointment.id,
+               hospital: appointment.hospital,
+               startDate: new Date(appointment.startDate),
+               endDate: new Date(appointment.endDate),
+               status: appointment.status,
+               firstNamePatient: appointment.firstNamePatient,
+               lastNamePatient: appointment.lastNamePatient,
+               agePatient: appointment.agePatient
+             };
+             return mapData;
+           })
+           // const calendar = appointmentsInfo.map(({ startDate, endDate, ...restArgs }) => {
+           //   const result = {
+           //     ...makeTodayAppointment(startDate, endDate),
+           //     ...restArgs,
+           //   };
+           //   date += 1;
+           //   if (date > 31) date = 1;
+           //   return result;
+           // });
+           // console.log(calendar);
+           // console.log(appointments);
+         })
+         .catch( error => {
+           alert( error.response.data.message );
+         } );
+       console.log(fdk);
  }
 
   changeAddedAppointment(addedAppointment) {

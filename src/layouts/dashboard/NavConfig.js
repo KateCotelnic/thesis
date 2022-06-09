@@ -4,23 +4,15 @@ import Iconify from '../../components/Iconify';
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
+const userRole = localStorage.getItem("role");
+const token = localStorage.getItem("token");
 
-const navConfig = [
+const navConfigGuest = [
   {
-    title: 'calendar',
-    path: '/dashboard/app',
-    icon: getIcon('bi:calendar-check-fill'),
+    title: 'Home',
+    path: '/dashboard/home',
+    icon: getIcon('eva:home-fill'),
   },
-  {
-    title: 'patients',
-    path: '/dashboard/patients',
-    icon: getIcon('eva:people-fill'),
-  },
-  // {
-  //   title: 'product',
-  //   path: '/dashboard/products',
-  //   icon: getIcon('eva:shopping-bag-fill'),
-  // },
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',
@@ -43,4 +35,36 @@ const navConfig = [
   // },
 ];
 
-export default navConfig;
+const navConfigDoctor = [
+  {
+    title: 'calendar',
+    path: '/dashboard/app',
+    icon: getIcon('bi:calendar-check-fill'),
+  },
+  {
+    title: 'patients',
+    path: '/dashboard/patients',
+    icon: getIcon('eva:people-fill'),
+  }
+];
+
+const navConfigPatient = [
+  {
+    title: 'calendar',
+    path: '/dashboard/app',
+    icon: getIcon('bi:calendar-check-fill'),
+  },
+  {
+    title: 'patients',
+    path: '/dashboard/patients',
+    icon: getIcon('eva:people-fill'),
+  }
+];
+
+// const role = localStorage.getItem("role") === 'DOCTOR';
+const role = localStorage.getItem("role") === 'DOCTOR';
+const nav = role ? navConfigDoctor : navConfigPatient;
+
+export default nav;
+
+
