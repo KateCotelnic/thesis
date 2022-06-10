@@ -77,4 +77,11 @@ public class UserController {
         String name = user.getFirstName();
         return ResponseEntity.ok(name);
     }
+
+    @GetMapping("/getSpeciality")
+    public ResponseEntity<String> getSpecialityByEmail(@RequestParam(name = "email", defaultValue = "") String email) {
+        User user = userService.getUserByEmail(email);
+        String name = user.getSpeciality().toString();
+        return ResponseEntity.ok(name);
+    }
 }

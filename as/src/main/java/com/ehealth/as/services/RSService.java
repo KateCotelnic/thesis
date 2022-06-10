@@ -15,5 +15,6 @@ public interface RSService {
     List<AppointmentDTO> getAllAppointments();
     void setSentNotification(String id);
     String getNameByEmail(String email);
+    String getSpecialityByEmail(String email);
     String getHospitalAddress(String hospitalName);
 }

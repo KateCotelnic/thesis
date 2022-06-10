@@ -67,6 +67,11 @@ public class RSServiceImpl implements RSService {
     }
 
     @Override
+    public String getSpecialityByEmail(String email) {
+        return restTemplate.getForEntity(urlRS + "/getSpeciality?email=" + email, String.class).getBody();
+    }
+
+    @Override
     public String getHospitalAddress(String hospitalName) {
         return restTemplate.getForEntity(urlRS + "/hospitals/getAddress?hospital=" + hospitalName, String.class).getBody();
     }

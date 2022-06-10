@@ -56,7 +56,7 @@ public class NSServiceImpl implements NSService {
     public void sendPatientAppointment(AppointmentDTO appointmentDTO, boolean accepted) throws JsonProcessingException {
         String acceptedMessage = accepted ? "accepted" : "declined";
         String subject = accepted ? "Accepted " : "Declined ";
-        String messageText = "The appointment was " + acceptedMessage + " by doctor " + rsService.getNameByEmail(appointmentDTO.getDoctorEmail()) + ".\nDate: " + reformatDate(appointmentDTO.getStartDate()) + " - " + reformatDate(appointmentDTO.getEndDate()) + ".\nHospital: " + appointmentDTO.getHospitalName() + ".\nHospital address: " + rsService.getHospitalAddress(appointmentDTO.getHospitalName());
+        String messageText = "The appointment was " + acceptedMessage + " by doctor " + rsService.getNameByEmail(appointmentDTO.getDoctorEmail()) + "(" + rsService.getSpecialityByEmail(appointmentDTO.getDoctorEmail()) + ")" + ".\nDate: " + reformatDate(appointmentDTO.getStartDate()) + " - " + reformatDate(appointmentDTO.getEndDate()) + ".\nHospital: " + appointmentDTO.getHospitalName() + ".\nHospital address: " + rsService.getHospitalAddress(appointmentDTO.getHospitalName());
         String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getPatientEmail()).message(messageText).build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
         messageText = "Hello " + rsService.getNameByEmail(appointmentDTO.getPatientEmail()) + ", \n\n" + messageText + "\n\nBest regards,\neHealth team";
@@ -65,7 +65,7 @@ public class NSServiceImpl implements NSService {
     }
 
     private void sendNotification(AppointmentDTO appointmentDTO) throws JsonProcessingException {
-        String messageText = "You have an upcoming appointment to the doctor " + rsService.getNameByEmail(appointmentDTO.getDoctorEmail()) + "!\nDate: " + reformatDate(appointmentDTO.getStartDate()) + " - " + reformatDate(appointmentDTO.getEndDate()) + ".\nHospital: " + appointmentDTO.getHospitalName() + ".\nHospital address: " + rsService.getHospitalAddress(appointmentDTO.getHospitalName());
+        String messageText = "You have an upcoming appointment to the doctor " + rsService.getNameByEmail(appointmentDTO.getDoctorEmail()) + "(" + rsService.getSpecialityByEmail(appointmentDTO.getDoctorEmail()) + ")" + "!\nDate: " + reformatDate(appointmentDTO.getStartDate()) + " - " + reformatDate(appointmentDTO.getEndDate()) + ".\nHospital: " + appointmentDTO.getHospitalName() + ".\nHospital address: " + rsService.getHospitalAddress(appointmentDTO.getHospitalName());
         String message = ow.writeValueAsString(MessageDTO.builder().receiverEmail(appointmentDTO.getPatientEmail()).message(messageText).build());
         rabbitTemplate.convertAndSend(AMQPConfiguration.EXCHANGE_NAME, AMQPConfiguration.ROUTING_KEY_APP, message);
         messageText = "Hello " + rsService.getNameByEmail(appointmentDTO.getPatientEmail()) + ", \n\n" + messageText + "\n\nBest regards,\neHealth team";

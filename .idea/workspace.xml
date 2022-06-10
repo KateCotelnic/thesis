@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b34a0bb0-30d6-4b84-b1fe-5a6f64e19e9b" name="Changes" comment="rs initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/as/src/main/java/com/ehealth/as/services/RSService.java" beforeDir="false" afterPath="$PROJECT_DIR$/as/src/main/java/com/ehealth/as/services/RSService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/as/src/main/java/com/ehealth/as/services/impl/NSServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/as/src/main/java/com/ehealth/as/services/impl/NSServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/as/src/main/java/com/ehealth/as/services/impl/RSServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/as/src/main/java/com/ehealth/as/services/impl/RSServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rs/src/main/java/com/ehelth/rs/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rs/src/main/java/com/ehelth/rs/controllers/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +89,7 @@
       <workItem from="1650213674892" duration="1228000" />
       <workItem from="1650216136733" duration="722000" />
       <workItem from="1650220370250" duration="657000" />
-      <workItem from="1654688662853" duration="3746000" />
+      <workItem from="1654688662853" duration="3813000" />
     </task>
     <task id="LOCAL-00001" summary="rs initial">
       <created>1650214300836</created>
