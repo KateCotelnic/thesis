@@ -8,6 +8,7 @@ import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import Login from './pages/Login';
 import Doctors from './pages/Doctors';
 import Products from './pages/Products';
+import Register from './pages/Register';
 
 // ----------------------------------------------------------------------
 

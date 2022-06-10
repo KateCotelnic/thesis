@@ -106,21 +106,21 @@ export default function LoginForm() {
             helperText={touched.password && errors.password}
           />
         </Stack>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        {/*  /!* <FormControlLabel *!/ */}
+        {/*  /!*  control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />} *!/ */}
+        {/*  /!*  label="Remember me" *!/ */}
+        {/*  /!* /> *!/ */}
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          {/* <FormControlLabel */}
-          {/*  control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />} */}
-          {/*  label="Remember me" */}
-          {/* /> */}
+        {/*  <Link  component={RouterLink} to="/register" variant="subtitle2" underline="hover"> */}
+        {/*    Register */}
+        {/*  </Link> */}
 
-          <Link  component={RouterLink} to="/register" variant="subtitle2" underline="hover">
-            Register
-          </Link>
-        </Stack>
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
           Login
         </LoadingButton>
+          </Stack>
       </Form>
     </FormikProvider>
   );
