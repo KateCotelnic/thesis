@@ -74,7 +74,7 @@ public class UserController {
     @GetMapping("/getName")
     public ResponseEntity<String> getNameByEmail(@RequestParam(name = "email", defaultValue = "") String email) {
         User user = userService.getUserByEmail(email);
-        String name = user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName();
+        String name = user.getFirstName();
         return ResponseEntity.ok(name);
     }
 }
