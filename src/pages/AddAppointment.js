@@ -156,6 +156,7 @@ export const AddApp = () => {
         alignItems="flex-left"
         spacing={2}
         marginLeft={2}
+        paddingBottom={2}
       >
         <Box>
       <Select

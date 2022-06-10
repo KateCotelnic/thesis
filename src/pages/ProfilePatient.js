@@ -59,6 +59,7 @@ export const ProfilePatient = () => {
       alignItems="flex-center"
       spacing={2}
       marginLeft={2}
+      paddingBottom={2}
     >
       <Box marginLeft={2}>
         <h2>My Profile</h2>
