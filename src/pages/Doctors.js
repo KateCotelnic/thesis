@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { useSearchEnums } from '../sections/doctors/useSearchEnums';
@@ -35,6 +35,7 @@ export default function Doctors() {
   };
 
   return (
+    <Paper elevation={1}>
     <Page title="Dashboard: Doctors">
       <Container sx={{ padding: '40px', minWidth: '320px' }}>
         <Typography variant="h4" sx={{ mb: 5 }}>
@@ -96,5 +97,6 @@ export default function Doctors() {
         <PaginationContainer filters={filters} setFilters={setFilters} />
       </Container>
     </Page>
+    </Paper>
   );
 }

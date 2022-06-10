@@ -314,14 +314,14 @@ export default class Calendar extends React.Component {
            // console.log(appointments);
          })
          .catch( error => {
-           alert( error.response.data.message );
+           // alert( error.response.data.message );
          } );
-       console.log(fdk);
+       // console.log(fdk);
  }
 
   changeAddedAppointment(addedAppointment) {
     this.setState({ addedAppointment });
-    console.log(this.setState({ addedAppointment }));
+    // console.log(this.setState({ addedAppointment }));
   }
 
   changeAppointmentChanges(appointmentChanges) {
@@ -355,7 +355,7 @@ export default class Calendar extends React.Component {
       currentDate, data, addedAppointment, appointmentChanges, editingAppointment, shadePreviousCells,
       updateInterval, shadePreviousAppointments,
     } = this.state;
-    console.log(data);
+    // console.log(data);
     return (
       <Paper>
         {/* <button onClick={myData}>Here</button> */}

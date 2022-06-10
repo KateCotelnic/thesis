@@ -189,7 +189,7 @@ export default function Test2() {
       setArr(result.data.appointmentsDoctor)
     }
     setRows(result.data.appointmentsDoctor);
-    console.log(rows)
+    // console.log(rows)
   }, [])
 
 
@@ -241,7 +241,16 @@ export default function Test2() {
     axios.post( "http://localhost:8090/api/doctor/acceptAppointment", null,
       { params: { id }, headers: {"Authorization": accessToken}})
       .then( ( response ) => {
-        console.log(response)
+        // console.log(response)
+        window.location.reload();
+      })
+  }
+
+  const cancelApp = (id) => {
+    axios.post( "http://localhost:8090/api/doctor/cancelAppointment", null,
+      { params: { id }, headers: {"Authorization": accessToken}})
+      .then( ( response ) => {
+        // console.log(response)
         window.location.reload();
       })
   }
@@ -297,7 +306,7 @@ export default function Test2() {
                       <Box align="left" paddingTop={2}>
                       <ButtonGroup disableElevation size="small"  >
                         <Button onClick={() => acceptApp(row.id)} variant="outlined">Accept</Button>
-                        <Button onClick={() => console.log(row.id)} variant="outlined" color="error" >Decline</Button>
+                        <Button onClick={() => cancelApp(row.id)} variant="outlined" color="error" >Decline</Button>
                       </ButtonGroup>
                       </Box>
                     </TableRow>

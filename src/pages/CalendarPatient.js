@@ -229,16 +229,16 @@ export default class CalendarPatient extends React.Component {
         this.setState({
           apiDoctorAppointments: calendar
         })
-        console.log(this.state.apiDoctorAppointments);
+        // console.log(this.state.apiDoctorAppointments);
       } )
       .catch( error => {
-        alert( error.response.data.message );
+
       } );
   }
 
   changeAddedAppointment(addedAppointment) {
     this.setState({ addedAppointment });
-    console.log(this.setState({ addedAppointment }));
+    // console.log(this.setState({ addedAppointment }));
   }
 
   changeAppointmentChanges(appointmentChanges) {

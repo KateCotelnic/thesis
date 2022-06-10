@@ -11,11 +11,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import axios from 'axios';
 import moment from 'moment';
 
-
-
-
-
-
 const mockHospitals = [
   {
     key: 1,
@@ -112,6 +107,12 @@ const mockDoctors = [
   },
 ]
 
+const styles = theme => ({
+  input: {
+    color: "blue"
+  }
+});
+
 export const AddApp = () => {
   const [textValue, setTextValue] = useState("");
   const [rows, setRows] = useState([]);
@@ -125,16 +126,16 @@ export const AddApp = () => {
   const accessToken = localStorage.getItem("token");
 
   const startDate = moment(date).format('YYYY-MM-DD HH:mm')
-  console.log(startDate);
+  // console.log(startDate);
   const endDate = moment(date2).format('YYYY-MM-DD HH:mm')
-  console.log(endDate);
+  // console.log(endDate);
 
   const doctorsList = async () => {
     const result = await axios(
       "http://localhost:8090/api/doctors", {params: {hospitalName}}
     );
     setRows(result.data)
-    console.log(rows)
+    // console.log(rows)
   };
 
   const addAppointment = () => {
@@ -145,9 +146,18 @@ export const AddApp = () => {
   }
 
   return (
-    <Box
-    >
+    <Paper elevation={1}>
+      <Box marginLeft={2}>
       <h2>Add appointment</h2>
+      </Box>
+      <Stack
+        direction="row"
+        justifyContent="left"
+        alignItems="flex-left"
+        spacing={2}
+        marginLeft={2}
+      >
+        <Box>
       <Select
         labelId="Hospital"
         value={hospitalName}
@@ -160,7 +170,9 @@ export const AddApp = () => {
           </MenuItem>
         ))}
       </Select>
+        </Box>
 
+        <Box>
       <Select
         labelId="Doctor"
         value={doctorEmail}
@@ -173,6 +185,9 @@ export const AddApp = () => {
           </MenuItem>
         ))}
       </Select>
+        </Box>
+
+        <Box color="#0000FF">
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DateTimePicker
           renderInput={(props) => <TextField {...props} />}
@@ -183,6 +198,9 @@ export const AddApp = () => {
           }}
         />
       </LocalizationProvider>
+        </Box>
+
+        <Box>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DateTimePicker
           renderInput={(props) => <TextField {...props} />}
@@ -193,7 +211,11 @@ export const AddApp = () => {
           }}
         />
       </LocalizationProvider>
-      <Button onClick={() => {addAppointment()}}>Add</Button>
+        </Box>
+        <Box>
+      <Button variant="outlined" size="large" onClick={() => {addAppointment()}}>Add</Button>
     </Box>
+      </Stack>
+    </Paper>
   );
 };

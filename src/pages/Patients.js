@@ -78,7 +78,7 @@ export default class Patients extends React.Component {
     axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
       .then( ( response ) => {
         const appointments = response.data.appointmentsDoctor;
-        console.log(appointments)
+        // console.log(appointments)
         const appointmentsInfo = appointments.map((appointment) => {
           return {
             id: appointment.id,
@@ -93,10 +93,10 @@ export default class Patients extends React.Component {
         this.setState({
           rows: appointmentsInfo
         })
-        console.log(this.state.rows);
+        // console.log(this.state.rows);
       } )
       .catch( error => {
-        alert( error.response.data.message );
+        // alert( error.response.data.message );
       } );
   }
 

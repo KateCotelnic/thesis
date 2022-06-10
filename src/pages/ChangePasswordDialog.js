@@ -15,14 +15,14 @@ function updatePass(oldP, newP) {
     oldPassword: oldP,
     newPassword: newP
   }
-  console.log(body);
+  // console.log(body);
   axios.post(api.dashboard.postChangePassword(), JSON.stringify({
     "oldPassword": oldP,
     "newPassword": newP
   }))
     .then((response) => console.log(response))
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     });
 }
 
@@ -45,7 +45,7 @@ export default function FormDialog({setOpen}) {
 
   const handleNewPassChange= (event) => {
     setNewP(event);
-    console.log(event)
+    // console.log(event)
   }
 
   const accessToken = localStorage.getItem("token");
@@ -56,16 +56,16 @@ export default function FormDialog({setOpen}) {
       oldPassword,
       newPassword
     }
-    console.log(body)
+    // console.log(body)
     e.preventDefault();
 
     try {
       const response = await axios.post(api.dashboard.postChangePassword(), body,
         {headers: {"Authorization": accessToken}}
       );
-      console.log(response);
+      // console.log(response);
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
     handleClose();
   }

@@ -20,7 +20,7 @@ async function registerUser(credentials) {
       localStorage.setItem( "token", response.data.token );
     } )
     .catch( error => {
-      alert( "error.response.data.message" );
+      // alert( "error.response.data.message" );
     } );
 }
 
@@ -43,7 +43,7 @@ export default function RegisterForm() {
       lastName,
       phoneNumber
     });
-    console.log(response)
+    // console.log(response)
     if ('token' in localStorage) {
       window.location.href = "/dashboard/app";
     } else {

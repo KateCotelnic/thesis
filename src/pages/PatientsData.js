@@ -4,7 +4,7 @@ import { usePatientsData } from './usePatientsData';
 
 export default function PatientsData() {
   const patientsData = usePatientsData();
-  console.log(patientsData);
+  // console.log(patientsData);
 
   const patients = patientsData.data;
 
@@ -20,5 +20,5 @@ export default function PatientsData() {
     };
   })
 
-  console.log(patientsMap);
+  // console.log(patientsMap);
 }

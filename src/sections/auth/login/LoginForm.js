@@ -18,7 +18,7 @@ async function loginUser(credentials) {
       localStorage.setItem( "token", response.data.token );
     } )
     .catch( error => {
-      alert( error.response.data.message );
+      // alert( error.response.data.message );
     } );
 }
 
@@ -35,10 +35,14 @@ export default function LoginForm() {
       email,
       password
     });
-    console.log(response)
+    // console.log(response)
     if ('token' in localStorage) {
           localStorage.setItem("email", email);
+          if(localStorage.getItem( "role") === "DOCTOR") {
           window.location.href = "/dashboard/app";
+          } else {
+            window.location.href = "/dashboard/calendarpat"
+          }
     } else {
       alert("Unauthorized");
     }

@@ -6,6 +6,7 @@ import ThemeProvider from './theme';
 import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import Login from './pages/Login';
+import Doctors from './pages/Doctors';
 import Products from './pages/Products';
 
 // ----------------------------------------------------------------------

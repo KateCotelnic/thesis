@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper"
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import axios from 'axios';
 import { api } from '../api';
+
 
 
 export const Profile = () => {
@@ -35,7 +37,7 @@ export const Profile = () => {
         headers: { "Authorization": accessToken }
       }
     );
-    console.log(result)
+    // console.log(result)
     setRows(result.data);
     setFName(result.data.firstName)
     setEmail(result.data.email)
@@ -61,55 +63,70 @@ export const Profile = () => {
   }
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="center"
-      alignItems="flex-start"
-      spacing={2}
+    <Paper elevation={1}>
+  <Stack
+    direction="column"
+    justifyContent="center"
+    alignItems="flex-center"
+    spacing={2}
+    marginLeft={2}
     >
+    <Box marginLeft={2}>
       <h2>My Profile</h2>
+    </Box>
       <TextField
-        label={email}
+        value={email}
+        label={"Email"}
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
-        label={firstName}
+        value={firstName}
+        label={"First Name"}
         onChange={(e) => setFName(e.target.value)}
       />
 
       <TextField
-        label={lastName}
+        value={lastName}
+        label={"Last Name"}
         onChange={(e) => setLName(e.target.value)}
       />
       <TextField
-        label={phoneNumber}
+        value={phoneNumber}
+        label={"Phone Number"}
         onChange={(e) => setPhone(e.target.value)}
       />
       <TextField
-        label={speciality}
+        value={speciality}
+        label={"Speciality"}
         onChange={(e) => setSpec(e.target.value)}
       />
       <TextField
-        label={price}
+        value={price}
+        label={"Price, Lei"}
         onChange={(e) => setPrice(e.target.value)}
       />
       <TextField
-        label={grade}
+        value={grade}
+        label={"Grade"}
         onChange={(e) => setGrade(e.target.value)}
       />
       <TextField
-        label={experience}
+        value={experience}
+        label={"Experience, years"}
         onChange={(e) => setExp(e.target.value)}
       />
       <TextField
-        label={classification}
+        value={classification}
+        label={"Classification"}
         onChange={(e) => setClass(e.target.value)}
       />
       <TextField
-        label={hospitals}
+        value={hospitals}
+        label={"Hospitals"}
         onChange={(e) => setHospitals(e.target.value)}
       />
-      <Button onClick={() => {updateDoctor()}}>Update</Button>
+      <Button variant="outlined" onClick={() => {updateDoctor()}}>Update</Button>
     </Stack>
+      </Paper>
   );
 };
