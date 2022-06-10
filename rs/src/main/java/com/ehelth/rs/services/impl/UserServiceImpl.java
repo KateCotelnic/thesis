@@ -20,9 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserCredentialsDTO getUserCredentials(String email) {
-        User user = userRepository.getUserByEmail(email).orElseThrow(
-                () -> new RuntimeException("User not found")
-        );
+        User user = userRepository.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user with the provided email was found."));
         return user.toUserCredentialsDTO();
     }
 
@@ -43,18 +41,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email).orElseThrow();
+        return userRepository.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user with the provided email was found."));
     }
 
     @Override
     public UserDetailsDTO getUserDetails(String email) {
-        User user = userRepository.getUserByEmail(email).orElseThrow();
+        User user = userRepository.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user with the provided email was found."));
         return user.toUserDetailsDTO();
     }
 
     @Override
     public UserDetailsDTO updateUser(String email, UserDetailsDTO userDetailsDTO) {
-        User user = userRepository.getUserByEmail(email).orElseThrow();
+        User user = userRepository.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user with the provided email was found."));
         user.setFirstName(userDetailsDTO.getFirstName());
         user.setLastName(userDetailsDTO.getLastName());
         user.setMiddleName(userDetailsDTO.getMiddleName());
@@ -67,22 +65,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String email) {
-        User user = userRepository.getUserByEmail(email).orElseThrow();
+        User user = userRepository.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user with the provided email was found."));
         user.setEnable(false);
         userRepository.save(user);
     }
 
     @Override
     public void setNewPassword(String email, PasswordDTO passwordDTO) {
-        User user = userRepository.getUserByEmail(email).orElseThrow();
+        User user = userRepository.getUserByEmail(email).orElseThrow(() -> new RuntimeException("No user with the provided email was found."));
         user.setPassword(passwordDTO.getNewPassword());
         userRepository.save(user);
     }
 
     @Override
     public String getAdmin() {
-        String email = userRepository.getFirstByRole(Role.ADMIN).getEmail();
-        System.out.println(email);
+        String email = userRepository.getFirstByRole(Role.ADMIN).orElseThrow(() -> new RuntimeException("No admin was found.")).getEmail();
         return email;
     }
 }

@@ -31,5 +31,5 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     List<User> getAllByClassification(Classification classification);
 
-    User getFirstByRole(Role role);
+    Optional<User> getFirstByRole(Role role);
 }

@@ -8,6 +8,7 @@ import com.ehelth.rs.entities.enums.Classification;
 import com.ehelth.rs.entities.enums.Grade;
 import com.ehelth.rs.entities.enums.Role;
 import com.ehelth.rs.entities.enums.Speciality;
+import com.ehelth.rs.exceptions.DataNotFoundException;
 import com.ehelth.rs.repositories.FreeTimeRepository;
 import com.ehelth.rs.repositories.UserRepository;
 import com.ehelth.rs.services.DoctorService;
@@ -30,12 +31,12 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO[] getAllDoctors() {
         List<User> doctors = userRepository.getDoctors();
-        return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
+            return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
     }
 
     @Override
     public DoctorDetailsDTO getDoctorByEmail(String email) {
-        User doctor = userRepository.getUserByEmailAndRole(email, Role.DOCTOR).orElseThrow(() -> new RuntimeException("No such user"));
+        User doctor = userRepository.getUserByEmailAndRole(email, Role.DOCTOR).orElseThrow(() -> new DataNotFoundException("No doctor with the provided email was found."));
         DoctorDetailsDTO doctorDetailsDTO = doctor.toDoctorDetailsDTO();
         return doctorDetailsDTO;
     }
@@ -49,14 +50,14 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void delete(String email) {
-        User doctor = userRepository.getUserByEmailAndRole(email, Role.DOCTOR).orElseThrow(RuntimeException::new);
+        User doctor = userRepository.getUserByEmailAndRole(email, Role.DOCTOR).orElseThrow(() -> new DataNotFoundException("No doctor with the provided email was found."));
         doctor.setEnable(false);
         userRepository.save(doctor);
     }
 
     @Override
     public DoctorDetailsDTO update(DoctorUpdateAdminDTO doctorDTO) {
-        User doctor = userRepository.getUserByEmailAndRole(doctorDTO.getEmail(), Role.DOCTOR).orElseThrow(RuntimeException::new);
+        User doctor = userRepository.getUserByEmailAndRole(doctorDTO.getEmail(), Role.DOCTOR).orElseThrow(() -> new DataNotFoundException("No doctor with the provided email was found."));
         doctor.setFirstName(doctorDTO.getFirstName());
         doctor.setLastName(doctorDTO.getLastName());
         doctor.setMiddleName(doctorDTO.getMiddleName());
@@ -87,7 +88,7 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorDTO[] getByHospital(String hospitalName) {
         Hospital hospital = hospitalService.getHospitalByName(hospitalName);
         List<User> doctors = userRepository.getAllByHospitalsContainingAndRole(hospital, Role.DOCTOR);
-        return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
+            return doctors.stream().map(User::toDoctorDTO).toArray(DoctorDTO[]::new);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class DoctorServiceImpl implements DoctorService {
     public FreeTimeDTO addFreeTime(FreeTimeDTO freeTimeDTO) {
         FreeTime freeTime = FreeTime.builder()
                 .cronExpression(freeTimeDTO.getCronExpression())
-                .doctor(userRepository.getUserByEmail(freeTimeDTO.getDoctorEmail()).orElseThrow())
+                .doctor(userRepository.getUserByEmail(freeTimeDTO.getDoctorEmail()).orElseThrow(() -> new DataNotFoundException("No doctor with the provided email was found.")))
                 .build();
         return freeTimeRepository.save(freeTime).toFreeTimeDTO();
     }

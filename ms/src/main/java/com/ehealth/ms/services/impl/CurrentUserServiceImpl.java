@@ -43,6 +43,9 @@ public class CurrentUserServiceImpl implements CurrentUserService {
         AuthResponseRSDTO user;
         try {
             user = rsService.getUserByUsername(email);
+            System.out.println("//////////////////////");
+            System.out.println(user);
+            System.out.println("//////////////////////");
             if (!user.isEnable()) {
                 throw new RuntimeException("User is not enable");
             }
@@ -86,6 +89,8 @@ public class CurrentUserServiceImpl implements CurrentUserService {
 
     @Override
     public void changePassword(String email, PasswordDTO passwordDTO) {
+        System.out.println("email = " + email);
+        System.out.println("password: " + passwordDTO);
         authenticate(email, passwordDTO.getOldPassword());
         validationService.verifyPassword(passwordDTO.getNewPassword());
         passwordDTO.setNewPassword(new BCryptPasswordEncoder(12).encode(passwordDTO.getNewPassword()));

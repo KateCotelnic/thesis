@@ -6,11 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> getAllByDoctor_Email(String email);
     @Transactional
     void deleteByCommentId(long id);
-    Comment getCommentByCommentId(long id);
+    Optional<Comment> getCommentByCommentId(long id);
 }

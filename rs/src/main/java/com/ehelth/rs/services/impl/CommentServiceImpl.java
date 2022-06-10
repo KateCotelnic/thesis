@@ -4,6 +4,7 @@ import com.ehelth.rs.entities.Comment;
 import com.ehelth.rs.entities.dto.CommentDTO;
 import com.ehelth.rs.entities.dto.NewCommentDTO;
 import com.ehelth.rs.entities.dto.UpdateCommentDTO;
+import com.ehelth.rs.exceptions.DataNotFoundException;
 import com.ehelth.rs.repositories.CommentRepository;
 import com.ehelth.rs.services.CommentService;
 import com.ehelth.rs.services.UserService;
@@ -23,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDTO[] getCommentsByDoctor(String doctorEmail) {
         List<Comment> comments = commentRepository.getAllByDoctor_Email(doctorEmail);
-        return comments.stream().map(Comment::toCommentDTO).toArray(CommentDTO[]::new);
+            return comments.stream().map(Comment::toCommentDTO).toArray(CommentDTO[]::new);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public NewCommentDTO update(UpdateCommentDTO updateCommentDTO) {
-        Comment comment = commentRepository.getById(Long.parseLong(updateCommentDTO.getCommentId()));
+        Comment comment = commentRepository.getCommentByCommentId(Long.parseLong(updateCommentDTO.getCommentId())).orElseThrow(() -> new DataNotFoundException("The comment with the provided id was not found in database."));
         comment.setBody(updateCommentDTO.getBody());
         comment.setRating(Integer.parseInt(updateCommentDTO.getRating()));
         comment.setDate(LocalDate.now());
@@ -51,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public NewCommentDTO getComment(String id) {
-        return commentRepository.getCommentByCommentId(Long.parseLong(id)).toNewCommentDTO();
+        return commentRepository.getCommentByCommentId(Long.parseLong(id)).orElseThrow(() -> new DataNotFoundException("The comment with the provided id was not found in database.")).toNewCommentDTO();
     }
 
     Comment toCommentFromNew(NewCommentDTO commentDTO) {

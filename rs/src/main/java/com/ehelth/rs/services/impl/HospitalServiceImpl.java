@@ -7,6 +7,7 @@ import com.ehelth.rs.entities.dto.SearchEnums;
 import com.ehelth.rs.entities.enums.Area;
 import com.ehelth.rs.entities.enums.Classification;
 import com.ehelth.rs.entities.enums.Speciality;
+import com.ehelth.rs.exceptions.DataNotFoundException;
 import com.ehelth.rs.repositories.HospitalRepository;
 import com.ehelth.rs.services.HospitalService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public Hospital getHospitalByName(String name) {
-        return hospitalRepository.getHospitalByHospitalName(name).orElseThrow();
+        return hospitalRepository.getHospitalByHospitalName(name).orElseThrow(() -> new DataNotFoundException("No hospital with the provided name was found."));
     }
 
     @Override
@@ -54,14 +55,14 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public void delete(String hospitalName) {
-        Hospital hospital = hospitalRepository.getHospitalByHospitalName(hospitalName).orElseThrow();
+        Hospital hospital = hospitalRepository.getHospitalByHospitalName(hospitalName).orElseThrow(() -> new DataNotFoundException("No hospital with the provided name was found."));
         hospital.setEnable(false);
         hospitalRepository.save(hospital);
     }
 
     @Override
     public HospitalDTO update(HospitalDTO hospitalDTO) {
-        Hospital hospital = hospitalRepository.getHospitalByHospitalName(hospitalDTO.getHospitalName()).orElseThrow();
+        Hospital hospital = hospitalRepository.getHospitalByHospitalName(hospitalDTO.getHospitalName()).orElseThrow(() -> new DataNotFoundException("No hospital with the provided name was found."));
         hospital.setAddress(hospitalDTO.getAddress());
         hospital.setCityArea(Area.valueOf(hospitalDTO.getCityArea()));
         hospital.setPhoto(hospitalDTO.getPhoto());

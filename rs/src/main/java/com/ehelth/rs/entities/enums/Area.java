@@ -5,5 +5,6 @@ public enum Area {
     CENTRU,
     CIOCANA,
     BUIUCANI,
-    RISCANI
+    RISCANI,
+    TELECENTRU
 }

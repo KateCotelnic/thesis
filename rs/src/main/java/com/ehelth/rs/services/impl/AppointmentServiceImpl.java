@@ -4,6 +4,7 @@ import com.ehelth.rs.entities.Appointment;
 import com.ehelth.rs.entities.dto.AppointmentDTO;
 import com.ehelth.rs.entities.dto.AppointmentEnums;
 import com.ehelth.rs.entities.enums.Status;
+import com.ehelth.rs.exceptions.DataNotFoundException;
 import com.ehelth.rs.repositories.AppointmentRepository;
 import com.ehelth.rs.services.AppointmentService;
 import com.ehelth.rs.services.HospitalService;
@@ -33,21 +34,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentDTO cancelAppointment(String id) {
-        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id)).orElseThrow(() -> new DataNotFoundException("The appointment with the provided id was not found in database."));
         appointment.setStatus(Status.DECLINED);
         return appointmentRepository.save(appointment).toAppointmentDTO();
     }
 
     @Override
     public AppointmentDTO acceptAppointment(String id) {
-        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id)).orElseThrow(() -> new DataNotFoundException("The appointment with the provided id was not found in database."));
         appointment.setStatus(Status.APPROVED);
         return appointmentRepository.save(appointment).toAppointmentDTO();
     }
 
     @Override
     public AppointmentDTO declineAppointment(String id) {
-        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id)).orElseThrow(() -> new DataNotFoundException("The appointment with the provided id was not found in database."));
         appointment.setStatus(Status.DECLINED);
         return appointmentRepository.save(appointment).toAppointmentDTO();
     }
@@ -61,7 +62,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentDTO setDone(String id) {
-        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id)).orElseThrow(() -> new DataNotFoundException("The appointment with the provided id was not found in database."));
         appointment.setStatus(Status.DONE);
         appointmentRepository.save(appointment);
         return appointment.toAppointmentDTO();
@@ -74,7 +75,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentDTO sendNotification(String id) {
-        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id));
+        Appointment appointment = appointmentRepository.getAppointmentByAppointmentId(Long.parseLong(id)).orElseThrow(() -> new DataNotFoundException("The appointment with the provided id was not found in database."));
         appointment.setSentNotification(true);
         return appointmentRepository.save(appointment).toAppointmentDTO();
     }
@@ -94,7 +95,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .status(Status.REQUESTED)
                 .sentNotification(false)
                 .build();
-        System.out.println(appointment);
         return appointment;
     }
 }

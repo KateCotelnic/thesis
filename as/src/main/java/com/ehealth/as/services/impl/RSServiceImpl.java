@@ -2,8 +2,10 @@ package com.ehealth.as.services.impl;
 
 import com.ehealth.as.entities.dto.AppointmentDTO;
 import com.ehealth.as.entities.dto.CommentDTO;
+import com.ehealth.as.exceptions.RestTemplateResponseErrorHandler;
 import com.ehealth.as.services.RSService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +15,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RSServiceImpl implements RSService {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplate restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 
     private String urlRS = "http://rs:8091/rs";
 
