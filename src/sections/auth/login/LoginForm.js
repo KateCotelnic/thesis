@@ -14,7 +14,6 @@ import Iconify from '../../../components/Iconify';
 async function loginUser(credentials) {
   return axios.post( api.login(), credentials )
     .then( ( response ) => {
-      localStorage.setItem( "logined", "1" );
       localStorage.setItem( "role", response.data.role );
       localStorage.setItem( "token", response.data.token );
     } )

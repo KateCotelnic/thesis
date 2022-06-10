@@ -143,7 +143,7 @@ const ShadePreviousAppointmentsCheckBox = ({ shadePreviousAppointments, handleCh
 //   </Grid>
 // ));
 
-export default class Calendar extends React.Component {
+export default class CalendarPatient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -203,9 +203,9 @@ export default class Calendar extends React.Component {
   getAppointments = () => {
     let date = currentDate.date();
     const accessToken = localStorage.getItem("token");
-    axios.get(api.dashboard.getDoctorData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
+    axios.get(api.dashboard.getPatientData(), { params: { email: localStorage.getItem("email") }, headers: {"Authorization": accessToken}})
       .then( ( response ) => {
-        const appointments = response.data.appointmentsDoctor;
+        const appointments = response.data.appointments;
         const appointmentsInfo = appointments.map((appointment) => {
           const mapData = {
             id: appointment.id,
@@ -213,8 +213,7 @@ export default class Calendar extends React.Component {
             startDate: new Date(appointment.startDate),
             endDate: new Date(appointment.endDate),
             status: appointment.status,
-            title: `${appointment.firstNamePatient} ${appointment.lastNamePatient}: ${appointment.hospital}`,
-            agePatient: appointment.agePatient
+            title: `${appointment.firstNameDoctor} ${appointment.lastNameDoctor}: ${appointment.hospital}`
           };
           return mapData;
         })

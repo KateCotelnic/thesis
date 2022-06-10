@@ -1,6 +1,7 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -25,15 +26,18 @@ import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+
 // mock
 import USERLIST from '../_mock/user';
+import { api } from '../api';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Full Name', alignRight: false },
+  { id: 'age', label: 'Age', alignRight: false },
   { id: 'phone', label: 'Phone', alignRight: false },
-  { id: 'date', label: 'Date', alignRight: false },
+  { id: 'hospital', label: 'Hospital', alignRight: false },
   { id: 'visit', label: 'Visit Time', alignRight: false },
   { id: 'duration', label: 'Duration', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
@@ -85,19 +89,14 @@ export default function User() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [patients, setPatients] = useState([]);
+
+  const accessToken = localStorage.getItem("token");
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
   };
 
   const handleClick = (event, name) => {
@@ -163,7 +162,7 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, visit, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, visit, status, company, isVerified } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (

@@ -4,7 +4,8 @@ export const api = {
   login: () => `${host}/login`,
   register: () => `${host}/register`,
   dashboard: {
-    getTes: () => `${host}/dashboard/test`,
     getDoctorData: () => `${host}/doctor`,
+    getPatientData: () => `${host}/details`,
+    postChangePassword: () => `${host}/changePassword`,
   },
 }

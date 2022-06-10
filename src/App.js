@@ -31,14 +31,9 @@ export default function App() {
   const queryClient = new QueryClient();
 
   const token = localStorage.getItem('token');
-  const logined = localStorage.getItem("logined") === "1";
 
   if(!token) {
     return <Login />
-  // const logined = localStorage.getItem('logined') === '1';
-  // //
-  // if (!token) {
-  //   return <Login />;
   }
 
   return (

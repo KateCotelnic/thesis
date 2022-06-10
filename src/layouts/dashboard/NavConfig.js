@@ -45,19 +45,34 @@ const navConfigDoctor = [
     title: 'patients',
     path: '/dashboard/patients',
     icon: getIcon('eva:people-fill'),
+  },
+  {
+    title: 'profile',
+    path: '/dashboard/profile',
+    icon: getIcon('healthicons:ui-user-profile'),
   }
 ];
 
 const navConfigPatient = [
   {
     title: 'calendar',
-    path: '/dashboard/app',
+    path: '/dashboard/calendarpat',
     icon: getIcon('bi:calendar-check-fill'),
   },
   {
-    title: 'patients',
-    path: '/dashboard/patients',
+    title: 'doctors',
+    path: '/dashboard/doctorslist',
     icon: getIcon('eva:people-fill'),
+  },
+  {
+    title: 'add appointment',
+    path: '/dashboard/addappointment',
+    icon: getIcon('bx:calendar-plus'),
+  },
+  {
+    title: 'profile',
+    path: '/dashboard/profilepat',
+    icon: getIcon('healthicons:ui-user-profile'),
   }
 ];
 

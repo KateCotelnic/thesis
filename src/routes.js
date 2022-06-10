@@ -12,6 +12,13 @@ import Products from './pages/Products';
 import Calendar from './pages/DashboardApp';
 // import DashboardApp from './pages/DashboardApp';
 import Doctors from './pages/Doctors';
+import Patients from './pages/Patients';
+import Test from './pages/Test';
+import Test2 from './pages/Test2';
+import { Profile } from './pages/Profile';
+import CalendarPatient from './pages/CalendarPatient';
+import { ProfilePatient } from './pages/ProfilePatient';
+import { AddApp } from './pages/AddAppointment';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -21,9 +28,15 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <Calendar /> },
-        { path: 'patients', element: <User /> },
+        { path: 'patients', element: <Test2 /> },
         { path: 'home', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'profile', element: <Profile />},
+        { path: 'calendarpat', element: <CalendarPatient />},
+        { path: 'profilepat', element: <ProfilePatient />},
+        { path: 'doctorslist', element: <Doctors />},
+        { path: 'addappointment', element: <AddApp />}
+
       ],
     },
     {
