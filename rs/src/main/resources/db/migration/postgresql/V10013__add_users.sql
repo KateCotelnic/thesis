@@ -36,7 +36,7 @@ VALUES ('polina@gmail.com', '$2a$12$s39m9a4.s8NXuIZ0GzmkrugfSEF3FBpMJKusthZwohRg
         'ADULT', 0),
        ('catalin.schiopu@isa.utm.md', '$2a$12$s39m9a4.s8NXuIZ0GzmkrugfSEF3FBpMJKusthZwohRgy1f1pcKVu',
         'DOCTOR', true, 'Catalin', 'Schiopu', '069857403', 'PSYCHIATRIST', 330, 'FIRST', 3, 'Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.',
-        'ADULT', 0),
+        'ADULT', 4.5),
        ('rose.fr@gmail.com', '$2a$12$KXIXyz4J.z6g9FAjPo0One6LED0DysQnh4Z2Y3Wis0EiuOCq1G6hm',
         'DOCTOR', true, 'Rose', 'Francis', '068645986', 'MAMMOLOGIST', 400, 'FIRST', 3, 'Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.',
         'ADULT', 0),

@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 public class ASServiceImpl implements ASService {
-    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
     private final RestTemplate restTemplate = restTemplateBuilder.errorHandler(new ASRestTemplateResponseErrorHandler()).build();
 
     private String urlAS = "http://as:8092/as/";

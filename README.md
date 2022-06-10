@@ -10,14 +10,17 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> URL: http://localhost:8090/api/login
 <br/> request body:
 {
-"email": "polly@email.com",
-"password": "pp123"
+"email": "ecaterina.cotelnic@isa.utm.md",
+"password": "ee123"
 }
 <br/> response body:
 {
-"email": "polly@mail.com",
-"token": "eyJhbGc...uYP5Y",
-"role": "ADMIN" ("DOCTOR"/"PATIENT")
+"email": "ecaterina.cotelnic@isa.utm.md",
+"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlY2F0ZXJpbmEuY290ZWxuaWNAaXNhLnV0bS5tZCIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNjU0ODY1NDQ4LCJleHAiOjE2NTU0NzAyNDh9.Oasoqxrhupiwlvk270BOzyZU3Du-KKiMnOKDCabPPY0",
+"role": "PATIENT",
+"firstName": "Ecaterina",
+"lastName": "Cotelnic",
+"middleName": ""
 }
 
 [//]: # (######requests between services &#40;for server&#41;)
@@ -59,9 +62,13 @@ All requests except authentication, registration and for unauthorized user shoul
 }
 <br/> response body:
 {
-"email": "newuser@mail.com",
-"token": "eyJhbGc...uYP5Y"
-} 
+"email": "newuser@email.com",
+"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyQGVtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNjU0ODY1NTM5LCJleHAiOjE2NTU0NzAzMzl9.yZHzBbId-rSKUyvUd1b7zX9IkNzvg7i8fgt9aS_oLr8",
+"role": "PATIENT",
+"firstName": "new",
+"lastName": "user",
+"middleName": "middle"
+}
 
 [//]: # (######requests between services &#40;for server&#41;)
 
@@ -136,18 +143,52 @@ All requests except authentication, registration and for unauthorized user shoul
 &nbsp; **get all doctors**
 <br/>
 <br/> method: GET
-<br/> URL: http://localhost:8090/api/admin/doctors?page=1
+<br/> URL: http://localhost:8090/api/admin/doctors?page=2
 <br/> response body:
 {
 "list": [
 {
-"id": null,
-"firstName": "Polina",
-"lastName": "Murphy",
+"email": "holli@gmail.com",
+"firstName": "Holli",
+"lastName": "Wheatley",
 "middleName": "",
-"phoneNumber": "0948573035",
-"speciality": "PSYCHIATRIST",
-"price": "300",
+"phoneNumber": "069887409",
+"speciality": "DENTIST",
+"price": "500",
+"photo": null,
+"grade": "HIGHEST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "bonnie@gmail.com",
+"firstName": "Bonnie",
+"lastName": "Boyce",
+"middleName": "",
+"phoneNumber": "068765498",
+"speciality": "UROLOGIST",
+"price": "200",
+"photo": null,
+"grade": "SECOND",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": []
+},
+{
+"email": "felicity@gmail.com",
+"firstName": "Felicity",
+"lastName": "Hurley",
+"middleName": "",
+"phoneNumber": "069890945",
+"speciality": "ENDOCRINOLOGIST",
+"price": "230",
 "photo": null,
 "grade": "FIRST",
 "experience": "3",
@@ -159,27 +200,58 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 },
 {
-"id": null,
+"email": "rosalind@gmail.com",
+"firstName": "Rosalind",
+"lastName": "Dillard",
+"middleName": "",
+"phoneNumber": "069895432",
+"speciality": "ONCOLOGIST",
+"price": "300",
+"photo": null,
+"grade": "HIGHEST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": []
+},
+{
+"email": "zakifor@gmail.com",
+"firstName": "Zaki",
+"lastName": "Foreman",
+"middleName": "",
+"phoneNumber": "069543209",
+"speciality": "PULMONOLOGIST",
+"price": "300",
+"photo": null,
+"grade": "SECOND",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "tommy@email.com",
 "firstName": "Tom",
 "lastName": "Reyes",
 "middleName": "",
-"phoneNumber": "05948386785",
+"phoneNumber": "079857463",
 "speciality": "THERAPIST",
-"price": "200",
+"price": "100",
 "photo": null,
 "grade": "HIGHEST",
 "experience": "12",
 "description": null,
 "classification": "FAMILY",
-"rating": "4.5",
-"hospitals": [
-"Medpark International Hospital",
-"Repromed"
-]
+"rating": "0.0",
+"hospitals": []
 }
 ],
-"totalPages": 1,
-"totalElements": 2
+"totalPages": 2,
+"totalElements": 16
 }
 
 &nbsp; **get doctor by email**
@@ -521,21 +593,23 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> response body:
 [
 {
+"id": "1",
 "body": "I liked the consultation, it went quickly and efficiently.",
 "rating": "5",
 "date": "2021-11-28",
 "firstNamePatient": "Jeffrey",
 "lastNamePatient": "Jef",
-"middleNamePatient": null,
+"middleNamePatient": "",
 "photoPatient": null
 },
 {
+"id": "2",
 "body": null,
 "rating": "4",
 "date": "2020-03-12",
-"firstNamePatient": "Emily",
-"lastNamePatient": "Muller",
-"middleNamePatient": null,
+"firstNamePatient": "Ecaterina",
+"lastNamePatient": "Cotelnic",
+"middleNamePatient": "",
 "photoPatient": null
 }
 ]
@@ -585,43 +659,103 @@ All requests except authentication, registration and for unauthorized user shoul
 {
 "list": [
 {
-"id": null,
-"firstName": "Tom",
-"lastName": "Reyes",
+"email": "polina@gmail.com",
+"firstName": "Polina",
+"lastName": "Murphy",
 "middleName": "",
-"phoneNumber": "05948386785",
-"speciality": "THERAPIST",
-"price": "200",
+"phoneNumber": "068493784",
+"speciality": "PSYCHIATRIST",
+"price": "300",
 "photo": null,
-"grade": "HIGHEST",
-"experience": "12",
-"description": null,
-"classification": "FAMILY",
-"rating": "4.5",
+"grade": "SECOND",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
 "hospitals": [
 "Medpark International Hospital",
 "Repromed"
 ]
-}
-],
-"totalPages": 1,
-"totalElements": 1
-}
-
-&nbsp; **get doctors by area/speciality/classification (any combination is allowed)**
-<br/>
-<br/> method: GET
-<br/> URL: http://localhost:8090/api/doctors/param?area=&speciality=&classification=&page=1
-<br/> response body:
+},
 {
-"list": [
-{
-"id": null,
-"firstName": "Polina",
-"lastName": "Murphy",
+"email": "catalin.schiopu@isa.utm.md",
+"firstName": "Catalin",
+"lastName": "Schiopu",
 "middleName": "",
-"phoneNumber": "0948573035",
+"phoneNumber": "069857403",
 "speciality": "PSYCHIATRIST",
+"price": "330",
+"photo": null,
+"grade": "FIRST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "esmae@gmail.com",
+"firstName": "Esmae",
+"lastName": "Thompson",
+"middleName": "",
+"phoneNumber": "069253640",
+"speciality": "HEMATOLOGIST",
+"price": "250",
+"photo": null,
+"grade": "HIGHEST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "hopperlacy@gmail.com",
+"firstName": "Lacy",
+"lastName": "Hopper",
+"middleName": "",
+"phoneNumber": "069857102",
+"speciality": "PLASTIC_SURGEON",
+"price": "500",
+"photo": null,
+"grade": "SECOND",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "cherish@gmail.com",
+"firstName": "Cherish",
+"lastName": "Avila",
+"middleName": "",
+"phoneNumber": "069840583",
+"speciality": "PEDIATRICIAN",
+"price": "100",
+"photo": null,
+"grade": "FIRST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "kyandev@gmail.com",
+"firstName": "Kyan",
+"lastName": "Devlin",
+"middleName": "",
+"phoneNumber": "069482029",
+"speciality": "RADIOLOGIST",
 "price": "300",
 "photo": null,
 "grade": "FIRST",
@@ -634,19 +768,85 @@ All requests except authentication, registration and for unauthorized user shoul
 ]
 },
 {
-"id": null,
-"firstName": "Tom",
-"lastName": "Reyes",
+"email": "holli@gmail.com",
+"firstName": "Holli",
+"lastName": "Wheatley",
 "middleName": "",
-"phoneNumber": "05948386785",
-"speciality": "THERAPIST",
-"price": "200",
+"phoneNumber": "069887409",
+"speciality": "DENTIST",
+"price": "500",
 "photo": null,
 "grade": "HIGHEST",
-"experience": "12",
-"description": null,
-"classification": "FAMILY",
-"rating": "4.5",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "felicity@gmail.com",
+"firstName": "Felicity",
+"lastName": "Hurley",
+"middleName": "",
+"phoneNumber": "069890945",
+"speciality": "ENDOCRINOLOGIST",
+"price": "230",
+"photo": null,
+"grade": "FIRST",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+},
+{
+"email": "zakifor@gmail.com",
+"firstName": "Zaki",
+"lastName": "Foreman",
+"middleName": "",
+"phoneNumber": "069543209",
+"speciality": "PULMONOLOGIST",
+"price": "300",
+"photo": null,
+"grade": "SECOND",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
+"hospitals": [
+"Medpark International Hospital"
+]
+}
+],
+"totalPages": 1,
+"totalElements": 9
+}
+
+&nbsp; **get doctors by area/speciality/classification (any combination is allowed)**
+<br/>
+<br/> method: GET
+<br/> URL: http://localhost:8090/api/doctors/param?area=BOTANICA&speciality=&classification=&page=1
+<br/> response body:
+{
+"list": [
+{
+"email": "polina@gmail.com",
+"firstName": "Polina",
+"lastName": "Murphy",
+"middleName": "",
+"phoneNumber": "068493784",
+"speciality": "PSYCHIATRIST",
+"price": "300",
+"photo": null,
+"grade": "SECOND",
+"experience": "3",
+"description": "Consultation, examination, diagnosis, prescription treatment. Consult in the language: Romanian, Russian.",
+"classification": "ADULT",
+"rating": "0.0",
 "hospitals": [
 "Medpark International Hospital",
 "Repromed"
@@ -654,7 +854,7 @@ All requests except authentication, registration and for unauthorized user shoul
 }
 ],
 "totalPages": 1,
-"totalElements": 2
+"totalElements": 1
 }
 
 &nbsp; **get speciality, areas and classification are for search**
@@ -664,13 +864,71 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> response body:
 {
 "areas": [
-"[BOTANICA, CENTRU, CIOCANA, BUIUCANI, RISCANI]"
+"BOTANICA",
+"CENTRU",
+"CIOCANA",
+"BUIUCANI",
+"RISCANI",
+"TELECENTRU"
 ],
 "specialities": [
-"[ACUPUNCTURIST, OBSTETRICIAN_GYNECOLOGIST, ALLERGIST, ANDROLOGIST, VENEREOLOGIST, VERTEBROLOGIST, GASTROENTEROLOGIST, HEMATOLOGIST, HEPATOLOGIST, GYNECOLOGIST, DERMATOLOGIST, NUTRITIONIST, INFECTIONIST, CARDIOLOGIST, KINESITHERAPIST, COSMETOLOGIST, MAMMOLOGIST, MASSEUR, NEUROLOGIST, NEUROSURGEON, NEPHROLOGIST, ONCOLOGIST, ORTHOPEDIST_TRAUMATOLOGIST, OTOLARYNGOLOGIST, OPHTHALMOLOGIST, PEDIATRICIAN, PLASTIC_SURGEON, PROCTOLOGIST, PSYCHIATRIST, PSYCHO_NEUROLOGIST, PSYCHOLOGIST, PSYCHOTHERAPIST, PULMONOLOGIST, RADIOLOGIST, REHABILITOLOGIST, RHEUMATOLOGIST, REPRODUCTOLOGIST, REFLEXOLOGIST, SEXOLOGIST, FAMILY_DOCTOR, DENTIST, THERAPIST, TRICHOLOGIST, ULTRASOUND_SPECIALIST, UROLOGIST, PHYSIOTHERAPIST, PHYTOTHERAPIST, PHLEBOLOGIST, SURGEON, ENDOCRINOLOGIST, ENDOSCOPIST, AESTHETIC_SURGEON]"
+"ACUPUNCTURIST",
+"OBSTETRICIAN_GYNECOLOGIST",
+"ALLERGIST",
+"ANDROLOGIST",
+"VENEREOLOGIST",
+"VERTEBROLOGIST",
+"GASTROENTEROLOGIST",
+"HEMATOLOGIST",
+"HEPATOLOGIST",
+"GYNECOLOGIST",
+"DERMATOLOGIST",
+"NUTRITIONIST",
+"INFECTIONIST",
+"CARDIOLOGIST",
+"KINESITHERAPIST",
+"COSMETOLOGIST",
+"MAMMOLOGIST",
+"MASSEUR",
+"NEUROLOGIST",
+"NEUROSURGEON",
+"NEPHROLOGIST",
+"ONCOLOGIST",
+"ORTHOPEDIST_TRAUMATOLOGIST",
+"OTOLARYNGOLOGIST",
+"OPHTHALMOLOGIST",
+"PEDIATRICIAN",
+"PLASTIC_SURGEON",
+"PROCTOLOGIST",
+"PSYCHIATRIST",
+"PSYCHO_NEUROLOGIST",
+"PSYCHOLOGIST",
+"PSYCHOTHERAPIST",
+"PULMONOLOGIST",
+"RADIOLOGIST",
+"REHABILITOLOGIST",
+"RHEUMATOLOGIST",
+"REPRODUCTOLOGIST",
+"REFLEXOLOGIST",
+"SEXOLOGIST",
+"FAMILY_DOCTOR",
+"DENTIST",
+"THERAPIST",
+"TRICHOLOGIST",
+"ULTRASOUND_SPECIALIST",
+"UROLOGIST",
+"PHYSIOTHERAPIST",
+"PHYTOTHERAPIST",
+"PHLEBOLOGIST",
+"SURGEON",
+"ENDOCRINOLOGIST",
+"ENDOSCOPIST",
+"AESTHETIC_SURGEON"
 ],
 "classifications": [
-"[CHILDREN, ADULT, FAMILY]"
+"CHILDREN",
+"ADULT",
+"FAMILY"
 ]
 }
 
@@ -1117,14 +1375,23 @@ All requests except authentication, registration and for unauthorized user shoul
 <br/> URL: http://localhost:8090/api/patient/newAppointment
 <br/> request body:
 {
-"doctorEmail": "polly@email.com",
-"patientEmail": "emily@email.com",
+"doctorEmail": "catalin.schiopu@isa.utm.md",
+"patientEmail": "ecaterina.cotelnic@isa.utm.md",
 "hospitalName": "Medpark International Hospital",
-"dateTime": "2022-07-20 10:20",
-"duration": "30"
+"startDate": "2022-06-04 10:20",
+"endDate": "2022-06-04 11:00"
 }
 <br/> response body:
-"CREATED"
+{
+"id": "14",
+"doctorEmail": "catalin.schiopu@isa.utm.md",
+"patientEmail": "ecaterina.cotelnic@isa.utm.md",
+"hospitalName": "Medpark International Hospital",
+"startDate": "2022-06-04T10:20",
+"endDate": "2022-06-04T11:00",
+"status": "REQUESTED",
+"sentNotification": "false"
+}
 
 &nbsp; **get enums for creating an appointment**
 <br/>
@@ -1374,29 +1641,33 @@ All requests except authentication, registration and for unauthorized user shoul
 &nbsp; **accept appointment**
 <br/>
 <br/> method: POST
-<br/> URL: http://localhost:8090/api/doctor/acceptAppointment?id=18
+<br/> URL: http://localhost:8090/api/doctor/acceptAppointment?id=8
 <br/> response body:
 {
-"id": "18",
-"doctorEmail": "polly@email.com",
-"patientEmail": "emily@email.com",
+"id": "8",
+"doctorEmail": "catalin.schiopu@isa.utm.md",
+"patientEmail": "ecaterina.cotelnic@isa.utm.md",
 "hospitalName": "Medpark International Hospital",
-"dateTime": "2022-06-20T10:20",
-"duration": "60"
+"startDate": "2022-06-10T12:00",
+"endDate": "2022-06-10T12:20",
+"status": "APPROVED",
+"sentNotification": "true"
 }
 
 &nbsp; **decline appointment**
 <br/>
 <br/> method: POST
-<br/> URL: http://localhost:8090/api/doctor/declineAppointment?id=18
+<br/> URL: http://localhost:8090/api/doctor/declineAppointment?id=8
 <br/> response body:
 {
-"id": "18",
-"doctorEmail": "polly@email.com",
-"patientEmail": "emily@email.com",
+"id": "8",
+"doctorEmail": "catalin.schiopu@isa.utm.md",
+"patientEmail": "ecaterina.cotelnic@isa.utm.md",
 "hospitalName": "Medpark International Hospital",
-"dateTime": "2022-06-20T10:20",
-"duration": "60"
+"startDate": "2022-06-10T12:00",
+"endDate": "2022-06-10T12:20",
+"status": "APPROVED",
+"sentNotification": "true"
 }
 
 &nbsp; **add free time**

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RSServiceImpl implements RSService {
-    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
     private final RestTemplate restTemplate = restTemplateBuilder.errorHandler(new RSRestTemplateResponseErrorHandler()).build();
 
     private String urlRS = "http://rs:8091/rs/";

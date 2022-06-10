@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RSServiceImpl implements RSService {
-    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
     private final RestTemplate restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 
     private String urlRS = "http://rs:8091/rs";

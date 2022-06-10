@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorRSDTO {
-    private String id;
+    private String email;
     private String firstName;
     private String lastName;
     private String middleName;
