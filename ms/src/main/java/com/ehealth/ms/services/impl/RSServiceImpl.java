@@ -1,8 +1,10 @@
 package com.ehealth.ms.services.impl;
 
 import com.ehealth.ms.entities.dto.*;
+import com.ehealth.ms.exceptions.RSRestTemplateResponseErrorHandler;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +19,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RSServiceImpl implements RSService {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplate restTemplate = restTemplateBuilder.errorHandler(new RSRestTemplateResponseErrorHandler()).build();
 
     private String urlRS = "http://rs:8091/rs/";
 

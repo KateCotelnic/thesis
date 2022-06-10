@@ -3,6 +3,7 @@ package com.ehealth.ms.controllers;
 import com.ehealth.ms.entities.dto.AppointmentDTO;
 import com.ehealth.ms.entities.dto.FreeTimeDTO;
 import com.ehealth.ms.entities.dto.RequestDeleteCommentDTO;
+import com.ehealth.ms.exceptions.NoPermissionsException;
 import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
 import com.ehealth.ms.services.RSService;
@@ -53,7 +54,7 @@ public class DoctorController {
 
     private void verifyIsDoctor() {
         if (!currentUserService.verifyDoctor()) {
-            throw new RuntimeException("User is not doctor");
+            throw new NoPermissionsException("User is not doctor");
         }
     }
 }

@@ -40,8 +40,4 @@ public class AuthController {
         securityContextLogoutHandler.logout(request, response, null);
     }
 
-    @GetMapping("/hi")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("HELLO");
-    }
 }

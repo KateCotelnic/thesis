@@ -22,7 +22,6 @@ public class RegisterController {
 
     @PostMapping()
     public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO request){
-        System.out.println(request);
         validationService.verifyEmail(request.getEmail());
         validationService.verifyPassword(request.getPassword());
         if(rsService.existUserByUsername(request.getEmail())){

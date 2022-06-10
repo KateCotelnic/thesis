@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,6 @@ public class CurrentUserServiceImpl implements CurrentUserService {
         } else {
             username = principal.toString();
         }
-//        System.out.println("current user = " + username);
         AuthResponseRSDTO user = rsService.getUserByUsername(username);
         if (user.getRole().equals(Role.PATIENT.name())) {
             return true;
@@ -43,16 +44,12 @@ public class CurrentUserServiceImpl implements CurrentUserService {
         AuthResponseRSDTO user;
         try {
             user = rsService.getUserByUsername(email);
-            System.out.println("//////////////////////");
-            System.out.println(user);
-            System.out.println("//////////////////////");
             if (!user.isEnable()) {
-                throw new RuntimeException("User is not enable");
+                throw new UsernameNotFoundException("No such user");
             }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             return user;
-//        } catch (AuthenticationException e) {
-        } catch (RuntimeException e) {
+        } catch (AuthenticationException e) {
             throw new BadCredentialsException("Incorrect combination of email and/or password");
         }
     }
@@ -89,8 +86,6 @@ public class CurrentUserServiceImpl implements CurrentUserService {
 
     @Override
     public void changePassword(String email, PasswordDTO passwordDTO) {
-        System.out.println("email = " + email);
-        System.out.println("password: " + passwordDTO);
         authenticate(email, passwordDTO.getOldPassword());
         validationService.verifyPassword(passwordDTO.getNewPassword());
         passwordDTO.setNewPassword(new BCryptPasswordEncoder(12).encode(passwordDTO.getNewPassword()));

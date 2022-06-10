@@ -1,6 +1,7 @@
 package com.ehealth.ms.controllers;
 
 import com.ehealth.ms.entities.dto.*;
+import com.ehealth.ms.exceptions.NoPermissionsException;
 import com.ehealth.ms.services.CurrentUserService;
 import com.ehealth.ms.services.RSService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class GeneralController {
     @GetMapping("/doctor")
     public ResponseEntity<DoctorDetailsDTO> getDoctor(@RequestParam(name = "email", defaultValue = "") String email) {
         if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient() || currentUserService.verifyDoctor())) {
-            throw new RuntimeException("user don't have permissions");
+            throw new NoPermissionsException("user don't have permissions");
         }
         System.out.println("email = " + email);
         return ResponseEntity.ok(rsService.getDoctorByEmail(email));
@@ -54,7 +55,7 @@ public class GeneralController {
     @GetMapping("/details")
     public ResponseEntity<UserDetailsDTO> getMyDetails() {
         if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())) {
-            throw new RuntimeException("user don't have permissions");
+            throw new NoPermissionsException("user don't have permissions");
         }
         return ResponseEntity.ok(rsService.getUserDetails(getCurrentUsername()));
     }
@@ -62,7 +63,7 @@ public class GeneralController {
     @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteUser() {
         if (!(currentUserService.verifyDoctor() || currentUserService.verifyPatient())) {
-            throw new RuntimeException("user don't have permissions");
+            throw new NoPermissionsException("user don't have permissions");
         }
         rsService.deleteUser(getCurrentUsername());
         return ResponseEntity.ok(HttpStatus.OK);
@@ -82,7 +83,7 @@ public class GeneralController {
     @DeleteMapping("/deleteComment")
     public ResponseEntity<HttpStatus> deleteComments(@RequestParam(name = "id", defaultValue = "") String id) {
         if (!(currentUserService.verifyAdmin() || currentUserService.verifyPatient())) {
-            throw new RuntimeException("user don't have permissions");
+            throw new NoPermissionsException("user don't have permissions");
         }
         rsService.deleteComment(id);
         return ResponseEntity.ok(HttpStatus.OK);

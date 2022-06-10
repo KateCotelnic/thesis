@@ -15,7 +15,9 @@ public class ErrorHandler {
 
     @ExceptionHandler({
             RSServiceClientException.class,
-            ASServiceClientException.class})
+            ASServiceClientException.class,
+            NoPermissionsException.class,
+            InvalidEmailPasswordException.class})
     public ResponseEntity<ErrorData> exceptionHandle(Exception exception) {
         return getErrorResponseEntity(HttpStatus.BAD_REQUEST, exception.getMessage());
     }

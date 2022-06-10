@@ -2,14 +2,19 @@ package com.ehealth.ms.services.impl;
 
 import com.ehealth.ms.entities.dto.AppointmentDTO;
 import com.ehealth.ms.entities.dto.RequestDeleteCommentDTO;
+import com.ehealth.ms.exceptions.ASRestTemplateResponseErrorHandler;
 import com.ehealth.ms.services.ASService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 public class ASServiceImpl implements ASService {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplate restTemplate = restTemplateBuilder.errorHandler(new ASRestTemplateResponseErrorHandler()).build();
 
     private String urlAS = "http://as:8092/as/";
 

@@ -1,6 +1,7 @@
 package com.ehealth.ms.controllers;
 
 import com.ehealth.ms.entities.dto.*;
+import com.ehealth.ms.exceptions.NoPermissionsException;
 import com.ehealth.ms.services.ASService;
 import com.ehealth.ms.services.CurrentUserService;
 import com.ehealth.ms.services.RSService;
@@ -40,7 +41,7 @@ public class PatientController {
 
     private void verifyIsPatient() {
         if (!currentUserService.verifyPatient()) {
-            throw new RuntimeException("User is not patient");
+            throw new NoPermissionsException("User is not patient");
         }
     }
 
